@@ -2,3 +2,7 @@
 Name: Derek Frevel
 CCID: dfrevel
 Email: dfrevel@ualberta.ca
+------ Akash -----
+Name: Akash Sharma
+CCID: akash5
+Email: akash5@ualberta.ca
