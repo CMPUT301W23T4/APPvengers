@@ -5,3 +5,7 @@ Github username: thienhuynhhh
 Name: Ba Thien Huynh
 CCID: bth
 Email: bth@ualberta.ca
+------ CCID: cdhamija Github username: charvidhamija ------
+Name: Charvi Dhamija
+CCID: cdhamija
+Email: cdhamija@ualberta.ca
