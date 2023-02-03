@@ -1,7 +1,4 @@
------- Derek -----
-Name: Derek Frevel
-CCID: dfrevel
-Email: dfrevel@ualberta.ca
+dfrevel Derek-Frevel
 ------ CCID: akash5  Github username: akxsh -----
 Name: Akash Sharma
 CCID: akash5
