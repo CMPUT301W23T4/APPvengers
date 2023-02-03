@@ -1,8 +1,5 @@
 dfrevel Derek-Frevel
------- CCID: akash5  Github username: akxsh -----
-Name: Akash Sharma
-CCID: akash5
-Email: akash5@ualberta.ca
+akash5 akxsh 
 ----------Ba Thien-------------
 Github username: thienhuynhhh
 Name: Ba Thien Huynh
