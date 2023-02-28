@@ -9,11 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.example.qrcity.databinding.FragmentSecondBinding;
+import com.example.qrcity.databinding.FragmentCodeScannerBinding;
 
-public class SecondFragment extends Fragment {
+public class QRScanner extends Fragment {
 
-    private FragmentSecondBinding binding;
+    private FragmentCodeScannerBinding binding;
 
     @Override
     public View onCreateView(
@@ -21,7 +21,7 @@ public class SecondFragment extends Fragment {
             Bundle savedInstanceState
     ) {
 
-        binding = FragmentSecondBinding.inflate(inflater, container, false);
+        binding = FragmentCodeScannerBinding.inflate(inflater, container, false);
         return binding.getRoot();
 
     }
@@ -32,8 +32,8 @@ public class SecondFragment extends Fragment {
         binding.buttonSecond.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment.findNavController(SecondFragment.this)
-                        .navigate(R.id.action_SecondFragment_to_FirstFragment);
+                NavHostFragment.findNavController(QRScanner.this)
+                        .navigate(R.id.action_CodeScannerFragment_to_FirstFragment);
             }
         });
     }
