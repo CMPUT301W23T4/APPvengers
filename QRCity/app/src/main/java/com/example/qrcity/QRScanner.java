@@ -43,6 +43,10 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * This class defines a Code Scanner
+ */
+
 public class QRScanner extends Fragment {
 
     private FragmentCodeScannerBinding binding;
@@ -116,7 +120,11 @@ public class QRScanner extends Fragment {
         super.onPause();
     }
 
-    //Code from reference (3)
+    /**
+     * This returns the 64 hexadecimal hash of the input as a string
+     * @param input
+     * Code from reference (3)
+     */
     public String getHash(String input) {
         try {
             // Static getInstance method is called with hashing SHA
