@@ -18,17 +18,24 @@
 package com.example.qrcity;
 
 import static android.content.ContentValues.TAG;
+import static android.content.pm.PackageManager.PERMISSION_DENIED;
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -63,25 +70,20 @@ public class QRScanner extends Fragment {
         CodeScannerView scannerView = root.findViewById(R.id.scanner_view);
 
         //TODO: Get Camera Permissions
-            
-        //Create a new scanner
-        mCodeScanner = new CodeScanner(activity, scannerView);
-        mCodeScanner.setDecodeCallback(new DecodeCallback() {
-            @Override
-            public void onDecoded(@NonNull final Result result) {
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try{
-                            onSuccessfulScan(result);
+        if (ContextCompat.checkSelfPermission(getContext() , Manifest.permission.CAMERA) == PERMISSION_DENIED){
+            ActivityResultLauncher<String> requestPermissionLauncher =
+                    registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                        if (isGranted) {
+                            //Create a new scanner
+                            createScanner(activity, scannerView);
                         }
-                        catch (Exception exception){
-                            Log.e(TAG, "Error - Could not hash result");
-                        }
-                    }
-                });
-            }
-        });
+                    });
+
+            requestPermissionLauncher.launch(Manifest.permission.CAMERA);
+        } else{
+            //Create a new scanner
+            createScanner(activity, scannerView);
+        }
 
         scannerView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,12 +121,38 @@ public class QRScanner extends Fragment {
         super.onPause();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
+    public void createScanner(Activity activity, CodeScannerView scannerView){
+        mCodeScanner = new CodeScanner(activity, scannerView);
+        mCodeScanner.setDecodeCallback(new DecodeCallback() {
+            @Override
+            public void onDecoded(@NonNull final Result result) {
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            onSuccessfulScan(result);
+                        } catch (Exception exception) {
+                            Log.i(TAG, "Error - Could not hash result");
+                            return;
+                        }
+                    }
+                });
+            }
+        });
+    }
+
     /**
      * This returns the 64 hexadecimal hash of the input as a string
      * @param input
      * Code from reference (3)
      */
-    public String getHash(String input) {
+    public String calculateHash(String input) {
         try {
             // Static getInstance method is called with hashing SHA
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -150,24 +178,24 @@ public class QRScanner extends Fragment {
 
         } catch (NoSuchAlgorithmException e) {
             // Handle the case where SHA-256 is not a supported algorithm
-            System.out.println("SHA-256 algorithm not supported");
+            Log.e(TAG, "SHA-256 algorithm not supported");
             return null;
         }
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
-
     public void onSuccessfulScan(Result result){
 
-        String hash = getHash(result.getText());
+        String hash = calculateHash(result.getText());
+        if (hash == null){
+            return;
+        } else{
+            Log.i(TAG, result.getText());
+            Log.i(TAG, hash);
+        }
 
         //TODO: Go to different fragment and pass the hash to it
-
+        /*
         NavHostFragment.findNavController(QRScanner.this)
-                .navigate(R.id.action_FirstFragment_to_CodeScannerFragment);
+                .navigate(R.id.action_FirstFragment_to_CodeScannerFragment);*/
     }
 }
