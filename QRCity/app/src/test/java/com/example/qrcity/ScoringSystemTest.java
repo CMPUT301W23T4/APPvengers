@@ -1,11 +1,8 @@
 package com.example.qrcity;
 
-import static android.content.ContentValues.TAG;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
-import android.util.Log;
 
 import org.junit.Test;
 
@@ -17,16 +14,30 @@ public class ScoringSystemTest {
             "1234567812345678123456781234567812345678123456781234567812345678",
             "0112223333444445555556666666777777888889999aaabbcddeeeffff000000"};
 
-    private int[] Scores = {17, 59, 115, 0, 3275397};
+    private int[] scores = {17, 59, 115, 0, 3275397};
 
+    private String[] names = {"Amateur Wind Mage",
+                              "Novice Earth Warrior",
+                              "Master Wind Archer",
+                              "Divine Water Warrior"};
     @Test
     public void testGetScore() {
 
         ScoringSystem system = new ScoringSystem();
 
         for (int i = 0; i < hashValues.length; i++) {
-            assertTrue(Scores[i] == system.getScore(hashValues[i]));
+            assertTrue(scores[i] == system.getScore(hashValues[i]));
 
+        }
+    }
+
+    @Test
+    public void testGetName() {
+
+        ScoringSystem system = new ScoringSystem();
+
+        for (int i = 0; i < hashValues.length; i++) {
+            assertEquals(0, names[i].compareTo(system.getName(hashValues[i])));
         }
     }
 }

@@ -73,8 +73,7 @@ public class QRScanner extends Fragment {
                     @Override
                     public void run() {
                         try{
-                            //TODO: Call and return getHash(String input) here
-                            Toast.makeText(activity, result.getText(), Toast.LENGTH_SHORT).show();
+                            onSuccessfulScan(result);
                         }
                         catch (Exception exception){
                             Log.e(TAG, "Error - Could not hash result");
@@ -162,4 +161,13 @@ public class QRScanner extends Fragment {
         binding = null;
     }
 
+    public void onSuccessfulScan(Result result){
+
+        String hash = getHash(result.getText());
+
+        //TODO: Go to different fragment and pass the hash to it
+
+        NavHostFragment.findNavController(QRScanner.this)
+                .navigate(R.id.action_FirstFragment_to_CodeScannerFragment);
+    }
 }
