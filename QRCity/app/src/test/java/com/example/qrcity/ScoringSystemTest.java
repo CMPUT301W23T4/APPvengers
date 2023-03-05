@@ -19,7 +19,8 @@ public class ScoringSystemTest {
     private String[] names = {"Amateur Wind Mage",
                               "Novice Earth Warrior",
                               "Master Wind Archer",
-                              "Divine Water Warrior"};
+                              "Divine Water Warrior",
+                              "Divine Earth Warrior"};
     @Test
     public void testGetScore() {
 
