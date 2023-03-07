@@ -14,11 +14,14 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.qrcity.databinding.ActivityMainBinding;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
+
+    FirebaseFirestore firestore;
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
