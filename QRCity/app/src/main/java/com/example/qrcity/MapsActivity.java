@@ -48,39 +48,25 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.mapview);
 
-        // 获取MapView实例
-        mMapView = findViewById(R.id.map);
-        mMapView.onCreate(savedInstanceState);
+        Intent intent = getIntent();
 
-        // 异步获取地图实例
-        mMapView.getMapAsync(this);
+
+        initMap();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        mMapView.onResume();
+    /**
+     * initialize map
+     */
+    private void initMap() {
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(MapsActivity.this);
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        mMapView.onPause();
-    }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mMapView.onDestroy();
-    }
 
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        mMapView.onLowMemory();
-    }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         // 在地图准备好后进行操作
