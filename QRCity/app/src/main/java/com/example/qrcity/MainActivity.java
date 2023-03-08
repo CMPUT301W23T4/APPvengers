@@ -2,12 +2,10 @@ package com.example.qrcity;
 
 import android.os.Bundle;
 
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.material.snackbar.Snackbar;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.view.View;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -15,15 +13,14 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.qrcity.databinding.ActivityMainBinding;
-import com.google.firebase.firestore.FirebaseFirestore;
+
 
 import android.view.Menu;
 import android.view.MenuItem;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback{
 
-    FirebaseFirestore firestore;
+public class MainActivity extends AppCompatActivity{
+
+
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
@@ -42,8 +39,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
         //map- Leo
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.maps);
-        mapFragment.getMapAsync(this);
+
 
     }
 
@@ -76,8 +72,5 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 || super.onSupportNavigateUp();
     }
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
 
-    }
 }
