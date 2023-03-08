@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_FirstFragment_to_CodeScannerFragment"
             app:destination="@id/CodeScannerFragment" />
+        <action
+            android:id="@+id/action_FirstFragment_to_scannable_code"
+            app:destination="@id/scannable_code" />
     </fragment>
     <fragment
         android:id="@+id/CodeScannerFragment"
@@ -23,4 +26,18 @@
             android:id="@+id/action_CodeScannerFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/scannable_code"
+        android:name="com.example.qrcity.Scannable_code_fragment"
+        android:label="scannable_code_fragment"
+        tools:layout="@layout/scannable_code_fragment" >
+        <action
+            android:id="@+id/action_scannable_code_to_camera_fragment"
+            app:destination="@id/camera_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/camera_fragment"
+        android:name="com.example.qrcity.Camera_fragment"
+        android:label="fragment_camera_fragment"
+        tools:layout="@layout/fragment_camera" />
 </navigation>

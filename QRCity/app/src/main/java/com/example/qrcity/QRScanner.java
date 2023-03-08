@@ -54,7 +54,7 @@ import java.security.NoSuchAlgorithmException;
  * This class defines a Code Scanner
  */
 
-public class QRScanner extends Fragment {
+public class    QRScanner extends Fragment {
 
     private FragmentCodeScannerBinding binding;
     private CodeScanner mCodeScanner;
