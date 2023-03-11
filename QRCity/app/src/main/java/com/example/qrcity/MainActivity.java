@@ -1,4 +1,14 @@
+/** Author: Android Studio
+ * Editor(s): Derek
+ *
+ *  References:
+ *      1) Basic Activity template provided by Android Studio
+ */
+
+
 package com.example.qrcity;
+
+import static android.content.ContentValues.TAG;
 
 import android.os.Bundle;
 
@@ -15,15 +25,15 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.qrcity.databinding.ActivityMainBinding;
 
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity{
 
-
-
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
+    private String lastHash;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,5 +82,13 @@ public class MainActivity extends AppCompatActivity{
                 || super.onSupportNavigateUp();
     }
 
-
+    //Get the last known calculated hash value
+    public String getLastHash() {
+        return lastHash;
+    }
+    
+    //Set the last known calculated hash value
+    public void setLastHash(String hash){
+        lastHash = hash;
+    }
 }

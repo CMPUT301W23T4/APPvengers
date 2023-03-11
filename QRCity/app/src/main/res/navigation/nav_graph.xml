@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_CodeScannerFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
+        <action
+            android:id="@+id/action_CodeScannerFragment_to_scannable_code"
+            app:destination="@id/scannable_code" />
     </fragment>
     <fragment
         android:id="@+id/scannable_code"
@@ -34,6 +37,9 @@
         <action
             android:id="@+id/action_scannable_code_to_camera_fragment"
             app:destination="@id/camera_fragment" />
+        <action
+            android:id="@+id/action_scannable_code_to_CodeScannerFragment"
+            app:destination="@id/CodeScannerFragment" />
     </fragment>
     <fragment
         android:id="@+id/camera_fragment"
