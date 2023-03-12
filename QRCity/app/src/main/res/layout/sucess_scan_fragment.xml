@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Camera_fragment">
+    tools:context=".success_scan_fragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,18 +14,18 @@
         android:weightSum="2">
 
         <ImageView
-            android:id="@+id/capturedImage"
+            android:id="@+id/imageView2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="47dp"
             android:layout_weight="1"
-            android:src="@android:drawable/ic_menu_camera" />
+            android:src="@drawable/checkmark_sucess" />
 
         <Button
-            android:id="@+id/btnTakePicture"
+            android:id="@+id/back_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/grey"
             android:gravity="center"
-            android:text="Take photo" />
+            android:text="Return" />
     </LinearLayout>
 </FrameLayout>

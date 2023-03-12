@@ -35,15 +35,15 @@
         android:label="scannable_code_fragment"
         tools:layout="@layout/scannable_code_fragment" >
         <action
-            android:id="@+id/action_scannable_code_to_camera_fragment"
-            app:destination="@id/camera_fragment" />
-        <action
             android:id="@+id/action_scannable_code_to_CodeScannerFragment"
             app:destination="@id/CodeScannerFragment" />
+        <action
+            android:id="@+id/action_scannable_code_to_success_scan_fragment"
+            app:destination="@id/success_scan_fragment" />
     </fragment>
     <fragment
-        android:id="@+id/camera_fragment"
-        android:name="com.example.qrcity.Camera_fragment"
-        android:label="fragment_camera_fragment"
-        tools:layout="@layout/fragment_camera" />
+        android:id="@+id/success_scan_fragment"
+        android:name="com.example.qrcity.success_scan_fragment"
+        android:label="sucess_scan_fragment"
+        tools:layout="@layout/sucess_scan_fragment" />
 </navigation>

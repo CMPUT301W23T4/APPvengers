@@ -1,21 +1,32 @@
 package com.example.qrcity;
 
+import android.graphics.Bitmap;
 import android.location.Location;
 
 public class ScannableCode {
 
     private int score;
     private String comment;
-    private Location location;
-
+    private double[] location={0,0};
+    private Bitmap photo;
+    public ScannableCode(int score,String cmt,double[] location,Bitmap photo){
+        this.score=score;
+        this.comment=cmt;
+        this.location=location;
+        this.photo=photo;
+    }
     public void setComment(String new_Comment){
         this.comment=new_Comment;
     }
     public void setScore(int New_score){
         this.score=New_score;
     }
-    public void setLocation(Location new_Location){
-        this.location=new_Location;
+    public void setLocation(double[] new_Location){
+        this.location[0]=new_Location[0];
+        this.location[0]=new_Location[1];
+    }
+    public void setPhoto(Bitmap new_Photo){
+        this.photo=new_Photo;
     }
 
     public String getComment(){
@@ -24,5 +35,12 @@ public class ScannableCode {
     public int getScore(){
         return this.score;
     }
-    public Location getLocation(){return this.location;};
+    public double[] getLocation(){return this.location;};
+    public double getLatitude(){
+        return this.location[0];
+    }
+    public double getLongitude(){
+      return this.location[1];
+    };
+    public Bitmap getPhoto(){return this.photo;};
 }

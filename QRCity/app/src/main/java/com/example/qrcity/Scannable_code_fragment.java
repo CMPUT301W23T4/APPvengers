@@ -1,6 +1,7 @@
 package com.example.qrcity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -29,6 +30,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +51,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.IOException;
 import java.util.List;
@@ -58,50 +61,98 @@ import java.util.Locale;
 public class Scannable_code_fragment extends Fragment {
 
 
+    public static final String EXTRA_INFO = "default";
+    private Button btnCapture;
+    private Switch sw;
+    private Button next_frag;
+    private TextView score_textview;
+    private TextInputEditText cmt_edit;
+    private double[] location={0,0};
+    private int score;
+    private Bitmap photo=null;
+    private ScoringSystem score_sys = new ScoringSystem();
 
+
+
+    private static final int Image_Capture_Code = 1;
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-        return inflater.inflate(R.layout.scannable_code_fragment, container, false);
+        View view = inflater.inflate(R.layout.scannable_code_fragment, container, false);
+        btnCapture =(Button) view.findViewById(R.id.taking_pic_button);
+        btnCapture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //access to camera to take photo
+                Intent cInt = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cInt,Image_Capture_Code);
+            }
+        });
+        cmt_edit=(TextInputEditText) view.findViewById(R.id.input_cmt);
+        score_textview=(TextView) view.findViewById(R.id.score_view);
+        show_score();
+        return view;
     }
-
+    private void show_score(){
+        score=score_sys.getScore(((MainActivity)getActivity()).getLastHash()); //save score
+        score_textview.setText("Code is worth: "+score);
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        //after capturing image by camera
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Image_Capture_Code) {
+            if (resultCode == -1) {
+                photo = (Bitmap) data.getExtras().get("data"); //save photo
+                btnCapture.setText("Retake");
+            } else if (resultCode == 0) {
+                Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Button takepic_button=view.getRootView().findViewById(R.id.taking_pic_button);
-        Switch sw=view.getRootView().findViewById(R.id.switch1);
-
-
-        takepic_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(Scannable_code_fragment.this)
-                        .navigate(R.id.action_scannable_code_to_camera_fragment);
-
-            }
-        });
-
+        //location switch
+        sw=view.getRootView().findViewById(R.id.switch1);
         sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                //turn on the switch to record the location
                 if (b){
-                    Toast.makeText(getContext(), "sucess",
+                    Toast.makeText(getContext(), "Location recorded!",
                         Toast.LENGTH_LONG).show();
-                    //action here
-
+                    GPS_location gps=new GPS_location(getContext());
+                    location=gps.getDeviceLocation();               //save location
                 }
+                //turn off to not record the location
                 else{
-
+                    location[0]=0;
+                    location[1]=0;
                 }
             }
         });
+        //Next button
+        next_frag=view.getRootView().findViewById(R.id.next_button);
+        next_frag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (photo==null){
+                    Toast.makeText(getActivity(), "Please add the photo of the location!", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    save_data();
+                    NavHostFragment.findNavController(Scannable_code_fragment.this)
+                            .navigate(R.id.action_scannable_code_to_success_scan_fragment);
+                }
+            }
+        });
+    }
+    private void save_data(){
+        ScannableCode code=new ScannableCode(score,cmt_edit.getText().toString(),location,photo);
 
 
     }
-
-
-
-
 }
