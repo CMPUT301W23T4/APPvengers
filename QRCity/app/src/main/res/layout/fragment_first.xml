@@ -27,7 +27,7 @@
         app:layout_constraintTop_toBottomOf="@id/textview_first" />
 
     <Button
-        android:id="@+id/button_test_scannable_code"
+        android:id="@+id/button_goto_listview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Go to scannable frag"

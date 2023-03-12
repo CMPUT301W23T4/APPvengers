@@ -36,11 +36,12 @@ public class FirstFragment extends Fragment {
                         .navigate(R.id.action_FirstFragment_to_CodeScannerFragment);
             }
         });
-        binding.buttonTestScannableCode.setOnClickListener(new View.OnClickListener() {
+
+        binding.buttonGotoListview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(FirstFragment.this)
-                        .navigate(R.id.action_FirstFragment_to_scannable_code);
+                        .navigate(R.id.action_FirstFragment_to_CodeListview);
             }
         });
     }

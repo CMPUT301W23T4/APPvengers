@@ -8,8 +8,6 @@
 
 package com.example.qrcity;
 
-import static android.content.ContentValues.TAG;
-
 import android.os.Bundle;
 
 
@@ -25,7 +23,6 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.qrcity.databinding.ActivityMainBinding;
 
 
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -36,7 +33,7 @@ public class MainActivity extends AppCompatActivity{
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
     private String lastHash;
-    private ArrayList<ScannableCode> QR_code_list=new ArrayList<ScannableCode>();
+    private ArrayList<ScannableCode> qrCodeList =new ArrayList<ScannableCode>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,9 +83,20 @@ public class MainActivity extends AppCompatActivity{
     }
 
     //add a code into the list of QR code.
-    public void add_code(ScannableCode code){
-        this.QR_code_list.add(code);
+    public void addCode(ScannableCode code){
+        this.qrCodeList.add(code);
     }
+
+    //TODO: remove a code from the list.
+    public void removeCode(){
+        //this.QR_code_list.add(code);
+    }
+
+    //return the QR Code List
+    public ArrayList<ScannableCode> getCodeList(){
+        return this.qrCodeList;
+    }
+
     //Get the last known calculated hash value
     public String getLastHash() {
         return lastHash;
