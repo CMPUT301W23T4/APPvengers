@@ -95,13 +95,6 @@ public class Userprofileactivity extends AppCompatActivity implements Removeprof
         });
 
     }
-    public void editButton(View view){
-        new editprofile(user).show(getSupportFragmentManager(),"EDIT");
-    }
-    public void RemoveProfile(View view){
-        new Removeprofile().show(getSupportFragmentManager(),"Try_Remove");
-    }
-    
 
 
     @Override
