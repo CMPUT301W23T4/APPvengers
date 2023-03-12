@@ -1,13 +1,11 @@
 package com.example.qrcity;
 
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -18,13 +16,9 @@ import android.widget.TextView;
 //import com.google.firebase.firestore.QueryDocumentSnapshot;
 //import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
-public class Useractivity extends AppCompatActivity implements Removeprofile.OnFragmentInteractionListener, editprofile.OnFragmentInteractionListener , Observer {
+public class Userprofileactivity extends AppCompatActivity implements Removeprofile.OnFragmentInteractionListener, editprofile.OnFragmentInteractionListener , Observer {
 
     private User user;
     private TextView userName;
