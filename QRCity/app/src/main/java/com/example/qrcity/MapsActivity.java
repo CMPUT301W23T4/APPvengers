@@ -43,7 +43,30 @@ import java.util.Map;
 
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
-    private MapView mMapView;
+    public GoogleMap gMap;
+    private FusedLocationProviderClient fusedLocationProviderClient;
+    private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
+    private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 9802;
+    private LatLng deviceLocation;
+    private boolean LocationPermissionGranted = false;
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        Log.d(TAG, "Map is ready!");
+        gMap = googleMap;
+
+        if (LocationPermissionGranted) {
+            getDeviceLocation();
+
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+            gMap.setMyLocationEnabled(true);
+        }
+    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +75,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         Intent intent = getIntent();
 
-
+        getLocationPermission();
         initMap();
     }
 
@@ -63,27 +86,106 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(MapsActivity.this);
     }
+    private void getLocationPermission() {
+        String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
 
-
-
-
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(), FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this.getApplicationContext(), COURSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                LocationPermissionGranted = true;
+            }else{
+                ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
+            }
+        }else{
+            ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
+        }
+    }
     @Override
-    public void onMapReady(GoogleMap googleMap) {
-        // 在地图准备好后进行操作
-        // 可以在这里添加标记、设置地图类型等等
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        LocationPermissionGranted = false;
 
-        // 设置地图类型为卫星图像
-        googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+        switch(requestCode){
+            case LOCATION_PERMISSION_REQUEST_CODE: {
+                if (grantResults.length > 0) {
+                    for (int i = 0; i < grantResults.length; i++) {
+                        if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                            return;
+                        }
+                    }
+                    LocationPermissionGranted = true;
+                }
+            }
+        }
+    }
+    private void getDeviceLocation(){
 
-        // 添加一个标记
-        LatLng sydney = new LatLng(-33.852, 151.211);
-        googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
-        // 移动地图视图到标记的位置
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        try {
+            if(LocationPermissionGranted){
+                Task location = fusedLocationProviderClient.getLastLocation();
+                location.addOnCompleteListener(new OnCompleteListener() {
+                    @Override
+                    public void onComplete(@NonNull Task task) {
+                        if(task.isSuccessful()){
+                            Location currentLocation = (Location) task.getResult();
+                            if(currentLocation != null){
+                                deviceLocation = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
+                                addMark(deviceLocation,15f);
+                            }
+                            else {
+                                getDeviceLocation();
+                            }
+                        }
+                    }
+                });
+            }else {
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "No Permission",
+                        Toast.LENGTH_SHORT);
+
+                toast.show();
+            }
+        }catch (SecurityException securityException){
+            Log.d(TAG,"getDeviceLocation: SecurityException: " + securityException.getMessage());
+        }
+    }
+    private void addMark(LatLng latLng, float zoom){ List<List<Double>> codeList = new LinkedList<>();
+        if(LocationPermissionGranted){
+            Log.d(TAG,"Current location is latitude: " + latLng.latitude + ", longitude: " + latLng.longitude);
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            CollectionReference collectionReference = db.collection("ScannableCodes");
+            collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
+                    assert queryDocumentSnapshots != null;
+                    for(QueryDocumentSnapshot doc: queryDocumentSnapshots) {
+                        List<Double> codeLocation;
+                        Map<String,Object> code = doc.getData();
+                        for(Map.Entry<String, Object> pair : code.entrySet()) {
+                            String key = pair.getKey();
+                            if (pair.getKey().equals("Location")) {
+                                codeLocation = (List<Double>) pair.getValue();
+                                codeList.add(codeLocation);
+                                if(codeLocation.get(0) != 0 && codeLocation.get(0) != 0) {
+                                    gMap.addMarker(new MarkerOptions().position(new LatLng(codeLocation.get(0), codeLocation.get(1))).title("[" + codeLocation.get(0) + "," + codeLocation.get(1) + "]"));
+                                    Log.d(TAG, "*****Added code marker to: latitude: " + codeLocation.get(0) + ", longitude: " + codeLocation.get(1));
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(deviceLocation,15f));
+        }
+
     }
 
+
+
+
+
+
+
+
 }
-
-
-
