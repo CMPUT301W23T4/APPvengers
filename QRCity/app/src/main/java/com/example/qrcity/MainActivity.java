@@ -37,11 +37,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+<<<<<<< HEAD
 public class MainActivity extends AppCompatActivity {
+=======
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity{
+>>>>>>> main
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
     private String lastHash;
+    private ArrayList<ScannableCode> QR_code_list=new ArrayList<ScannableCode>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,6 +140,10 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
+    //add a code into the list of QR code.
+    public void add_code(ScannableCode code){
+        this.QR_code_list.add(code);
+    }
     //Get the last known calculated hash value
     public String getLastHash() {
         return lastHash;
