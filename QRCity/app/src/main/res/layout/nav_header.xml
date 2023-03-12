@@ -10,8 +10,7 @@
         android:layout_height="50dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:src="@drawable/addphoto"
-        tools:ignore="MissingClass" />
+        android:src="@drawable/addphoto" />
 
     <TextView
         android:id="@+id/name"
