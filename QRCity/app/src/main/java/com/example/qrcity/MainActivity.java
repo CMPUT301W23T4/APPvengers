@@ -26,6 +26,8 @@ import com.example.qrcity.databinding.ActivityMainBinding;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity{
 
     private AppBarConfiguration appBarConfiguration;

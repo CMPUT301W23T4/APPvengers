@@ -5,15 +5,23 @@ import android.location.Location;
 
 public class ScannableCode {
 
+    private String name;
     private int score;
     private String comment;
     private double[] location={0,0};
     private Bitmap photo;
-    public ScannableCode(int score,String cmt,double[] location,Bitmap photo){
+    public ScannableCode(int score,String cmt,double[] location,Bitmap photo,String name){
         this.score=score;
         this.comment=cmt;
         this.location=location;
         this.photo=photo;
+        this.name=name;
+    }
+    public void setName(String new_Name){
+        this.name=new_Name;
+    }
+    public String getName() {
+        return this.name;
     }
     public void setComment(String new_Comment){
         this.comment=new_Comment;
