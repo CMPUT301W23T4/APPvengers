@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.location.Location;
 
 public class ScannableCode {
+
     private String name;
     private int score;
     private String comment;
@@ -19,7 +20,7 @@ public class ScannableCode {
     public void setName(String new_Name){
         this.name=new_Name;
     }
-    public String getName(){
+    public String getName() {
         return this.name;
     }
     public void setComment(String new_Comment){
