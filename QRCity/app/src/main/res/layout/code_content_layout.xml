@@ -6,15 +6,30 @@
     android:layout_width="match_parent"
     android:orientation="horizontal">
 
-    <ImageView
-        android:id="@+id/location_image"
-        android:layout_height="100dp"
-        android:layout_width="100dp"
-        android:src="@drawable/error_image"
-        />
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/location_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/error_image" />
+
+        <Button
+            android:id="@+id/button_delete_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:textSize="15sp"
+            android:text="Delete code">
+        </Button>
+
+    </LinearLayout>
 
     <LinearLayout
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_width="0sp"
         android:layout_weight="1"
         android:orientation="vertical">

@@ -18,14 +18,6 @@
             android:layout_height="1dp"
             android:layout_weight="0.925" />
 
-        <Button
-            android:id="@+id/button_second"
-            android:layout_width="match_parent"
-            android:layout_margin="5dp"
-            android:layout_height="1dp"
-            android:text="Cancel"
-            android:layout_weight="0.075"/>
-
     </LinearLayout>
 
 </FrameLayout>

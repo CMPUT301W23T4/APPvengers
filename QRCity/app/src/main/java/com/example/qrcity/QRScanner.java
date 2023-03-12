@@ -54,7 +54,7 @@ import java.security.NoSuchAlgorithmException;
  * This class defines a Code Scanner
  */
 
-public class    QRScanner extends Fragment {
+public class QRScanner extends Fragment {
 
     private FragmentCodeScannerBinding binding;
     private CodeScanner mCodeScanner;
@@ -62,8 +62,9 @@ public class    QRScanner extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-
+        //Get the current activity
         final Activity activity = getActivity();
         activityMain = (MainActivity)activity;
 
@@ -102,14 +103,6 @@ public class    QRScanner extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        binding.buttonSecond.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(QRScanner.this)
-                        .navigate(R.id.action_CodeScannerFragment_to_FirstFragment);
-            }
-        });
     }
 
     @Override
