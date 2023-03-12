@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Userprofileactivity">
+    tools:context=".Useractivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -100,7 +100,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:clickable="true"
-        android:contentDescription="@string/todo"
+        android:contentDescription="todo"
         android:focusable="true"
         android:onClick="editButton"
         app:layout_constraintBottom_toBottomOf="parent"

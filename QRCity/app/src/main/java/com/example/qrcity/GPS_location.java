@@ -30,7 +30,7 @@ public class GPS_location {
         }
     }
 
-    public double[] get_Device_Location() {
+    public double[] getDeviceLocation() {
         return deviceLocation;
     }
 }
