@@ -1,11 +1,13 @@
 package com.example.qrcity;
 
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -16,6 +18,9 @@ import android.widget.TextView;
 //import com.google.firebase.firestore.QueryDocumentSnapshot;
 //import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 public class Userprofileactivity extends AppCompatActivity implements Removeprofile.OnFragmentInteractionListener, editprofile.OnFragmentInteractionListener , Observer {
@@ -31,11 +36,70 @@ public class Userprofileactivity extends AppCompatActivity implements Removeprof
         setContentView(R.layout.user_profile);
         String android_ID = Settings.Secure.getString(getApplicationContext().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
+        user = firebaseData.getUser(android_ID);
+        user =  userProfilePresenter.getUsers().get(android_ID);
         user = new User(android_ID,"name");
         userName = findViewById(R.id.UserName);
         contactInfo = findViewById(R.id.ContactInfo);
         score = findViewById(R.id.UserScore);
         userName.setText(user.getName());
+        contactInfo.setText(user.getContactInfo());
+        score.setText(user.getTotalScore());
+        db = FirebaseFirestore.getInstance();
+        final String TAG = "what to put here";
+        final CollectionReference collectionReference = db.collection("Users");
+        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
+            FirebaseFirestoreException error) {
+                HashMap<String, User> userDataList = new HashMap<>();
+                for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
+                {
+                    String userId = new String();
+                    Map<String,Object> user = doc.getData();
+                    User user1 = new User();
+                    boolean success = false;
+                    for (Map.Entry<String, Object> pair : user.entrySet()) {
+
+                        String key = pair.getKey();
+
+                        if (pair.getKey().equals("userId")) {
+                            user1.setId((String) pair.getValue());
+                            userId = (String) pair.getValue();
+                        }
+                        if (pair.getKey().equals("name")) {
+                            user1.setName((String) pair.getValue());
+                        }
+                        if (pair.getKey().equals("contactInfo")){
+                            user1.setContactInfo((String) pair.getValue());
+                        }
+                        if (pair.getKey() == "userCodeList") {
+                            user1.setCodeList((List) pair.getValue());
+                        }
+                    }
+                    if(true) {
+                        userDataList.put(userId, user1);
+                        Log.d(TAG, "User " + userId + " downloaded");
+                    }
+                }
+
+                if (!userDataList.isEmpty()){
+                    user = userDataList.get(android_ID);
+                    if(user!=null){
+                        userName.setText(user.getName());
+                        contactInfo.setText(user.getContactInfo());
+                        score.setText(String.valueOf(user.getTotalScore()));
+                    }
+                }
+            }
+
+        });
+
+    }
+    public void editButton(View view){
+        new editprofile(user).show(getSupportFragmentManager(),"EDIT");
+    }
+    public void RemoveProfile(View view){
+        new Removeprofile().show(getSupportFragmentManager(),"Try_Remove");
     }
     
 
