@@ -4,36 +4,24 @@
  *  References:
  *      1) Basic Activity template provided by Android Studio
  */
-
-
 package com.example.qrcity;
-
+import static android.content.ContentValues.TAG;
 import android.os.Bundle;
-
-
-
 import androidx.appcompat.app.AppCompatActivity;
-
-
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
 import com.example.qrcity.databinding.ActivityMainBinding;
-
-
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity{
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
     private String lastHash;
-    private ArrayList<ScannableCode> qrCodeList =new ArrayList<ScannableCode>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,21 +68,6 @@ public class MainActivity extends AppCompatActivity{
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
-    }
-
-    //add a code into the list of QR code.
-    public void addCode(ScannableCode code){
-        this.qrCodeList.add(code);
-    }
-
-    //TODO: remove a code from the list.
-    public void removeCode(){
-        //this.QR_code_list.add(code);
-    }
-
-    //return the QR Code List
-    public ArrayList<ScannableCode> getCodeList(){
-        return this.qrCodeList;
     }
 
     //Get the last known calculated hash value
