@@ -151,8 +151,9 @@ public class Scannable_code_fragment extends Fragment {
         });
     }
     private void save_data(){
-        ScannableCode code=new ScannableCode(score,cmt_edit.getText().toString(),location,photo);
-
-
+        //create a scanned QR code
+        ScannableCode code=new ScannableCode(score,cmt_edit.getText().toString(),location,photo,score_sys.getName(((MainActivity)getActivity()).getLastHash()));
+        //add a code into QR code list.
+        ((MainActivity)getActivity()).add_code(code);
     }
 }
