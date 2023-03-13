@@ -56,7 +56,6 @@ import java.security.NoSuchAlgorithmException;
 
 public class QRScanner extends Fragment {
 
-    private FragmentCodeScannerBinding binding;
     private CodeScanner mCodeScanner;
     private MainActivity activityMain;
 
@@ -96,7 +95,6 @@ public class QRScanner extends Fragment {
             }
         });
 
-        binding = FragmentCodeScannerBinding.inflate(inflater, container, false);
         return root;
 
     }
@@ -120,7 +118,6 @@ public class QRScanner extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding = null;
     }
 
     private void createScanner(Activity activity, CodeScannerView scannerView){

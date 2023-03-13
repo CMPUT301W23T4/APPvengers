@@ -43,6 +43,12 @@ public class ListViewFragment extends Fragment implements CustomList.CodeListLis
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.sucess_scan_fragment, container, false);
+
+        return view;
+
+        /*
         //Get the current activity
         final Activity activity = getActivity();
         activityMain = (MainActivity)activity;
@@ -61,6 +67,7 @@ public class ListViewFragment extends Fragment implements CustomList.CodeListLis
         loadCodes();
 
         return root;
+         */
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
