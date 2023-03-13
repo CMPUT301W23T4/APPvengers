@@ -63,7 +63,7 @@ public class CustomList extends ArrayAdapter<ScannableCode> {
         TextView codeScore = view.findViewById(R.id.score);
 
         //TODO: codeName.setText(code.getName());
-        codeScore.setText(code.getScore());
+        //codeScore.setText(code.getScore());
 
         if (context instanceof CodeListListener) {
             listener = (CodeListListener) context;
@@ -74,14 +74,14 @@ public class CustomList extends ArrayAdapter<ScannableCode> {
         //Get the button
         removeCodeButton = view.findViewById(R.id.button_delete_code);
 
-        //On button Click
+        /*On button Click
         removeCodeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //TODO: remove the code using some ID
                 //listener.removeCode(code.getID());
             }
-        });
+        });*/
 
         return view;
 
