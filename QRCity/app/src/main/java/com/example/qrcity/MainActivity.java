@@ -8,7 +8,11 @@
 
 package com.example.qrcity;
 
+
+import android.content.Intent;
+
 import static android.content.ContentValues.TAG;
+
 
 import android.os.Bundle;
 
@@ -28,7 +32,15 @@ import com.example.qrcity.databinding.ActivityMainBinding;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import android.view.View;
+import android.widget.Button;
+
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+
 import java.util.ArrayList;
+
 
 public class MainActivity extends AppCompatActivity{
 
@@ -50,7 +62,10 @@ public class MainActivity extends AppCompatActivity{
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
-        //map- Leo
+
+
+
+
 
         // Testing database
         User user = new User("1274893219","Charv", "ch@appvengers.com");
@@ -68,12 +83,14 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -90,12 +107,14 @@ public class MainActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
+
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
 
     //add a code into the list of QR code.
     public void addCode(ScannableCode code){
@@ -121,4 +140,5 @@ public class MainActivity extends AppCompatActivity{
     public void setLastHash(String hash){
         lastHash = hash;
     }
+
 }
