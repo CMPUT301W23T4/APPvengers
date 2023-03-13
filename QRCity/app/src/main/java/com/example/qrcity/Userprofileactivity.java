@@ -34,8 +34,7 @@ public class Userprofileactivity extends AppCompatActivity implements Removeprof
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         setContentView(R.layout.user_profile);
-        String android_ID = Settings.Secure.getString(getApplicationContext().getContentResolver(),
-                Settings.Secure.ANDROID_ID);
+        String android_ID = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
         user = firebaseData.getUser(android_ID);
         user =  userProfilePresenter.getUsers().get(android_ID);
         user = new User(android_ID,"name");
