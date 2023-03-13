@@ -69,13 +69,14 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:srcCompat="@drawable/addphoto" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <FrameLayout
+                    android:id="@+id/frameLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:layout_editor_absoluteX="-2dp"
+                    tools:layout_editor_absoluteY="102dp" />
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/frameLayout"
-                android:layout_below="@+id/appbarLayout"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </RelativeLayout>
 

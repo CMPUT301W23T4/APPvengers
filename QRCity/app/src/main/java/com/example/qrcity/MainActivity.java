@@ -77,10 +77,7 @@ public class MainActivity extends AppCompatActivity{
             }
         });
     }
-    public void onClick(View v) {
-        Intent intent = new Intent(MainActivity.this, MapsActivity.class);
-        startActivity(intent);
-    }
+
 
     private void replaceFragment(Fragment fragment){
 
@@ -100,7 +97,13 @@ public class MainActivity extends AppCompatActivity{
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
         //map- Leo
-
+        location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
         // Testing database
