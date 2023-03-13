@@ -168,7 +168,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 codeLocation = (List<Double>) pair.getValue();
                                 codeList.add(codeLocation);
                                 if(codeLocation.get(0) != 0 && codeLocation.get(0) != 0) {
-                                    gMap.addMarker(new MarkerOptions().position(new LatLng(codeLocation.get(0), codeLocation.get(1))).title("[" + codeLocation.get(0) + "," + codeLocation.get(1) + "]"));
+                                    gMap.addMark(new MarkerOptions().position(new LatLng(codeLocation.get(0), codeLocation.get(1))).title("[" + codeLocation.get(0) + "," + codeLocation.get(1) + "]"));
                                     Log.d(TAG, "*****Added code marker to: latitude: " + codeLocation.get(0) + ", longitude: " + codeLocation.get(1));
                                 }
                             }
