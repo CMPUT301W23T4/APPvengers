@@ -106,6 +106,16 @@ public class MainActivity extends AppCompatActivity{
                 //startActivity(intent);
             //}
         //});
+        //user-profile - leo
+        //Button profileButton = findViewById(R.id.profile_button);
+        //location.setOnClickListener(new View.OnClickListener() {
+        //@Override
+        //public void onClick(View v) {
+        //Intent intent = new Intent(MainActivity.this, Userprofileactivity.class);
+        //startActivity(intent);
+        //}
+        //});
+
 
 
         // Testing database
