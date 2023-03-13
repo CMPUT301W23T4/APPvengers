@@ -1,14 +1,25 @@
+/** Author: Android Studio
+ * Editor(s): Derek
+ *
+ *  References:
+ *      1) Basic Activity template provided by Android Studio
+ */
+
+
 package com.example.qrcity;
 
+
 import android.content.Intent;
+
+import static android.content.ContentValues.TAG;
+
+
 import android.os.Bundle;
 
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.material.snackbar.Snackbar;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.view.View;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -17,16 +28,26 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.qrcity.databinding.ActivityMainBinding;
 
+
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import android.view.View;
 import android.widget.Button;
 
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+
+import java.util.ArrayList;
+
+
 public class MainActivity extends AppCompatActivity{
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
+    private String lastHash;
+    private ArrayList<ScannableCode> qrCodeList =new ArrayList<ScannableCode>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +63,22 @@ public class MainActivity extends AppCompatActivity{
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
 
+
+
+
+
+        // Testing database
+        User user = new User("1274893219","Charv", "ch@appvengers.com");
+        DataBase db = DataBase.getInstance();
+        db.addUser(user);
+
+        // how to use getuser
+        db.getUser(user.getUserId(), new OnGetUserListener() {
+            @Override
+            public void getUserListener(User user) {
+                // Do action with user here
+            }
+        });
 
 
     }
@@ -76,6 +113,32 @@ public class MainActivity extends AppCompatActivity{
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+
+    //add a code into the list of QR code.
+    public void addCode(ScannableCode code){
+        this.qrCodeList.add(code);
+    }
+
+    //TODO: remove a code from the list.
+    public void removeCode(){
+        //this.QR_code_list.add(code);
+    }
+
+    //return the QR Code List
+    public ArrayList<ScannableCode> getCodeList(){
+        return this.qrCodeList;
+    }
+    
+    //Get the last known calculated hash value
+    public String getLastHash() {
+        return lastHash;
+    }
+    
+    //Set the last known calculated hash value
+    public void setLastHash(String hash){
+        lastHash = hash;
     }
 
 }

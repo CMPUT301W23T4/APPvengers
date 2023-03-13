@@ -29,11 +29,20 @@ public class FirstFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonFirst.setOnClickListener(new View.OnClickListener() {
+        binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(FirstFragment.this)
                         .navigate(R.id.action_FirstFragment_to_CodeScannerFragment);
+            }
+        });
+
+
+        binding.getRoot().findViewById(R.id.Records).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(FirstFragment.this)
+                        .navigate(R.id.action_FirstFragment_to_CodeListview);
             }
         });
     }
@@ -43,5 +52,4 @@ public class FirstFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
-
 }

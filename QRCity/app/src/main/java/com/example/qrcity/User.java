@@ -9,9 +9,9 @@ public class User {
 
     private String userId;
     private String name;
-    private String contactInfo = "None";
-    private int totalScore;
-    private int numCodes;
+    private String contactInfo;
+    private long totalScore;
+    private long numCodes;
 
     private ArrayList<Map> userCodeList = new ArrayList<>();
 
@@ -19,12 +19,17 @@ public class User {
     public User(String androidId, String name) {
         this.userId = androidId;
         this.name = name;
+        this.contactInfo = "None";
+        this.totalScore = 0;
+        this.numCodes = 0;
     }
 
     public User(String androidId, String name, String contactInfo) {
         this.userId = androidId;
         this.name = name;
         this.contactInfo = contactInfo;
+        this.totalScore = 0;
+        this.numCodes = 0;
     }
 
     public User() {
@@ -57,12 +62,12 @@ public class User {
         return name;
     }
 
-    public int getTotalScore() {
+    public long getTotalScore() {
 
         return totalScore;
     }
 
-    public int getNumCodes() {
+    public long getNumCodes() {
 
         return numCodes;
     }
@@ -101,12 +106,12 @@ public class User {
         totalScore += codeScore;
     }
 
-    public void set_Total_Score(int initialScore) {
+    public void set_Total_Score(long initialScore) {
 
         this.totalScore = initialScore;
     }
 
-    public void set_Num_Codes(int numCodes) {
+    public void set_Num_Codes(long numCodes) {
 
         this.numCodes = numCodes;
     }

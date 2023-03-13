@@ -6,6 +6,15 @@
     app:startDestination="@id/FirstFragment">
 
     <fragment
+        android:id="@+id/CodeListview"
+        android:name="com.example.qrcity.FirstFragment"
+        android:label="@string/first_fragment_label"
+        tools:layout="@layout/code_listview_layout">
+        <action
+            android:id="@+id/action_CodeListview_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+    </fragment>
+    <fragment
         android:id="@+id/FirstFragment"
         android:name="com.example.qrcity.FirstFragment"
         android:label="@string/first_fragment_label"
@@ -13,6 +22,9 @@
         <action
             android:id="@+id/action_FirstFragment_to_CodeScannerFragment"
             app:destination="@id/CodeScannerFragment" />
+        <action
+            android:id="@+id/action_FirstFragment_to_CodeListview"
+            app:destination="@id/CodeListview" />
     </fragment>
     <fragment
         android:id="@+id/CodeScannerFragment"
@@ -21,6 +33,30 @@
         tools:layout="@layout/fragment_code_scanner">
         <action
             android:id="@+id/action_CodeScannerFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+        <action
+            android:id="@+id/action_CodeScannerFragment_to_scannable_code"
+            app:destination="@id/scannable_code" />
+    </fragment>
+    <fragment
+        android:id="@+id/scannable_code"
+        android:name="com.example.qrcity.Scannable_code_fragment"
+        android:label="scannable_code_fragment"
+        tools:layout="@layout/scannable_code_fragment" >
+        <action
+            android:id="@+id/action_scannable_code_to_CodeScannerFragment"
+            app:destination="@id/CodeScannerFragment" />
+        <action
+            android:id="@+id/action_scannable_code_to_success_scan_fragment"
+            app:destination="@id/success_scan_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/success_scan_fragment"
+        android:name="com.example.qrcity.success_scan_fragment"
+        android:label="sucess_scan_fragment"
+        tools:layout="@layout/sucess_scan_fragment" >
+        <action
+            android:id="@+id/action_success_scan_fragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
 </navigation>
