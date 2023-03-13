@@ -1,6 +1,5 @@
 package com.example.qrcity;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,26 +9,26 @@ public class User {
     private String userId;
     private String name;
     private String contactInfo;
-    private long totalScore;
-    private long numCodes;
+    private long totalscore;
+    private long numcodes;
 
-    private ArrayList<Map> userCodeList = new ArrayList<>();
+
 
 
     public User(String androidId, String name) {
         this.userId = androidId;
         this.name = name;
         this.contactInfo = "None";
-        this.totalScore = 0;
-        this.numCodes = 0;
+        this.totalscore = 0;
+        this.numcodes = 0;
     }
 
     public User(String androidId, String name, String contactInfo) {
         this.userId = androidId;
         this.name = name;
         this.contactInfo = contactInfo;
-        this.totalScore = 0;
-        this.numCodes = 0;
+        this.totalscore = 0;
+        this.numcodes = 0;
     }
 
     public User() {
@@ -37,19 +36,7 @@ public class User {
     }
 
 
-    public List<Map> getUserCodeList() {
-        return userCodeList;
-    }
 
-    @Override
-    public boolean equals(Object obj) {
-        boolean result = false;
-        if (obj instanceof User) {
-            User s = (User) obj;
-            result = this.userId.equals(s.userId);
-        }
-        return result;
-    }
 
     @Override
     public int hashCode() {
@@ -64,12 +51,12 @@ public class User {
 
     public long getTotalScore() {
 
-        return totalScore;
+        return totalscore;
     }
 
     public long getNumCodes() {
 
-        return numCodes;
+        return numcodes;
     }
 
     public String getUserId() {
@@ -92,9 +79,7 @@ public class User {
         this.contactInfo = contactInfo;
     }
 
-    public void setCodeList(List<Map> userCodeList) {
-        this.userCodeList = new ArrayList<Map>(userCodeList);
-    }
+
 
     public void setId(String value) {
 
@@ -103,27 +88,27 @@ public class User {
 
     public void add_To_Score(int codeScore) {
 
-        totalScore += codeScore;
+        totalscore += codeScore;
     }
 
     public void set_Total_Score(long initialScore) {
 
-        this.totalScore = initialScore;
+        this.totalscore = initialScore;
     }
 
     public void set_Num_Codes(long numCodes) {
 
-        this.numCodes = numCodes;
+        this.numcodes = numCodes;
     }
 
     public void add_To_Num_Codes() {
 
-        numCodes += 1;
+        numcodes += 1;
     }
 
     public void add_To_Num_Codes(int i) {
 
-        numCodes += i;
+        numcodes += i;
     }
 
 

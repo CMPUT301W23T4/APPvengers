@@ -70,9 +70,6 @@ public class Userprofileactivity extends AppCompatActivity implements Removeprof
                         if (pair.getKey().equals("contactInfo")){
                             user1.setContactInfo((String) pair.getValue());
                         }
-                        if (pair.getKey() == "userCodeList") {
-                            user1.setCodeList((List) pair.getValue());
-                        }
                     }
                     if(true) {
                         userDataList.put(userId, user1);
@@ -81,7 +78,7 @@ public class Userprofileactivity extends AppCompatActivity implements Removeprof
                 }
 
                 if (!userDataList.isEmpty()){
-                    user = userDataList.get(android_ID);
+                        user = userDataList.get(android_ID);
                     if(user!=null){
                         userName.setText(user.getName());
                         contactInfo.setText(user.getContactInfo());

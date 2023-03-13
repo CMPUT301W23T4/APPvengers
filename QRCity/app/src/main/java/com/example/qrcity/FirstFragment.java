@@ -51,7 +51,7 @@ public class FirstFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 System.out.println("Clicked location");
-                Intent intent = new Intent();
+                Intent intent = new Intent(getContext(),MapsActivity.class);
                 startActivity(intent);
             }
         });
