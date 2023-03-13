@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/FirstFragment"
         android:name="com.example.qrcity.FirstFragment"
-        android:label="@string/first_fragment_label"
+        android:label="Home"
         tools:layout="@layout/fragment_first">
         <action
             android:id="@+id/action_FirstFragment_to_CodeScannerFragment"
@@ -32,7 +32,7 @@
     <fragment
         android:id="@+id/scannable_code"
         android:name="com.example.qrcity.Scannable_code_fragment"
-        android:label="scannable_code_fragment"
+        android:label="New Code"
         tools:layout="@layout/scannable_code_fragment" >
         <action
             android:id="@+id/action_scannable_code_to_CodeScannerFragment"
@@ -44,7 +44,7 @@
     <fragment
         android:id="@+id/success_scan_fragment"
         android:name="com.example.qrcity.success_scan_fragment"
-        android:label="success_scan_fragment"
+        android:label="Finished adding code"
         tools:layout="@layout/sucess_scan_fragment" >
         <action
             android:id="@+id/action_success_scan_fragment_to_FirstFragment"
@@ -53,7 +53,7 @@
     <fragment
         android:id="@+id/CodeListview"
         android:name="com.example.qrcity.ListViewFragment"
-        android:label="code_listview_layout"
+        android:label="Your scanned codes"
         tools:layout="@layout/code_listview_layout">
         <action
             android:id="@+id/action_CodeListview_to_FirstFragment"

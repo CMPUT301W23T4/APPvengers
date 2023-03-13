@@ -81,11 +81,7 @@ public class ListViewFragment extends Fragment implements CustomList.CodeListLis
         scannableCodeAdapter = new CustomList(this.getContext(), scannableCodeDataList, activityMain);
         codeList.setAdapter(scannableCodeAdapter);
 
-        //double[] location={0,0};
-        //ScannableCode code = new ScannableCode(17,"",location,null,"Placeholder");
-        //scannableCodeDataList.add(code);
-        
-        //loadCodes();
+        loadCodes();
 
         return root;
     }
@@ -100,12 +96,9 @@ public class ListViewFragment extends Fragment implements CustomList.CodeListLis
         scannableCodeDataList.clear();
 
         //Get the list of codes from activityMain
-        scannableCodeDataList = activityMain.getCodeList();
-
-        double[] location={0,0};
-        ScannableCode code = new ScannableCode(17,"",location,null,"Placeholder");
-
-        scannableCodeDataList.add(code);
+        for (ScannableCode code: activityMain.getCodeList()) {
+            scannableCodeDataList.add(code);
+        }
 
         //Notifying the adapter to render any new data fetched from the cloud
         scannableCodeAdapter.notifyDataSetChanged();
