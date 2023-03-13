@@ -35,7 +35,6 @@ public class Userprofileactivity extends AppCompatActivity implements Removeprof
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = getIntent();
         setContentView(R.layout.user_profile);
         String android_ID = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
         userName = findViewById(R.id.UserName);
