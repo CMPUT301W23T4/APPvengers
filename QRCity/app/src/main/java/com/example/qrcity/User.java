@@ -9,8 +9,8 @@ public class User {
     private String userId;
     private String name;
     private String contactInfo;
-    private long totalscore;
-    private long numcodes;
+    private long totalScore;
+    private long numCodes;
 
 
 
@@ -19,16 +19,16 @@ public class User {
         this.userId = androidId;
         this.name = name;
         this.contactInfo = "None";
-        this.totalscore = 0;
-        this.numcodes = 0;
+        this.totalScore = 0;
+        this.numCodes = 0;
     }
 
     public User(String androidId, String name, String contactInfo) {
         this.userId = androidId;
         this.name = name;
         this.contactInfo = contactInfo;
-        this.totalscore = 0;
-        this.numcodes = 0;
+        this.totalScore = 0;
+        this.numCodes = 0;
     }
 
     public User() {
@@ -51,12 +51,12 @@ public class User {
 
     public long getTotalScore() {
 
-        return totalscore;
+        return totalScore;
     }
 
     public long getNumCodes() {
 
-        return numcodes;
+        return numCodes;
     }
 
     public String getUserId() {
@@ -88,27 +88,27 @@ public class User {
 
     public void add_To_Score(int codeScore) {
 
-        totalscore += codeScore;
+        totalScore += codeScore;
     }
 
     public void set_Total_Score(long initialScore) {
 
-        this.totalscore = initialScore;
+        this.totalScore = initialScore;
     }
 
     public void set_Num_Codes(long numCodes) {
 
-        this.numcodes = numCodes;
+        this.numCodes = numCodes;
     }
 
     public void add_To_Num_Codes() {
 
-        numcodes += 1;
+        numCodes += 1;
     }
 
     public void add_To_Num_Codes(int i) {
 
-        numcodes += i;
+        numCodes += i;
     }
 
 
