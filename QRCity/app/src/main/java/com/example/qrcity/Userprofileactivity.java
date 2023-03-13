@@ -11,12 +11,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-//import com.google.firebase.firestore.CollectionReference;
-//import com.google.firebase.firestore.EventListener;
-//import com.google.firebase.firestore.FirebaseFirestore;
-//import com.google.firebase.firestore.FirebaseFirestoreException;
-//import com.google.firebase.firestore.QueryDocumentSnapshot;
-//import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 
 import java.util.HashMap;
 import java.util.List;
@@ -36,14 +37,12 @@ public class Userprofileactivity extends AppCompatActivity implements Removeprof
         setContentView(R.layout.user_profile);
         String android_ID = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
         user = firebaseData.getUser(android_ID);
-        user =  userProfilePresenter.getUsers().get(android_ID);
         user = new User(android_ID,"name");
         userName = findViewById(R.id.UserName);
         contactInfo = findViewById(R.id.ContactInfo);
         score = findViewById(R.id.UserScore);
         userName.setText(user.getName());
         contactInfo.setText(user.getContactInfo());
-        score.setText(user.getTotalScore());
         db = FirebaseFirestore.getInstance();
         final String TAG = "what to put here";
         final CollectionReference collectionReference = db.collection("Users");
