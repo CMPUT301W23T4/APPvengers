@@ -24,27 +24,27 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
+
 public class Userprofileactivity extends AppCompatActivity implements Removeprofile.OnFragmentInteractionListener, editprofile.OnFragmentInteractionListener , Observer {
 
     private User user;
     private TextView userName;
     private TextView contactInfo;
     private TextView score;
+    private FirebaseFirestore db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         setContentView(R.layout.user_profile);
         String android_ID = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-        user = firebaseData.getUser(android_ID);
-        user = new User(android_ID,"name");
         userName = findViewById(R.id.UserName);
         contactInfo = findViewById(R.id.ContactInfo);
         score = findViewById(R.id.UserScore);
         userName.setText(user.getName());
         contactInfo.setText(user.getContactInfo());
         db = FirebaseFirestore.getInstance();
-        final String TAG = "what to put here";
+        final String TAG = "what you want to leave here";
         final CollectionReference collectionReference = db.collection("Users");
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
