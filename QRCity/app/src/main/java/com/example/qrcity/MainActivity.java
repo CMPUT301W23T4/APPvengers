@@ -10,6 +10,7 @@ package com.example.qrcity;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 
@@ -76,6 +77,11 @@ public class MainActivity extends AppCompatActivity{
             }
         });
     }
+    public void onClick(View v) {
+        Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+        startActivity(intent);
+    }
+
     private void replaceFragment(Fragment fragment){
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -94,6 +100,7 @@ public class MainActivity extends AppCompatActivity{
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
         //map- Leo
+
 
 
         // Testing database
