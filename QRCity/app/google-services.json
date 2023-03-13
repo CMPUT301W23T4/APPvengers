@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "639103583563",
+    "project_id": "qrcity-2ff33",
+    "storage_bucket": "qrcity-2ff33.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:639103583563:android:5a62f2c2403394eb6e14ce",
+        "android_client_info": {
+          "package_name": "com.example.qrcity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "639103583563-4tpte48h1bn0pgj23jg7cc98urd593rs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDatrwOaUGdh1IiY8yYzFtHYtsyuoNmYqg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "639103583563-4tpte48h1bn0pgj23jg7cc98urd593rs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

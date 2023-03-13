@@ -1,6 +1,5 @@
 package com.example.qrcity;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -19,11 +18,9 @@ import com.example.qrcity.databinding.ActivityMainBinding;
 
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
-
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback{
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
@@ -41,19 +38,11 @@ public class MainActivity extends AppCompatActivity{
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
-        Button mapButton = findViewById(R.id.map_button);
-        mapButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MapsActivity.class);
-                startActivity(intent);
-            }
-        });
-
-
+        //map- Leo
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.maps);
+        mapFragment.getMapAsync(this);
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -61,7 +50,6 @@ public class MainActivity extends AppCompatActivity{
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -78,7 +66,6 @@ public class MainActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
@@ -86,4 +73,8 @@ public class MainActivity extends AppCompatActivity{
                 || super.onSupportNavigateUp();
     }
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
+    }
 }

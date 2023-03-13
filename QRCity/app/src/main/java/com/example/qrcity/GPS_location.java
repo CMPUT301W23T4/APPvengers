@@ -1,11 +1,18 @@
 package com.example.qrcity;
+<<<<<<< HEAD
 
+=======
+>>>>>>> charvi-database
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import androidx.core.app.ActivityCompat;
+<<<<<<< HEAD
+=======
+
+>>>>>>> charvi-database
 public class GPS_location {
     private LocationManager locationManager;
     public double[] deviceLocation = {0, 0};
@@ -34,4 +41,7 @@ public class GPS_location {
         return deviceLocation;
     }
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> charvi-database

@@ -1,3 +1,7 @@
+/** Author(s): Derek
+ *  Purpose: Evaluate hash values by returning a score or a unique name associated to that hash
+ */
+
 package com.example.qrcity;
 
 /**

@@ -56,35 +56,38 @@ import java.security.NoSuchAlgorithmException;
 
 public class QRScanner extends Fragment {
 
-    private FragmentCodeScannerBinding binding;
     private CodeScanner mCodeScanner;
+    private MainActivity activityMain;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        //Current Activity
+        //Get the current activity
         final Activity activity = getActivity();
+        activityMain = (MainActivity)activity;
 
         //Find scanner from layout
         View root = inflater.inflate(R.layout.fragment_code_scanner, container, false);
         CodeScannerView scannerView = root.findViewById(R.id.scanner_view);
 
-        //TODO: Get Camera Permissions
+        //Get Camera Permissions
         if (ContextCompat.checkSelfPermission(getContext() , Manifest.permission.CAMERA) == PERMISSION_DENIED){
             ActivityResultLauncher<String> requestPermissionLauncher =
                     registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
                         if (isGranted) {
-                            //Create a new scanner
+                            //If permission granted, create a new scanner
                             createScanner(activity, scannerView);
                         }
                     });
 
             requestPermissionLauncher.launch(Manifest.permission.CAMERA);
         } else{
-            //Create a new scanner
+            //If permission already granted, Create a new scanner
             createScanner(activity, scannerView);
         }
 
+        //Display the camera preview on screen
         scannerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,21 +95,12 @@ public class QRScanner extends Fragment {
             }
         });
 
-        binding = FragmentCodeScannerBinding.inflate(inflater, container, false);
-        return root;//binding.getRoot();
+        return root;
 
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        binding.buttonSecond.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(QRScanner.this)
-                        .navigate(R.id.action_CodeScannerFragment_to_FirstFragment);
-            }
-        });
     }
 
     @Override
@@ -124,10 +118,10 @@ public class QRScanner extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding = null;
     }
 
-    public void createScanner(Activity activity, CodeScannerView scannerView){
+    private void createScanner(Activity activity, CodeScannerView scannerView){
+        //Create a new scanner
         mCodeScanner = new CodeScanner(activity, scannerView);
         mCodeScanner.setDecodeCallback(new DecodeCallback() {
             @Override
@@ -135,12 +129,8 @@ public class QRScanner extends Fragment {
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        try {
-                            onSuccessfulScan(result);
-                        } catch (Exception exception) {
-                            Log.i(TAG, "Error - Could not hash result");
-                            return;
-                        }
+                        //Once the scan is Successful
+                        onSuccessfulScan(result);
                     }
                 });
             }
@@ -183,19 +173,19 @@ public class QRScanner extends Fragment {
         }
     }
 
-    public void onSuccessfulScan(Result result){
+    private void onSuccessfulScan(Result result){
 
         String hash = calculateHash(result.getText());
         if (hash == null){
             return;
         } else{
-            Log.i(TAG, result.getText());
-            Log.i(TAG, hash);
+            Log.i(TAG, "Hash calculated successfully");
+            activityMain.setLastHash(hash);
+            Log.i(TAG, "Hash stored successfully");
+            Log.i(TAG, activityMain.getLastHash());
         }
 
-        //TODO: Go to different fragment and pass the hash to it
-        /*
         NavHostFragment.findNavController(QRScanner.this)
-                .navigate(R.id.action_FirstFragment_to_CodeScannerFragment);*/
+                .navigate(R.id.action_CodeScannerFragment_to_scannable_code);
     }
 }
