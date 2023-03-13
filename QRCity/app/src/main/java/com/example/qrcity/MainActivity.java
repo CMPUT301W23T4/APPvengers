@@ -62,6 +62,17 @@ public class MainActivity extends AppCompatActivity{
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
+        Button profileButton = findViewById(R.id.pf);
+        profileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println(1);
+                Intent intent = new Intent(getApplicationContext(),Userprofileactivity.class);
+                startActivity(intent);
+            }
+        });
+
+
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -107,14 +118,7 @@ public class MainActivity extends AppCompatActivity{
             //}
         //});
         //user-profile - leo
-        //Button profileButton = findViewById(R.id.profile_button);
-        //location.setOnClickListener(new View.OnClickListener() {
-        //@Override
-        //public void onClick(View v) {
-        //Intent intent = new Intent(MainActivity.this, Userprofileactivity.class);
-        //startActivity(intent);
-        //}
-        //});
+
 
 
 

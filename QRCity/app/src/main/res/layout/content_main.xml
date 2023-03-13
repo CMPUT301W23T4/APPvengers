@@ -17,4 +17,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/nav_graph" />
+
+    <Button
+        android:id="@+id/pf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="sb"
+        tools:layout_editor_absoluteX="56dp"
+        tools:layout_editor_absoluteY="10dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
