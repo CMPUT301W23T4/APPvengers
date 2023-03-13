@@ -57,8 +57,8 @@ public class DataBase {
                 if(doc.exists()){
                     String name= (String) doc.getData().get("name");
                     String contactInfo= (String) doc.getData().get("contactinfo");
-                    int totalScore= (int) doc.getData().get("totalscore");
-                    int numCodes = (int) doc.getData().get("numcodes");
+                    long totalScore= (long) doc.getData().get("totalscore");
+                    long numCodes = (long) doc.getData().get("numcodes");
                     user.setId(userId);
                     user.setName(name);
                     user.setContactInfo(contactInfo);

@@ -10,8 +10,8 @@ public class User {
     private String userId;
     private String name;
     private String contactInfo;
-    private int totalScore;
-    private int numCodes;
+    private long totalScore;
+    private long numCodes;
 
     private ArrayList<Map> userCodeList = new ArrayList<>();
 
@@ -62,12 +62,12 @@ public class User {
         return name;
     }
 
-    public int getTotalScore() {
+    public long getTotalScore() {
 
         return totalScore;
     }
 
-    public int getNumCodes() {
+    public long getNumCodes() {
 
         return numCodes;
     }
@@ -106,12 +106,12 @@ public class User {
         totalScore += codeScore;
     }
 
-    public void set_Total_Score(int initialScore) {
+    public void set_Total_Score(long initialScore) {
 
         this.totalScore = initialScore;
     }
 
-    public void set_Num_Codes(int numCodes) {
+    public void set_Num_Codes(long numCodes) {
 
         this.numCodes = numCodes;
     }
