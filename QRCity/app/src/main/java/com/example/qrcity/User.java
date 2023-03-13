@@ -9,7 +9,7 @@ public class User {
 
     private String userId;
     private String name;
-    private String contactInfo = "None";
+    private String contactInfo;
     private int totalScore;
     private int numCodes;
 
@@ -19,12 +19,17 @@ public class User {
     public User(String androidId, String name) {
         this.userId = androidId;
         this.name = name;
+        this.contactInfo = "None";
+        this.totalScore = 0;
+        this.numCodes = 0;
     }
 
     public User(String androidId, String name, String contactInfo) {
         this.userId = androidId;
         this.name = name;
         this.contactInfo = contactInfo;
+        this.totalScore = 0;
+        this.numCodes = 0;
     }
 
     public User() {

@@ -52,6 +52,19 @@ public class MainActivity extends AppCompatActivity{
 
         //map- Leo
 
+        // Testing database
+        User user = new User("1274893219","Charv", "ch@appvengers.com");
+        DataBase db = DataBase.getInstance();
+        db.addUser(user);
+
+        // how to use getuser
+        db.getUser(user.getUserId(), new OnGetUserListener() {
+            @Override
+            public void getUserListener(User user) {
+                // Do action with user here
+            }
+        });
+
 
     }
 
