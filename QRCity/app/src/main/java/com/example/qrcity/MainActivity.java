@@ -37,6 +37,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import java.util.ArrayList;
 
@@ -97,13 +98,14 @@ public class MainActivity extends AppCompatActivity{
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
         //map- Leo
-        location.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MapsActivity.class);
-                startActivity(intent);
-            }
-        });
+        //Button mapButton = findViewById(R.id.map_button);
+        //location.setOnClickListener(new View.OnClickListener() {
+            //@Override
+            //public void onClick(View v) {
+                //Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                //startActivity(intent);
+            //}
+        //});
 
 
         // Testing database
