@@ -21,19 +21,18 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-//import com.google.firebase.firestore.CollectionReference;
-//import com.google.firebase.firestore.EventListener;
-//import com.google.firebase.firestore.FirebaseFirestore;
-//import com.google.firebase.firestore.FirebaseFirestoreException;
-//import com.google.firebase.firestore.QueryDocumentSnapshot;
-//import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -168,7 +167,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 codeLocation = (List<Double>) pair.getValue();
                                 codeList.add(codeLocation);
                                 if(codeLocation.get(0) != 0 && codeLocation.get(0) != 0) {
-                                    gMap.addMark(new MarkerOptions().position(new LatLng(codeLocation.get(0), codeLocation.get(1))).title("[" + codeLocation.get(0) + "," + codeLocation.get(1) + "]"));
+                                    gMap.addMarker(new MarkerOptions().position(new LatLng(codeLocation.get(0), codeLocation.get(1))).title("[" + codeLocation.get(0) + "," + codeLocation.get(1) + "]"));
                                     Log.d(TAG, "*****Added code marker to: latitude: " + codeLocation.get(0) + ", longitude: " + codeLocation.get(1));
                                 }
                             }
