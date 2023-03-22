@@ -14,6 +14,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -72,5 +73,19 @@ public class DataBase {
             }
         });
 
+    }
+
+    public void getUsers(OnGetUsersListener listener){
+        CollectionReference cr = db.collection("users");
+        cr.get().addOnCompleteListener(task -> {
+            ArrayList<String> userIds = new ArrayList<>();
+            if(task.isSuccessful()){
+                for(QueryDocumentSnapshot doc: task.getResult()){
+                    String userid = doc.getId();
+                    userIds.add(userid);
+                }
+            }
+            listener.getUsersListener(userIds);
+        });
     }
 }
