@@ -1,19 +1,16 @@
 package com.example.qrcity;
 
-import androidx.annotation.NonNull;
+import android.graphics.Bitmap;
+import android.util.Base64;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -87,5 +84,30 @@ public class DataBase {
             }
             listener.getUsersListener(userIds);
         });
+    }
+
+    public void addCode(ScannableCode code, String hash){
+        CollectionReference cr = db.collection("codes");
+        DocumentReference dr = cr.document(hash);
+        Map<String, Object> data = new HashMap<>();
+        data.put("score",code.getScore());
+        data.put("comment",code.getComment());
+        data.put("location",code.getLocation());
+        data.put("name",code.getName());
+        if (code.getPhoto() == null) {
+            data.put("photo", null);
+        } else {
+            /* https://programmer.ink/think/how-to-use-bitmap-to-store-pictures-into-database.html
+             * Author: bretx
+             */
+            Bitmap bitmap = code.getPhoto();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] bytes = stream.toByteArray();
+
+            data.put("photo", Base64.encodeToString(bytes, Base64.DEFAULT));
+        }
+
+        dr.set(data);
     }
 }
