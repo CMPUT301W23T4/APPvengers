@@ -5,20 +5,27 @@ import android.util.Base64;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DataBase {
@@ -29,6 +36,7 @@ public class DataBase {
     CollectionReference collectionReference;
     CollectionReference ownerCollection;
     StorageReference photoColletion;
+
     final String TAG = "what to put here";
 
 
@@ -46,18 +54,133 @@ public class DataBase {
         }
         return instance;
     }
+    public ArrayList<User> getUsersByCode(String codeId) {
+        ArrayList<User> userDataList = new ArrayList<>();
+        //snapshot listener to watch for changes in the database
+        db.collection("Users")
+                .whereArrayContains("userCodeList", codeId)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                User user = new User();
+                                Map<String, Object> userData = document.getData();
+                                // Get all fields from the current document and construct a User
+                                for (Map.Entry<String, Object> pair : userData.entrySet()) {
 
+                                    String key = pair.getKey();
+                                    if (key.equals("userId")) {
+                                        user.setId((String) pair.getValue());
+                                    }
+                                    if (pair.getKey().equals("name")) {
+                                        user.setName((String) pair.getValue());
+                                    }
+                                    if (pair.getKey().equals("contactInfo")) {
+                                        user.setContactInfo((String) pair.getValue());
+                                    }
+                                    if (pair.getKey().equals("userCodeList")) {
+                                        user.setCodeList((List) pair.getValue());
+                                    }
+                                }
+                                // Add the user from the current document to userDataList
+                                if (user.getUserId() != null && user.getName() != null && user.getUserCodeList() != null
+                                        && user.getContactInfo() != null) {
+                                    userDataList.add(user);
+                                    Log.d(TAG, "User " + user.getUserId() + " downloaded");
+                                } else {
+                                    Log.d(TAG, "User " + user.getUserId() + " not downloaded");
+
+                                }
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+        return userDataList;
+    }
+
+    public HashMap<String, User> getAllUserData() {
+        HashMap<String, User> userDataList = new HashMap<>();
+        //snapshot listener to watch for changes in the database
+        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
+                // Iterate over all documents in the collection
+                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+
+                    List<Map> userCodeList = null;
+                    String userId = new String();
+                    User user = new User();
+                    Map<String, Object> userData = doc.getData();
+                    boolean success = false;
+                    // Get all fields from the current document and construct a User
+                    for (Map.Entry<String, Object> pair : userData.entrySet()) {
+                        String key = pair.getKey();
+
+                        if (key.equals("userId")) {
+                            user.setId((String) pair.getValue());
+                            userId = (String) pair.getValue();
+                        }
+                        if (key.equals("name")) {
+                            user.setName((String) pair.getValue());
+                        }
+                        if (key.equals("contactInfo")) {
+                            user.setContactInfo((String) pair.getValue());
+                        }
+                        if (key == "userCodeList") {
+                            user.setCodeList((List) pair.getValue());
+                        }
+                        if (key.equals("numCodes")) {
+                            Integer numCodes;
+                            numCodes = ((Long) pair.getValue()).intValue();
+                            user.setNumCodes(numCodes);
+                        }
+                        if (key.equals("totalScore")) {
+                            Integer totalScore;
+                            totalScore = ((Long) pair.getValue()).intValue();
+                            user.setTotalScore(totalScore);
+                        }
+                    }
+                    userDataList.put(userId, user);
+                    Log.d(TAG, "User downloaded");
+                    Log.d(TAG, "Server document data: " + doc.getData());
+                }
+            }
+        });
+        return userDataList;
+    }
     public void addUser(User user) {
         // Collection reference
         CollectionReference cr = db.collection("users");
 
-        Map<String, Object> data = new HashMap<>();
-        data.put("name", user.getName());
-        data.put("contactinfo", user.getContactInfo());
-        data.put("totalscore", user.getTotalScore());
-        data.put("numcodes", user.getNumCodes());
-        cr.document(user.getUserId()).set(data);
+        Map<String, Object> user_data = new HashMap<>();
+        user_data.put("name", user.getName());
+        user_data.put("contactinfo", user.getContactInfo());
+        user_data.put("totalscore", user.getTotalScore());
+        user_data.put("numcodes", user.getNumCodes());
+        cr.document(user.getUserId()).set(user_data);
+        collectionReference
+                .document(user.getUserId())
+                .set(user_data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        //if data is successfully uploaded
+                        Log.d(TAG, "User " + user.getUserId() + "  successfully uploaded");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        //if data upload fails
+                        Log.d(TAG, "User " + user.getUserId() + " data failed to upload: " + e.toString());
+                    }
+                });
     }
+
 
     public void getUser(String userId, OnGetUserListener listener) {
         CollectionReference cr = db.collection("users");
@@ -85,6 +208,7 @@ public class DataBase {
 
     }
 
+
     public void getUsers(OnGetUsersListener listener) {
         CollectionReference cr = db.collection("users");
         cr.get().addOnCompleteListener(task -> {
@@ -102,26 +226,23 @@ public class DataBase {
     public void addCode(ScannableCode code, String hash) {
         CollectionReference cr = db.collection("codes");
         DocumentReference dr = cr.document(hash);
-        Map<String, Object> data = new HashMap<>();
-        data.put("score", code.getScore());
-        data.put("comment", code.getComment());
-        data.put("location", code.getLocation());
-        data.put("name", code.getName());
+        Map<String, Object> user_data = new HashMap<>();
+        user_data.put("score", code.getScore());
+        user_data.put("comment", code.getComment());
+        user_data.put("location", code.getLocation());
+        user_data.put("name", code.getName());
         if (code.getPhoto() == null) {
-            data.put("photo", null);
+            user_data.put("photo", null);
         } else {
-            /* https://programmer.ink/think/how-to-use-bitmap-to-store-pictures-into-database.html
-             * Author: bretx
-             */
             Bitmap bitmap = code.getPhoto();
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
             byte[] bytes = stream.toByteArray();
 
-            data.put("photo", Base64.encodeToString(bytes, Base64.DEFAULT));
+            user_data.put("photo", Base64.encodeToString(bytes, Base64.DEFAULT));
         }
 
-        dr.set(data);
+        dr.set(user_data);
     }
 
     public void removerUserData(User user) {//removes User data from the firebase

@@ -1,5 +1,6 @@
 package com.example.qrcity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +12,7 @@ public class User {
     private String contactInfo;
     private long totalScore;
     private long numCodes;
-
+    private ArrayList<Map> userCodeList = new ArrayList<>();
 
 
 
@@ -21,6 +22,9 @@ public class User {
         this.contactInfo = "None";
         this.totalScore = 0;
         this.numCodes = 0;
+    }
+    public List<Map> getUserCodeList() {
+        return userCodeList;
     }
 
     public User(String androidId, String name, String contactInfo) {
@@ -34,7 +38,12 @@ public class User {
     public User() {
 
     }
-
+    public void addCode(ScannableCode codeData) {
+        Map<String, Object> codeMap = new HashMap<>();
+        codeMap.put("codeName", codeData.getName());
+        //codeMap.put("id", codeData.getId());
+        userCodeList.add(codeMap);
+    }
 
 
 
@@ -110,6 +119,14 @@ public class User {
 
         numCodes += i;
     }
-
+    public void setCodeList(List<Map> userCodeList) {
+        this.userCodeList = new ArrayList<Map>(userCodeList);
+    }
+    public void setTotalScore(int initialScore) {
+        this.totalScore = initialScore;
+    }
+    public void setNumCodes(int numCodes) {
+        this.numCodes = numCodes;
+    }
 
 }
