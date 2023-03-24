@@ -33,6 +33,9 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 
 
+import android.provider.Settings;
+import android.provider.Settings.Secure;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -46,7 +49,16 @@ public class MainActivity extends AppCompatActivity{
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
     private String lastHash;
+
+
     private ArrayList<ScannableCode> qrCodeList =new ArrayList<ScannableCode>();
+
+
+    //////////////////////////////////////////////////////////////////
+    private String user_id;    //android id. unique for each android device
+    public DataBase dataBase= new DataBase();           //access to database
+    public User user;   //user object for this device (we are dealing with multiples users in the database now)
+    //////////////////////////////////////////////////////////////////
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +67,10 @@ public class MainActivity extends AppCompatActivity{
         MaterialToolbar toolbar = findViewById(R.id.topAppbar);
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+
+        user_id= Settings.Secure.getString(this.getContentResolver(),Settings.Secure.ANDROID_ID); //get android id
+        user = dataBase.getUserById(user_id);                                                      //get user by android id
+                                                                                                    //if userid is not in database then it will add this new userid into database
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
