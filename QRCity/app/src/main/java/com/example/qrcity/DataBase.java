@@ -161,7 +161,10 @@ public class DataBase {
         user_data.put("contactinfo", user.getContactInfo());
         user_data.put("totalscore", user.getTotalScore());
         user_data.put("numcodes", user.getNumCodes());
+        user_data.put("userId", user.getUserId());
         cr.document(user.getUserId()).set(user_data);
+
+
         collectionReference
                 .document(user.getUserId())
                 .set(user_data)
