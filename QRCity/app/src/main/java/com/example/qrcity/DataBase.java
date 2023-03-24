@@ -19,6 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.Source;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -35,6 +36,7 @@ public class DataBase {
     final private FirebaseStorage storage;
     CollectionReference collectionReference;
     CollectionReference ownerCollection;
+    CollectionReference codeCollection;
     StorageReference photoColletion;
 
     final String TAG = "what to put here";
@@ -46,7 +48,10 @@ public class DataBase {
         collectionReference = db.collection("Users");
         ownerCollection = db.collection("Owners");
         photoColletion = storage.getReference();
+        codeCollection = db.collection("ScannableCodes");
+
     }
+
 
     public static DataBase getInstance() {
         if (instance == null) {
@@ -152,6 +157,7 @@ public class DataBase {
         });
         return userDataList;
     }
+
     public void addUser(User user) {
         // Collection reference
         CollectionReference cr = db.collection("users");
@@ -162,6 +168,7 @@ public class DataBase {
         user_data.put("totalscore", user.getTotalScore());
         user_data.put("numcodes", user.getNumCodes());
         user_data.put("userId", user.getUserId());
+        user_data.put("userCodeList", user.getUserCodeList());
         cr.document(user.getUserId()).set(user_data);
 
 
@@ -183,6 +190,21 @@ public class DataBase {
                     }
                 });
     }
+
+    public void addCode(ScannableCode code) {
+        // When a new code is added is must be added to the ScannableCodes collection and appended
+        // to the codeList of the current user document from the Users collection
+
+        // Add to ScannableCodes collection
+        // First check if the code already exists
+        Map<String, Object> codeData = new HashMap<>();
+        codeData.put("codeName", code.getName());
+        codeData.put("codeScore", code.getScore());
+        codeData.put("Location", code.getLocation());
+
+
+    }
+
 
 
     public void getUser(String userId, OnGetUserListener listener) {
@@ -210,6 +232,84 @@ public class DataBase {
         });
 
     }
+    public User getUserById(String userId) {
+        User user = new User();
+        DocumentReference docRef = db.collection("Users").document(userId);
+        Source source = Source.SERVER;
+
+        docRef.get(source).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    // Document found on the server
+                    DocumentSnapshot document = task.getResult();
+                    Map<String, Object> userData = document.getData();
+                    if (userData != null) {
+                        for (Map.Entry<String, Object> pair : userData.entrySet()) {
+                            String key = pair.getKey();
+                            if (key.equals("userId")) {
+                                user.setId((String) pair.getValue());
+                            }
+                            if (key.equals("name")) {
+                                user.setName((String) pair.getValue());
+                            }
+                            if (key.equals("contactInfo")) {
+                                user.setContactInfo((String) pair.getValue());
+                            }
+                            if (key.equals("userCodeList")) {
+                                user.setCodeList((List<Map>) pair.getValue());
+                            }
+                            if (key.equals("numCodes")) {
+                                Integer numCodes;
+                                numCodes = ((Long) pair.getValue()).intValue();
+                                user.setNumCodes(numCodes);
+                            }
+                            if (key.equals("totalScore")) {
+                                Integer totalScore;
+                                totalScore = ((Long) pair.getValue()).intValue();
+                                user.setTotalScore(totalScore);
+                            }
+                        }
+                    }
+                    Log.d(TAG, "User downloaded");
+                    Log.d(TAG, "Server document data: " + document.getData());
+                } else {
+                    Log.d(TAG, "Server get failed: ", task.getException());
+                }
+            }
+        });
+        return user;
+    }
+
+    public User getOwnerById(String androidId) {
+        User user = new User();
+        DocumentReference docRef = db.collection("Owners").document(androidId);
+        Source source = Source.SERVER;
+        docRef.get(source).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    // Document found on the server
+                    DocumentSnapshot document = task.getResult();
+                    Map<String, Object> userData = document.getData();
+                    if (userData != null) {
+                        for (Map.Entry<String, Object> pair : userData.entrySet()) {
+                            String key = pair.getKey();
+                            if (key.equals("name")) {
+                                user.setName((String) pair.getValue());
+                            }
+                        }
+                    }
+
+                    Log.d(TAG, "User downloaded");
+                    Log.d(TAG, "Server document data: " + document.getData());
+                } else {
+                    Log.d(TAG, "Server get failed: ", task.getException());
+                }
+            }
+        });
+        return user;
+    }
 
 
     public void getUsers(OnGetUsersListener listener) {
@@ -224,6 +324,53 @@ public class DataBase {
             }
             listener.getUsersListener(userIds);
         });
+    }
+    public ArrayList<User> getUsersByName(String userName) {
+        ArrayList<User> userDataList = new ArrayList<>();
+        //snapshot listener to watch for changes in the database
+        db.collection("Users")
+                .whereEqualTo("name", userName)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                User user = new User();
+                                Map<String, Object> userData = document.getData();
+                                // Get all fields from the current document and construct a User
+                                for (Map.Entry<String, Object> pair : userData.entrySet()) {
+
+                                    String key = pair.getKey();
+                                    if (key.equals("userId")) {
+                                        user.setId((String) pair.getValue());
+                                    }
+                                    if (pair.getKey().equals("name")) {
+                                        user.setName((String) pair.getValue());
+                                    }
+                                    if (pair.getKey().equals("contactInfo")) {
+                                        user.setContactInfo((String) pair.getValue());
+                                    }
+                                    if (pair.getKey().equals("userCodeList")) {
+                                        user.setCodeList((List) pair.getValue());
+                                    }
+                                }
+                                // Add the user from the current document to userDataList
+                                if (user.getUserId() != null && user.getName() != null && user.getUserCodeList() != null
+                                        && user.getContactInfo() != null) {
+                                    userDataList.add(user);
+                                    Log.d(TAG, "User " + user.getUserId() + " downloaded");
+                                } else {
+                                    Log.d(TAG, "User " + user.getUserId() + " not downloaded");
+
+                                }
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+        return userDataList;
     }
 
     public void addCode(ScannableCode code, String hash) {
@@ -248,6 +395,7 @@ public class DataBase {
         dr.set(user_data);
     }
 
+
     public void removerUserData(User user) {//removes User data from the firebase
         collectionReference
                 .document(user.getUserId())
@@ -267,6 +415,7 @@ public class DataBase {
                     }
                 });
     }
+
     public void addOwner(String OwnerName, String name) {
         Map<String, Object> ownerData = new HashMap<>();
         ownerData.put("name", name);
