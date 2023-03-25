@@ -87,7 +87,7 @@ public class ScannableCode {
     }
     public void setLocation(double[] new_Location){
         this.location[0]=new_Location[0];
-        this.location[0]=new_Location[1];
+        this.location[1]=new_Location[1];
     }
     public void setPhoto(Bitmap new_Photo){
         this.photo=new_Photo;
