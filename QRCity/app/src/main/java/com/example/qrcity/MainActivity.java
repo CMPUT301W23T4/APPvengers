@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity{
 
     //////////////////////////////////////////////////////////////////
     private String user_id;    //android id. unique for each android device
-    public DataBase dataBase= new DataBase();           //access to database
+    public DataBase dataBase;           //access to database
     public User user;   //user object for this device (we are dealing with multiples users in the database now)
     //////////////////////////////////////////////////////////////////
 
@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity{
         NavigationView navigationView = findViewById(R.id.nav_view);
 
         user_id= Settings.Secure.getString(this.getContentResolver(),Settings.Secure.ANDROID_ID); //get android id
+        dataBase = new DataBase();
         user = dataBase.getUserById(user_id);                                                      //get user by android id
                                                                                                     //if userid is not in database then it will add this new userid into database
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

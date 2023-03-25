@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -125,6 +126,8 @@ public class Scannable_code_fragment extends Fragment {
         ////////////////////////////////////////////////////
         ((MainActivity)getActivity()).user.addCode(code);//this user is in the main activity, we are now dealing with multiple user
         ((MainActivity)getActivity()).dataBase.addCode(code);
+
+
 
     }
 }

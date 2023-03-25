@@ -7,6 +7,7 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.LinkedList;
 import java.util.List;
 
 public class ScannableCode {
@@ -100,7 +101,14 @@ public class ScannableCode {
     public int getScore(){
         return this.score;
     }
-    public double[] getLocation(){return this.location;};
+    public List<Double> getLocation() {
+        List<Double> list = new LinkedList<>();
+        list.add(location[0]);
+        list.add(location[1]);
+        return list;
+    }
+
+
     public void setLocation(List<Double> list){
         this.location[0] = list.get(0);
         this.location[1] = list.get(1);
