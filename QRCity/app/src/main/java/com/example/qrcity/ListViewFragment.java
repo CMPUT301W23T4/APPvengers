@@ -6,6 +6,27 @@
  *      1) University of Alberta: CMPUT 301 - Winter 2023: ListyCity project / Lab 5
  */
 
+/*
+//Get the current activity
+final Activity activity = getActivity();
+activityMain = (MainActivity)activity;
+
+//Find the layout
+View root = inflater.inflate(R.layout.code_listview_layout, container, false);
+
+//Get a reference to the ListView and create an object for the city list
+codeList = root.findViewById(R.id.code_list);
+scannableCodeDataList = new ArrayList<>();
+
+// Set the adapter for the ListView to the CustomAdapter that
+scannableCodeAdapter = new CustomList(this.getContext(), scannableCodeDataList, activityMain);
+codeList.setAdapter(scannableCodeAdapter);
+
+loadCodes();
+
+return root;
+ */
+
 package com.example.qrcity;
 
 import static android.content.pm.PackageManager.PERMISSION_DENIED;
@@ -13,8 +34,10 @@ import static android.content.pm.PackageManager.PERMISSION_DENIED;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.Manifest;
 import android.app.Activity;
@@ -63,23 +86,9 @@ public class ListViewFragment extends Fragment implements CustomList.CodeListLis
         return root;
     }
 
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-    
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
     }
 
     public void loadCodes(){
@@ -87,7 +96,9 @@ public class ListViewFragment extends Fragment implements CustomList.CodeListLis
         scannableCodeDataList.clear();
 
         //Get the list of codes from activityMain
-        scannableCodeDataList = activityMain.getCodeList();
+        for (ScannableCode code: activityMain.getCodeList()) {
+            scannableCodeDataList.add(code);
+        }
 
         //Notifying the adapter to render any new data fetched from the cloud
         scannableCodeAdapter.notifyDataSetChanged();

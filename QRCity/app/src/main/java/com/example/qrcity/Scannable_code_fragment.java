@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -117,8 +118,16 @@ public class Scannable_code_fragment extends Fragment {
     }
     private void save_data(){
         //create a scanned QR code
-        ScannableCode code=new ScannableCode(score,cmt_edit.getText().toString(),location,photo,score_sys.getName(((MainActivity)getActivity()).getLastHash()));
+        ScannableCode code=new ScannableCode(((MainActivity)getActivity()).getLastHash(),score,cmt_edit.getText().toString(),location,photo,score_sys.getName(((MainActivity)getActivity()).getLastHash()));
         //add a code into QR code list.
         ((MainActivity)getActivity()).addCode(code);
+
+
+        ////////////////////////////////////////////////////
+        ((MainActivity)getActivity()).user.addCode(code);//this user is in the main activity, we are now dealing with multiple user
+        ((MainActivity)getActivity()).dataBase.addCode(code);
+
+
+
     }
 }

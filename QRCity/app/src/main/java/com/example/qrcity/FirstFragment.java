@@ -1,5 +1,6 @@
 package com.example.qrcity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +30,7 @@ public class FirstFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonFirst.setOnClickListener(new View.OnClickListener() {
+        binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(FirstFragment.this)
@@ -37,11 +38,21 @@ public class FirstFragment extends Fragment {
             }
         });
 
-        binding.buttonGotoListview.setOnClickListener(new View.OnClickListener() {
+
+        binding.getRoot().findViewById(R.id.Records).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(FirstFragment.this)
                         .navigate(R.id.action_FirstFragment_to_CodeListview);
+            }
+        });
+
+        binding.getRoot().findViewById(R.id.Location).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("Clicked location");
+                Intent intent = new Intent(getContext(),MapsActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -51,5 +62,4 @@ public class FirstFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
-
 }

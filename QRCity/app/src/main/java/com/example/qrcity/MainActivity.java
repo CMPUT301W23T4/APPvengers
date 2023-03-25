@@ -8,23 +8,39 @@
 
 package com.example.qrcity;
 
+import static android.content.ContentValues.TAG;
+
+import android.content.Intent;
 import android.os.Bundle;
 
 
-
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.qrcity.databinding.ActivityMainBinding;
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.navigation.NavigationView;
 
 
+import android.provider.Settings;
+import android.provider.Settings.Secure;
+
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import java.util.ArrayList;
 
@@ -33,11 +49,61 @@ public class MainActivity extends AppCompatActivity{
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
     private String lastHash;
+
+
     private ArrayList<ScannableCode> qrCodeList =new ArrayList<ScannableCode>();
+
+
+    //////////////////////////////////////////////////////////////////
+    private String user_id;    //android id. unique for each android device
+    public DataBase dataBase;           //access to database
+    public User user;   //user object for this device (we are dealing with multiples users in the database now)
+    //////////////////////////////////////////////////////////////////
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        MaterialToolbar toolbar = findViewById(R.id.topAppbar);
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+
+        user_id= Settings.Secure.getString(this.getContentResolver(),Settings.Secure.ANDROID_ID); //get android id
+        dataBase = new DataBase();
+        user = dataBase.getUserById(user_id);                                                      //get user by android id
+                                                                                                    //if userid is not in database then it will add this new userid into database
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                int id = item.getItemId();
+                item.setChecked(true);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                switch (id)
+                {
+
+                }
+                return true;
+            }
+        });
+    }
+
+
+    private void replaceFragment(Fragment fragment){
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayout, fragment);
+        fragmentTransaction.commit();
+
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -49,6 +115,38 @@ public class MainActivity extends AppCompatActivity{
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
         //map- Leo
+        //Button mapButton = findViewById(R.id.map_button);
+        //location.setOnClickListener(new View.OnClickListener() {
+            //@Override
+            //public void onClick(View v) {
+                //Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                //startActivity(intent);
+            //}
+        //});
+        //user-profile - leo
+        //Button profileButton = findViewById(R.id.profile_button);
+        //location.setOnClickListener(new View.OnClickListener() {
+        //@Override
+        //public void onClick(View v) {
+        //Intent intent = new Intent(MainActivity.this, Userprofileactivity.class);
+        //startActivity(intent);
+        //}
+        //});
+
+
+
+        // Testing database
+        User user = new User("1274893219","Charv", "ch@appvengers.com");
+        DataBase db = DataBase.getInstance();
+        db.addUser(user);
+
+        // how to use getuser
+        db.getUser(user.getUserId(), new OnGetUserListener() {
+            @Override
+            public void getUserListener(User user) {
+                // Do action with user here
+            }
+        });
 
 
     }
@@ -68,11 +166,8 @@ public class MainActivity extends AppCompatActivity{
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
-        return super.onOptionsItemSelected(item);
+        return false;
     }
 
     @Override
@@ -101,7 +196,7 @@ public class MainActivity extends AppCompatActivity{
     public String getLastHash() {
         return lastHash;
     }
-    
+
     //Set the last known calculated hash value
     public void setLastHash(String hash){
         lastHash = hash;
