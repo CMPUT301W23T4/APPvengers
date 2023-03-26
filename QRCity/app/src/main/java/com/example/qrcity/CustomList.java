@@ -66,24 +66,23 @@ public class CustomList extends ArrayAdapter<ScannableCode> {
         codeScore.setText(Integer.toString(code.getScore()));
         image.setImageBitmap(code.getPhoto());
 
-        /*
+
         if (context instanceof CodeListListener) {
             listener = (CodeListListener) context;
         } else {
             throw new RuntimeException(context + " must implement CodeListListener");
-        }*/
+        }
 
         //Get the button
         removeCodeButton = view.findViewById(R.id.button_delete_code);
 
-        /*On button Click
+        //On button Click
         removeCodeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: remove the code using some ID
-                //listener.removeCode(code.getID());
+                listener.removeCode(code.getId());
             }
-        });*/
+        });
 
         return view;
 

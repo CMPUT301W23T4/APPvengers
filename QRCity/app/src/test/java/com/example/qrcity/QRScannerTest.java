@@ -1,3 +1,6 @@
+/** Author(s): Derek
+ *  Purpose: Test methods associated with the QRScanner class
+ */
 package com.example.qrcity;
 
 import static org.junit.Assert.assertEquals;

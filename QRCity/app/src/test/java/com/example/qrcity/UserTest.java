@@ -1,3 +1,6 @@
+/** Author(s): Derek
+ *  Purpose: Test methods associated with the User class
+ */
 package com.example.qrcity;
 
 import static org.junit.Assert.assertEquals;
@@ -20,15 +23,6 @@ public class UserTest {
     private String[] comments = {"Comment 0", "Comment 1", "Comment 2", "Comment 3", "Comment 4"};
     private double[][] locations = {{34.285, 110.189}, {156.023, 137.766}, {151.191, 44.902}, {92.487, 79.376}, {27.147, 67.384}};
     private String[] names = {"Novice Earth Thief", "Divine Fire Archer", "Master Wind Mage", "Amateur Earth Warrior", "Novice Water Thief"};
-
-    private ArrayList<ScannableCode> mockScannableCodes(){
-        ArrayList<ScannableCode> qrCodes= new ArrayList<ScannableCode>();
-        for (int i = 0; i < scores.length; i++) {
-            qrCodes.add(new ScannableCode(scores[i], comments[i], locations[i], null, names[i]));
-        }
-
-        return qrCodes;
-    }
 
     private User mockUser() {
         String userId = "12345";

@@ -51,6 +51,11 @@ public class ThisUserListViewActivity extends AppCompatActivity implements Custo
     private ArrayList<ScannableCode> scannableCodeDataList;
     private MainActivity activityMain;
 
+    /** --- Remove this --- **/
+    private TestObjects objs = new TestObjects();
+    private ArrayList<ScannableCode> ExternalCodeDataList = objs.mockScannableCodes();
+    /** ------------------- **/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,18 +81,33 @@ public class ThisUserListViewActivity extends AppCompatActivity implements Custo
         // Clear the old list
         scannableCodeDataList.clear();
 
-        //Get the list of codes from the user
+        /**Get the list of codes from the user
         for (Map codeID: user.getUserCodeList()) {
             scannableCodeDataList.add(dataBase.getCode((String) codeID.get("id")));
         }
+        */
+
+        /** --- Remove this --- **/
+        for (ScannableCode code: ExternalCodeDataList) {
+            scannableCodeDataList.add(code);
+        }
+        /** ------------------- **/
 
         //Notifying the adapter to render any new data fetched from the cloud
         scannableCodeAdapter.notifyDataSetChanged();
     }
 
-    //TODO: remove code from database in activityMain
     public void removeCode(String codeID){
-        //TODO: remove code from database in activityMain
+        //TODO: user.removeCode(String codeID);
+
+        /** --- Remove this --- **/
+        for (int i = 0; i < ExternalCodeDataList.size(); i++) {
+            if (ExternalCodeDataList.get(i).getId() == codeID){
+                ExternalCodeDataList.remove(i);
+                break;
+            }
+        }
+        /** ------------------- **/
 
         loadCodes();
     }
