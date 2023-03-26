@@ -50,9 +50,7 @@ public class MainActivity extends AppCompatActivity{
     private ActivityMainBinding binding;
     private String lastHash;
 
-
-    private ArrayList<ScannableCode> qrCodeList =new ArrayList<ScannableCode>();
-
+    private ArrayList<Fragment> activeFragments = new ArrayList<Fragment>();
 
     //////////////////////////////////////////////////////////////////
     private String user_id;    //android id. unique for each android device
@@ -104,7 +102,6 @@ public class MainActivity extends AppCompatActivity{
         fragmentTransaction.replace(R.id.frameLayout, fragment);
         fragmentTransaction.commit();
 
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -147,8 +144,6 @@ public class MainActivity extends AppCompatActivity{
                 // Do action with user here
             }
         });
-
-
     }
 
     @Override
@@ -177,19 +172,9 @@ public class MainActivity extends AppCompatActivity{
                 || super.onSupportNavigateUp();
     }
 
-    //add a code into the list of QR code.
-    public void addCode(ScannableCode code){
-        this.qrCodeList.add(code);
-    }
-
     //TODO: remove a code from the list.
     public void removeCode(){
         //this.QR_code_list.add(code);
-    }
-
-    //return the QR Code List
-    public ArrayList<ScannableCode> getCodeList(){
-        return this.qrCodeList;
     }
 
     //Get the last known calculated hash value
@@ -200,5 +185,22 @@ public class MainActivity extends AppCompatActivity{
     //Set the last known calculated hash value
     public void setLastHash(String hash){
         lastHash = hash;
+    }
+
+    /** Manage Fragment List (For testing) **/
+    public void addFragment(Fragment fragment){
+        activeFragments.add(fragment);
+    }
+    public ArrayList<Fragment> getActiveFragments(){
+        return activeFragments;
+    }
+    public Fragment popFragment(){
+        int i = activeFragments.size()-1;
+        Fragment fragment = activeFragments.get(i);
+        activeFragments.remove(i);
+        return fragment;
+    }
+    public void clearFragments(){
+        activeFragments.clear();
     }
 }

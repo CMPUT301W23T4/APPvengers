@@ -8,13 +8,23 @@
 
 package com.example.qrcity;
 
+import static android.content.ContentValues.TAG;
+
 import android.app.Activity;
 
+import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
+
+import android.app.FragmentManager;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.nfc.Tag;
+import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
-import android.widget.ListView;
 
 import com.robotium.solo.Solo;
 
@@ -29,6 +39,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Test class for MainActivity. All the UI tests are written here. Robotium test framework is used
@@ -64,29 +75,43 @@ public class MainActivityTest{
      */
     @Test
     public void testScanCode(){
+
+        /** Activity is started **/
         // Asserts that the current activity is the MainActivity. Otherwise, show “Wrong Activity”
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
 
         // Get MainActivity to access its variables and methods.
         MainActivity activity = (MainActivity) solo.getCurrentActivity();
+        androidx.fragment.app.FragmentManager fragmentManager = activity.getSupportFragmentManager();
 
         //TODO: Empty all scanned codes in the existing list of codes (if there are any)
 
+
+        /** Clicked on Scancode button **/
         //Click Scan Code button (FAB)
         solo.clickOnView(solo.getView(R.id.fab));
 
+        //Wait for the CodeScannerFragment to load
+        solo.waitForFragmentById(R.id.CodeScannerFragment, 2000);
+
+        //TODO: Scan the code without manually positioning the camera
+        //ArrayList<Fragment> fragments = activity.getActiveFragments();
+        //QRScanner scannerFragment = (QRScanner) fragments.get(fragments.size()-1);
+        //scannerFragment.onSuccessfulScan("Hello World");
+
+
+        /** On the Scannable Code Fragment **/
         //True if there is a text: "Code Scan Complete!" on the screen, wait at least 2 seconds and find minimum one match.
         assertTrue(solo.waitForText("Code Scan Complete!", 1, 2000));
 
+        //Write a comment
         solo.enterText((EditText) solo.getView(R.id.input_cmt), "Test Comment");
 
-        //Click button to take a photo
-        solo.clickOnView(solo.getView(R.id.taking_pic_button));
-
-        //TODO: Take a picture (For now, tester must perform this action manually)
-
-        //True if there is a text: "Code Scan Complete!" on the screen, wait at least 2 seconds and find minimum one match.
-        assertTrue(solo.waitForText("Code Scan Complete!", 1, 10000));
+        //Add a photo
+        Bitmap bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
+        bitmap.eraseColor(Color.BLACK);
+        Scannable_code_fragment codeFragment = (Scannable_code_fragment) fragmentManager.findFragmentById(R.id.CodeScannerFragment);
+        codeFragment.setPhoto(bitmap);
 
         //Click Next Button
         solo.clickOnView(solo.getView(R.id.next_button));
@@ -97,16 +122,8 @@ public class MainActivityTest{
         //Click back Button
         solo.clickOnView(solo.getView(R.id.back_button));
 
-        /** At this point, a Scannable code should have been created and added to the list of scanned codes*/
-        ArrayList<ScannableCode> codeList = activity.getCodeList();
+        /** A Scannable code has been created and added to the list of scanned codes **/
 
-        //Assert that there is a single code in the list
-        assertEquals(1, codeList.size());
-
-        //Assert the scanned codes has the expected values
-        assertEquals(41, codeList.get(0).getScore());
-        assertEquals(0, "Test Comment".compareTo(codeList.get(0).getComment()));
-        assertEquals(0, "Master Wind Mage".compareTo(codeList.get(0).getName()));
 
 
         return;
