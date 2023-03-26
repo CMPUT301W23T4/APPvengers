@@ -25,6 +25,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -58,6 +59,7 @@ public class QRScanner extends Fragment {
 
     private CodeScanner mCodeScanner;
     private MainActivity activityMain;
+    private static String TAG;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -66,6 +68,7 @@ public class QRScanner extends Fragment {
         //Get the current activity
         final Activity activity = getActivity();
         activityMain = (MainActivity)activity;
+        //activityMain.addFragment(this);
 
         //Find scanner from layout
         View root = inflater.inflate(R.layout.fragment_code_scanner, container, false);
@@ -130,7 +133,7 @@ public class QRScanner extends Fragment {
                     @Override
                     public void run() {
                         //Once the scan is Successful
-                        onSuccessfulScan(result);
+                        onSuccessfulScan(result.getText());
                     }
                 });
             }
@@ -173,9 +176,9 @@ public class QRScanner extends Fragment {
         }
     }
 
-    private void onSuccessfulScan(Result result){
+    public void onSuccessfulScan(String content){
 
-        String hash = calculateHash(result.getText());
+        String hash = calculateHash(content);
         if (hash == null){
             return;
         } else{

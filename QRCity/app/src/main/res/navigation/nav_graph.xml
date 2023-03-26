@@ -52,7 +52,7 @@
     </fragment>
     <fragment
         android:id="@+id/CodeListview"
-        android:name="com.example.qrcity.ListViewFragment"
+        android:name="com.example.qrcity.ThisUserListViewActivity"
         android:label="Your scanned codes"
         tools:layout="@layout/code_listview_layout">
         <action

@@ -33,6 +33,9 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 
 
+import android.provider.Settings;
+import android.provider.Settings.Secure;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -46,7 +49,14 @@ public class MainActivity extends AppCompatActivity{
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
     private String lastHash;
-    private ArrayList<ScannableCode> qrCodeList =new ArrayList<ScannableCode>();
+
+    private ArrayList<Fragment> activeFragments = new ArrayList<Fragment>();
+
+    //////////////////////////////////////////////////////////////////
+    private String user_id;    //android id. unique for each android device
+    public DataBase dataBase;           //access to database
+    public User user;   //user object for this device (we are dealing with multiples users in the database now)
+    //////////////////////////////////////////////////////////////////
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +65,11 @@ public class MainActivity extends AppCompatActivity{
         MaterialToolbar toolbar = findViewById(R.id.topAppbar);
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+
+        user_id= Settings.Secure.getString(this.getContentResolver(),Settings.Secure.ANDROID_ID); //get android id
+        dataBase = new DataBase();
+        user = dataBase.getUserById(user_id);                                                      //get user by android id
+                                                                                                    //if userid is not in database then it will add this new userid into database
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,7 +101,6 @@ public class MainActivity extends AppCompatActivity{
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment);
         fragmentTransaction.commit();
-
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -130,8 +144,6 @@ public class MainActivity extends AppCompatActivity{
                 // Do action with user here
             }
         });
-
-
     }
 
     @Override
@@ -160,19 +172,9 @@ public class MainActivity extends AppCompatActivity{
                 || super.onSupportNavigateUp();
     }
 
-    //add a code into the list of QR code.
-    public void addCode(ScannableCode code){
-        this.qrCodeList.add(code);
-    }
-
     //TODO: remove a code from the list.
     public void removeCode(){
         //this.QR_code_list.add(code);
-    }
-
-    //return the QR Code List
-    public ArrayList<ScannableCode> getCodeList(){
-        return this.qrCodeList;
     }
 
     //Get the last known calculated hash value
@@ -183,5 +185,22 @@ public class MainActivity extends AppCompatActivity{
     //Set the last known calculated hash value
     public void setLastHash(String hash){
         lastHash = hash;
+    }
+
+    /** Manage Fragment List (For testing) **/
+    public void addFragment(Fragment fragment){
+        activeFragments.add(fragment);
+    }
+    public ArrayList<Fragment> getActiveFragments(){
+        return activeFragments;
+    }
+    public Fragment popFragment(){
+        int i = activeFragments.size()-1;
+        Fragment fragment = activeFragments.get(i);
+        activeFragments.remove(i);
+        return fragment;
+    }
+    public void clearFragments(){
+        activeFragments.clear();
     }
 }
