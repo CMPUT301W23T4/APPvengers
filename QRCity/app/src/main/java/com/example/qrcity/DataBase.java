@@ -550,6 +550,25 @@ public class DataBase {
                     }
                 });
     }
+    public void deleteUserCode(String id) {
+        codeCollection
+                .document(id)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        //if data is successfully uploaded
+                        Log.d(TAG, "Code " + id + "  successfully deleted");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        //if data upload fails
+                        Log.d(TAG, "Code " + id + " data failed to delete: " + e.toString());
+                    }
+                });
+    }
 
     public void addOwner(String OwnerName, String name) {
         Map<String, Object> ownerData = new HashMap<>();

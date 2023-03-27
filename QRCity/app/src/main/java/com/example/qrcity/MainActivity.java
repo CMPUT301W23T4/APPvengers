@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity{
 
 
         // Testing database
-        User user = new User("1274893219","Charv", "ch@appvengers.com");
+        User user = new User("1274893219","Ch", "ch@appvengers.com");
         DataBase db = DataBase.getInstance();
         db.addUser(user);
 
