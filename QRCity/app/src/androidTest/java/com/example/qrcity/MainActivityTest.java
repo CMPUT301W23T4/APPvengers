@@ -1,9 +1,5 @@
 /** Author(s): Derek
- *  Purpose: Model the list view of ScannableCode's
- *
- *  References:
- *      1) University of Alberta: CMPUT 301 - Winter 2023: Lab 7 resources
- *          -> https://github.com/AbdulAli/CMPUT-301-IntentTesting/blob/main/README.md
+ *  Purpose: Test the UI of MainActivity
  */
 
 package com.example.qrcity;

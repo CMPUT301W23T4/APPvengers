@@ -39,7 +39,7 @@ public class ScannableCode {
      * This method generates a SHA-256 hash code from a String input
      * https://www.geeksforgeeks.org/sha-256-hash-in-java/
      */
-    private static byte[] getSHA(String input) throws NoSuchAlgorithmException
+    public static byte[] getSHA(String input) throws NoSuchAlgorithmException
     {
         // Static getInstance method is called with hashing SHA
         MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -54,7 +54,7 @@ public class ScannableCode {
      * This method converts a raw byte value to a String
      * https://www.geeksforgeeks.org/sha-256-hash-in-java/
      */
-    private static String toHexString(byte[] hash)
+    public static String toHexString(byte[] hash)
     {
         // Convert byte array into signum representation
         BigInteger number = new BigInteger(1, hash);
