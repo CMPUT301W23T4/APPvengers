@@ -99,6 +99,7 @@ public class ThisUserListViewActivity extends AppCompatActivity implements Custo
 
     public void removeCode(String codeID){
         //TODO: user.removeCode(String codeID);
+        //TODO: dataBase.removeCode(String codeID);
 
         /** --- Remove this --- **/
         for (int i = 0; i < ExternalCodeDataList.size(); i++) {

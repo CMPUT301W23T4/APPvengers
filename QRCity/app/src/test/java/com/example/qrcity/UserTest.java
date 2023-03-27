@@ -13,94 +13,92 @@ import android.graphics.Bitmap;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 
 //TODO: Add more tests as User class is implemented
 public class UserTest {
-
-    /** Mock ScannableCode values to be used to fill users list of scanned codes **/
-    private int[] scores = {43, 18, 96, 27, 51};
-    private String[] comments = {"Comment 0", "Comment 1", "Comment 2", "Comment 3", "Comment 4"};
-    private double[][] locations = {{34.285, 110.189}, {156.023, 137.766}, {151.191, 44.902}, {92.487, 79.376}, {27.147, 67.384}};
-    private String[] names = {"Novice Earth Thief", "Divine Fire Archer", "Master Wind Mage", "Amateur Earth Warrior", "Novice Water Thief"};
-
-    private User mockUser() {
-        String userId = "12345";
-        String name = "Test User";
-        String contactInfo = "780-1234-567";
-        User user = new User(userId, name, contactInfo);
-        return user;
-    }
+    private TestObjects objects = new TestObjects();
 
     /** Test Getters **/
 
     @Test
     public void testGetName() {
-        User user = mockUser();
+        User user = objects.mockBasicUser();
         String name = user.getName();
-        assertEquals(0, name.compareTo("Test User"));
+        assertEquals(0, name.compareTo("mockUser"));
     }
 
     @Test
     public void testGetUserID() {
-        User user = mockUser();
+        User user = objects.mockBasicUser();
         String userId = user.getUserId();
-        assertEquals(0, userId.compareTo("12345"));
+        assertEquals(0, userId.compareTo("0"));
     }
 
     @Test
     public void testGetContactInfo() {
-        User user = mockUser();
+        User user = objects.mockAdvancedUser();
         String contactInfo = user.getContactInfo();
-        assertEquals(0, contactInfo.compareTo("780-1234-567"));
+        assertEquals(0, contactInfo.compareTo("780-12340-567"));
     }
 
     @Test
     public void testGetTotalScore() {
-        User user = mockUser();
+        User user = objects.mockBasicUser();
         long totalScore = user.getTotalScore();
         assertTrue(totalScore == 0);
     }
 
     @Test
     public void testGetNumCodes() {
-        User user = mockUser();
+        User user = objects.mockBasicUser();
         long numCodes = user.getNumCodes();
         assertTrue(numCodes == 0);
+    }
+
+    @Test
+    public void testGetUserCodeList() {
+        User user = objects.mockAdvancedUser();
+        List<Map> codes = user.getUserCodeList();
+        assertEquals(5, codes.size());
+        String[] expectedHash = objects.mockScannableCodesIDs();
+        for (int i = 0; i < expectedHash.length; i++) {
+            Map code = codes.get(i);
+            assertEquals(0, expectedHash[i].compareTo((String) code.get("id")));
+        }
     }
 
     /** Test Setters **/
 
     @Test
     public void testSetName() {
-        User user = mockUser();
+        User user = objects.mockBasicUser();
         user.setName("New Name");
         String name = user.getName();
-        assertNotEquals(0, name.compareTo("Test User"));
         assertEquals(0, name.compareTo("New Name"));
     }
 
     @Test
     public void testSetUserID() {
-        User user = mockUser();
-        user.setId("54321");
+        User user = objects.mockBasicUser();
+        user.setId("1");
         String userId = user.getUserId();
-        assertNotEquals(0, userId.compareTo("12345"));
-        assertEquals(0, userId.compareTo("54321"));
+        assertEquals(0, userId.compareTo("1"));
     }
 
     @Test
     public void testSetContactInfo() {
-        User user = mockUser();
+        User user = objects.mockBasicUser();
         user.setContactInfo("780-9876-543");
         String contactInfo = user.getContactInfo();
-        assertNotEquals(0, contactInfo.compareTo("780-1234-567"));
         assertEquals(0, contactInfo.compareTo("780-9876-543"));
     }
 
     @Test
     public void testSetTotalScore() {
-        User user = mockUser();
+        User user = objects.mockBasicUser();
         user.set_Total_Score(128);
         long totalScore = user.getTotalScore();
         assertTrue(totalScore == 128);
@@ -108,17 +106,37 @@ public class UserTest {
 
     @Test
     public void testSetNumCodes() {
-        User user = mockUser();
+        User user = objects.mockBasicUser();
         user.set_Num_Codes(16);
         long numCodes = user.getNumCodes();
         assertTrue(numCodes == 16);
     }
 
+    @Test
+    public void testSetUserCodeList() {
+        User user = objects.mockBasicUser();
+
+        List<Map> codes = user.getUserCodeList();
+        assertEquals(0, codes.size());
+
+        user.setCodeList(objects.mockAdvancedUser().getUserCodeList());
+
+        codes = user.getUserCodeList();
+        assertEquals(5, codes.size());
+    }
+
     /** Test Increment methods **/
 
     @Test
+    public void testaddCode() {
+        User user = objects.mockBasicUser();
+        user.addCode(objects.mockScannableCode());
+
+    }
+
+    @Test
     public void testAddToScore() {
-        User user = mockUser();
+        User user = objects.mockBasicUser();
         user.add_To_Score(128);
         long totalScore = user.getTotalScore();
         assertTrue(totalScore == 128);
@@ -130,7 +148,7 @@ public class UserTest {
 
     @Test
     public void testAddToNumCodes() {
-        User user = mockUser();
+        User user = objects.mockBasicUser();
         user.add_To_Num_Codes();
         long numCodes = user.getNumCodes();
         assertTrue(numCodes == 1);

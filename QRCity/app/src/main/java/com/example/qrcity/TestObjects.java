@@ -20,6 +20,21 @@ public class TestObjects {
 
     public TestObjects(){}
 
+    /** Scannable codes **/
+    public User mockBasicUser() {
+        User user = new User("0", "mockUser");
+        return user;
+    }
+    public User mockAdvancedUser() {
+        User user = new User("0", "mockUser", "780-12340-567");
+        ArrayList<ScannableCode> codes = mockScannableCodes();
+        for (ScannableCode code: codes) {
+            user.addCode(code);
+        }
+        return user;
+    }
+
+    /** Scannable codes **/
     public ScannableCode mockScannableCode() {
         String hash = "a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e";
         String secondHash = "da0dec1c790d6b6197d906cce98981d60a4dd8c8da430fc71961bafaf2a8891a";
@@ -54,13 +69,21 @@ public class TestObjects {
         return qrCodes;
     }
 
-    /** these are not real codes, they are just randomly generated attributes **/
+    // these are not real codes, they are just randomly generated attributes
     public String[] mockScannableCodesHashs(){
         String[] hashs = {  "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
                 "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
                 "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
                 "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
                 "4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a"};
+        return hashs;
+    }
+    public String[] mockScannableCodesIDs(){
+        ArrayList<ScannableCode> codes = mockScannableCodes();
+        String[] hashs = {null, null, null, null, null};
+        for (int i = 0; i < codes.size(); i++) {
+            hashs[i] = codes.get(i).getId();
+        }
         return hashs;
     }
     public int[] mockScannableCodesScores(){

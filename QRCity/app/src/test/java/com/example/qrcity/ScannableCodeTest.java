@@ -20,7 +20,7 @@ import org.junit.Test;
 import java.util.List;
 
 public class ScannableCodeTest {
-    TestObjects objects = new TestObjects();
+    private TestObjects objects = new TestObjects();
 
     /** Test Getters **/
 
