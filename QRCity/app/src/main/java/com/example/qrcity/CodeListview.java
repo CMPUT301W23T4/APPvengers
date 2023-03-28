@@ -37,12 +37,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.Map;
 
-public class ThisUserListViewActivity extends AppCompatActivity implements CustomList.CodeListListener {
+public class CodeListview extends AppCompatActivity implements CustomList.CodeListListener {
 
     // Declare the variables so that you will be able to reference it later.
-    private String user_id;
+    private String ThisUserID;
+    private String TargetUserID;
+    boolean sameUser;
     private DataBase dataBase;
     private User user;
 
@@ -60,18 +61,22 @@ public class ThisUserListViewActivity extends AppCompatActivity implements Custo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-         user_id = Settings.Secure.getString(this.getContentResolver(),Settings.Secure.ANDROID_ID);;
-         dataBase = new DataBase();
-         user = dataBase.getUserById(user_id);
+        ThisUserID = Settings.Secure.getString(this.getContentResolver(),Settings.Secure.ANDROID_ID);
+        Bundle bundle = getIntent().getExtras();
+        TargetUserID = bundle.getString("userID");
+        sameUser = ThisUserID.compareTo(TargetUserID) == 0;
 
-        setContentView(R.layout.code_listview_layout);
+        dataBase = new DataBase();
+        user = dataBase.getUserById(TargetUserID);
+
+        setContentView(R.layout.code_listview);
 
         //Get a reference to the ListView and create an object for the city list
         codeList = findViewById(R.id.code_list);
         scannableCodeDataList = new ArrayList<>();
 
         // Set the adapter for the ListView to the CustomAdapter
-        scannableCodeAdapter = new CustomList(this, scannableCodeDataList, activityMain);
+        scannableCodeAdapter = new CustomList(this, scannableCodeDataList, sameUser);
         codeList.setAdapter(scannableCodeAdapter);
 
         loadCodes();

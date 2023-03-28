@@ -10,7 +10,6 @@ package com.example.qrcity;
 
 import static android.app.PendingIntent.getActivity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,15 +22,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 public class CustomList extends ArrayAdapter<ScannableCode> {
 
     private ArrayList<ScannableCode> codes;
     private Context context;
-    private MainActivity activityMain;
+    boolean sameUser;
     Button removeCodeButton;
 
     interface CodeListListener{
@@ -40,11 +37,11 @@ public class CustomList extends ArrayAdapter<ScannableCode> {
 
     private CodeListListener listener;
 
-    public CustomList(Context context, ArrayList<ScannableCode> codes, MainActivity activityMain){
+    public CustomList(Context context, ArrayList<ScannableCode> codes, boolean sameUser){
         super(context,0, codes);
         this.codes = codes;
         this.context = context;
-        this.activityMain = activityMain;
+        this.sameUser = sameUser;
     }
 
     @NonNull
@@ -53,7 +50,11 @@ public class CustomList extends ArrayAdapter<ScannableCode> {
         View view = convertView;
 
         if(view == null){
-            view = LayoutInflater.from(context).inflate(R.layout.code_content_layout, parent,false);
+            if (sameUser){
+                view = LayoutInflater.from(context).inflate(R.layout.code_content_1, parent,false);
+            } else{
+                view = LayoutInflater.from(context).inflate(R.layout.code_content_2, parent,false);
+            }
         }
 
         ScannableCode code = codes.get(position);
@@ -61,9 +62,11 @@ public class CustomList extends ArrayAdapter<ScannableCode> {
         ImageView image = view.findViewById(R.id.location_image);
         TextView codeName = view.findViewById(R.id.name);
         TextView codeScore = view.findViewById(R.id.score);
+        TextView codeComment = view.findViewById(R.id.comment);
 
         codeName.setText(code.getName());
         codeScore.setText(Integer.toString(code.getScore()));
+        codeComment.setText(code.getComment());
         image.setImageBitmap(code.getPhoto());
 
 
@@ -73,16 +76,19 @@ public class CustomList extends ArrayAdapter<ScannableCode> {
             throw new RuntimeException(context + " must implement CodeListListener");
         }
 
-        //Get the button
-        removeCodeButton = view.findViewById(R.id.button_delete_code);
+        if (sameUser){
+            //Get the button
+            removeCodeButton = view.findViewById(R.id.button_delete_code);
 
-        //On button Click
-        removeCodeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.removeCode(code.getId());
-            }
-        });
+            //On button Click
+            removeCodeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.removeCode(code.getId());
+                }
+            });
+        }
+
 
         return view;
 
