@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_FirstFragment_to_CodeListview"
             app:destination="@id/CodeListview" />
+        <action
+            android:id="@+id/action_FirstFragment_to_leaderboardFragment"
+            app:destination="@id/leaderboardFragment" />
     </fragment>
     <fragment
         android:id="@+id/CodeScannerFragment"
@@ -57,6 +60,14 @@
         tools:layout="@layout/code_listview">
         <action
             android:id="@+id/action_CodeListview_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/leaderboardFragment"
+        android:name="com.example.qrcity.leaderboard.LeaderboardFragment"
+        android:label="LeaderboardFragment" >
+        <action
+            android:id="@+id/action_leaderboardFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
 </navigation>
