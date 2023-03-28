@@ -1,4 +1,4 @@
-package com.example.qrcity;
+package com.example.qrcity.qr;
 
 import android.graphics.Bitmap;
 import android.location.Location;

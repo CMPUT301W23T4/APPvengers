@@ -27,7 +27,7 @@ loadCodes();
 return root;
  */
 
-package com.example.qrcity;
+package com.example.qrcity.qr;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -35,6 +35,10 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.example.qrcity.R;
+import com.example.qrcity.TestObjects;
+import com.example.qrcity.User;
 
 import java.util.ArrayList;
 

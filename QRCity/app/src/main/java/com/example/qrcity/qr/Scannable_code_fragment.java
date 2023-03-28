@@ -1,4 +1,4 @@
-package com.example.qrcity;
+package com.example.qrcity.qr;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +20,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.qrcity.map.GPS_location;
+import com.example.qrcity.R;
 import com.google.android.material.textfield.TextInputEditText;
 
 

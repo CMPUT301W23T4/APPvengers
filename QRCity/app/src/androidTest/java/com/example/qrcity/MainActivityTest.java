@@ -4,24 +4,18 @@
 
 package com.example.qrcity;
 
-import static android.content.ContentValues.TAG;
-
 import android.app.Activity;
 
-import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
-import android.app.FragmentManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.nfc.Tag;
-import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
 
+import com.example.qrcity.qr.MainActivity;
+import com.example.qrcity.qr.Scannable_code_fragment;
 import com.robotium.solo.Solo;
 
 import org.junit.After;
@@ -33,9 +27,6 @@ import org.junit.runner.RunWith;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Test class for MainActivity. All the UI tests are written here. Robotium test framework is used

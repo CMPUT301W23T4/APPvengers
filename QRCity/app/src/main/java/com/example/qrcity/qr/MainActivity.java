@@ -6,11 +6,8 @@
  */
 
 
-package com.example.qrcity;
+package com.example.qrcity.qr;
 
-import static android.content.ContentValues.TAG;
-
-import android.content.Intent;
 import android.os.Bundle;
 
 
@@ -28,19 +25,20 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.qrcity.OnGetUserListener;
+import com.example.qrcity.R;
+import com.example.qrcity.User;
 import com.example.qrcity.databinding.ActivityMainBinding;
+import com.example.qrcity.qr.DataBase;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 
 
 import android.provider.Settings;
-import android.provider.Settings.Secure;
 
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 
 import java.util.ArrayList;
 

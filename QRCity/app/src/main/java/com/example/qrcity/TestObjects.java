@@ -10,6 +10,8 @@ package com.example.qrcity;
 
 import android.graphics.Bitmap;
 
+import com.example.qrcity.qr.ScannableCode;
+
 import java.util.ArrayList;
 
 /**This is a class dedicated to producing various mockObjects

@@ -25,7 +25,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCLVSFs7o_UHxU5hD-EEKAl1bti32fMVdY"></meta-data>
         <activity
-            android:name=".MainActivity"
+            android:name=".qr.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.QRCity.NoActionBar">
@@ -35,8 +35,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MapsActivity" />
-        <activity android:name=".CodeListview" />
+        <activity android:name=".map.MapsActivity" />
+        <activity android:name=".qr.CodeListview" />
     </application>
 
 </manifest>

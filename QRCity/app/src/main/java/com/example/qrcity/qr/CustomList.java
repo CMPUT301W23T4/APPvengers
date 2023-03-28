@@ -6,7 +6,7 @@
  *      1) University of Alberta: CMPUT 301 - Winter 2023: ListyCity project / Lab 5
  */
 
-package com.example.qrcity;
+package com.example.qrcity.qr;
 
 import static android.app.PendingIntent.getActivity;
 
@@ -21,6 +21,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.qrcity.R;
 
 import java.util.ArrayList;
 

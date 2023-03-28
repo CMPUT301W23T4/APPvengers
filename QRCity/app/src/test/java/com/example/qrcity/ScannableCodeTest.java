@@ -13,7 +13,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
-import android.graphics.Bitmap;
+import com.example.qrcity.qr.ScannableCode;
 
 import org.junit.Test;
 

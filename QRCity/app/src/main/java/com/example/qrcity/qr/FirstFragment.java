@@ -1,4 +1,4 @@
-package com.example.qrcity;
+package com.example.qrcity.qr;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,7 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.example.qrcity.R;
 import com.example.qrcity.databinding.FragmentFirstBinding;
+import com.example.qrcity.map.MapsActivity;
 
 public class FirstFragment extends Fragment {
 
@@ -63,7 +65,7 @@ public class FirstFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 System.out.println("Clicked location");
-                Intent intent = new Intent(getContext(),MapsActivity.class);
+                Intent intent = new Intent(getContext(), MapsActivity.class);
                 startActivity(intent);
             }
         });

@@ -1,7 +1,5 @@
-package com.example.qrcity;
+package com.example.qrcity.qr;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,14 +7,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.ImageView;
-import android.widget.Toast;
+
+import com.example.qrcity.R;
 
 /**
  Cite: Stack overflow. (2019). Retrieved from https://stackoverflow.com/questions/54275594/how-to-start-camera-from-fragment-in-android

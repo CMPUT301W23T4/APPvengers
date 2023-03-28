@@ -2,7 +2,7 @@
  *  Purpose: Evaluate hash values by returning a score or a unique name associated to that hash
  */
 
-package com.example.qrcity;
+package com.example.qrcity.qr;
 
 /**
  * This class defines a set of function used for examining a codes hash value

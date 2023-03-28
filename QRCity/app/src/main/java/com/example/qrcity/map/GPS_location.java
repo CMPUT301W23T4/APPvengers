@@ -1,4 +1,4 @@
-package com.example.qrcity;
+package com.example.qrcity.map;
 
 import android.Manifest;
 import android.content.Context;
