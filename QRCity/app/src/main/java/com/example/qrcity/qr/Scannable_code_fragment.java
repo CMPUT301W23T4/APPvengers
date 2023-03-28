@@ -120,7 +120,8 @@ public class Scannable_code_fragment extends Fragment {
 
     private void save_data(){
         //create a scanned QR code
-        ScannableCode code=new ScannableCode(((MainActivity)getActivity()).getLastHash(),score,cmt_edit.getText().toString(),location,photo,score_sys.getName(((MainActivity)getActivity()).getLastHash()));
+        String unique_id=((MainActivity)getActivity()).getLastHash()+((MainActivity)getActivity()).user_id;
+        ScannableCode code=new ScannableCode(unique_id,score,cmt_edit.getText().toString(),location,photo,score_sys.getName(((MainActivity)getActivity()).getLastHash()));
 
         //add a code into QR code list.
         //((MainActivity)getActivity()).addCode(code);

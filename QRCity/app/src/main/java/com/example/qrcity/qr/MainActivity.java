@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity{
     private ArrayList<Fragment> activeFragments = new ArrayList<Fragment>();
 
     //////////////////////////////////////////////////////////////////
-    private String user_id;    //android id. unique for each android device
+    public String user_id;    //android id. unique for each android device
     public DataBase dataBase;           //access to database
     public User user;   //user object for this device (we are dealing with multiples users in the database now)
     //////////////////////////////////////////////////////////////////
