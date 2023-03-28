@@ -1,4 +1,4 @@
-package com.example.qrcity;
+package com.example.qrcity.user;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.qrcity.R;
 
 
 public class Removeprofile extends DialogFragment {

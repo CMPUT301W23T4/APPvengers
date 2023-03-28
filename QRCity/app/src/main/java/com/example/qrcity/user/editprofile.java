@@ -1,4 +1,4 @@
-package com.example.qrcity;
+package com.example.qrcity.user;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -11,6 +11,8 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
+
+import com.example.qrcity.R;
 
 public class editprofile extends DialogFragment {
     private OnFragmentInteractionListener listener;

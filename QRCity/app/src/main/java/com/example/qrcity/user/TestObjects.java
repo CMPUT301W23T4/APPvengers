@@ -6,11 +6,12 @@
  *          ->
  */
 
-package com.example.qrcity;
+package com.example.qrcity.user;
 
 import android.graphics.Bitmap;
 
 import com.example.qrcity.qr.ScannableCode;
+import com.example.qrcity.user.User;
 
 import java.util.ArrayList;
 

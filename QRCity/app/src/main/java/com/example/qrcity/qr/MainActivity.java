@@ -25,11 +25,10 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.qrcity.OnGetUserListener;
+import com.example.qrcity.user.OnGetUserListener;
 import com.example.qrcity.R;
-import com.example.qrcity.User;
+import com.example.qrcity.user.User;
 import com.example.qrcity.databinding.ActivityMainBinding;
-import com.example.qrcity.qr.DataBase;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 

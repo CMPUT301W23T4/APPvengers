@@ -14,6 +14,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import com.example.qrcity.qr.ScannableCode;
+import com.example.qrcity.user.TestObjects;
 
 import org.junit.Test;
 

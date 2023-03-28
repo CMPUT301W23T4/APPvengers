@@ -1,4 +1,4 @@
-package com.example.qrcity;
+package com.example.qrcity.user;
 
 import java.util.ArrayList;
 

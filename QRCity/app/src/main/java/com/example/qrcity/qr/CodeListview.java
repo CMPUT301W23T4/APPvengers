@@ -37,8 +37,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.qrcity.R;
-import com.example.qrcity.TestObjects;
-import com.example.qrcity.User;
+import com.example.qrcity.user.TestObjects;
+import com.example.qrcity.user.User;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.example.qrcity;
+package com.example.qrcity.user;
 
 
 import androidx.annotation.Nullable;
@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.qrcity.R;
 import com.example.qrcity.qr.MainActivity;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;

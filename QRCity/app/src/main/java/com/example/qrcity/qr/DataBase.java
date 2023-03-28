@@ -8,9 +8,9 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.qrcity.OnGetUserListener;
-import com.example.qrcity.OnGetUsersListener;
-import com.example.qrcity.User;
+import com.example.qrcity.user.OnGetUserListener;
+import com.example.qrcity.user.OnGetUsersListener;
+import com.example.qrcity.user.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
