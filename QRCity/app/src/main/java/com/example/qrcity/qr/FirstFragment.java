@@ -40,6 +40,7 @@ public class FirstFragment extends Fragment {
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                System.out.println("Clicked scanner");
                 NavHostFragment.findNavController(FirstFragment.this)
                         .navigate(R.id.action_FirstFragment_to_CodeScannerFragment);
             }
@@ -64,6 +65,7 @@ public class FirstFragment extends Fragment {
         binding.getRoot().findViewById(R.id.Rankings).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                System.out.println("Clicked rankings");
                 NavHostFragment.findNavController(FirstFragment.this)
                         .navigate(R.id.action_FirstFragment_to_leaderboardFragment);
             }
@@ -72,6 +74,7 @@ public class FirstFragment extends Fragment {
         binding.getRoot().findViewById(R.id.Search).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                System.out.println("Clicked search");
                 NavHostFragment.findNavController(FirstFragment.this)
                         .navigate(R.id.action_FirstFragment_to_searchPlayerFragment);
             }
