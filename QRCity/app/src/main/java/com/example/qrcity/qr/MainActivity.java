@@ -65,9 +65,13 @@ public class MainActivity extends AppCompatActivity{
         NavigationView navigationView = findViewById(R.id.nav_view);
 
         user_id= Settings.Secure.getString(this.getContentResolver(),Settings.Secure.ANDROID_ID); //get android id
+        System.out.println(user_id);
         dataBase = new DataBase();
         //if userid is not in database then it will add this new userid into database
-        user = dataBase.getUserById(user_id);                 //get user by android id
+        User logged_user = new User(String.valueOf(user_id),"UserName","ContactInfo");
+        dataBase.addUser(logged_user);
+
+
 
 
 
