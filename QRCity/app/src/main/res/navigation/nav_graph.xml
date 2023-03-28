@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_FirstFragment_to_leaderboardFragment"
             app:destination="@id/leaderboardFragment" />
+        <action
+            android:id="@+id/action_FirstFragment_to_searchPlayerFragment"
+            app:destination="@id/searchPlayerFragment" />
     </fragment>
     <fragment
         android:id="@+id/CodeScannerFragment"
@@ -68,6 +71,14 @@
         android:label="LeaderboardFragment" >
         <action
             android:id="@+id/action_leaderboardFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchPlayerFragment"
+        android:name="com.example.qrcity.search.SearchPlayerFragment"
+        android:label="SearchPlayerFragment" >
+        <action
+            android:id="@+id/action_searchPlayerFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
 </navigation>

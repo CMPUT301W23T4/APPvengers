@@ -69,6 +69,14 @@ public class FirstFragment extends Fragment {
             }
         });
 
+        binding.getRoot().findViewById(R.id.Search).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(FirstFragment.this)
+                        .navigate(R.id.action_FirstFragment_to_searchPlayerFragment);
+            }
+        });
+
         binding.getRoot().findViewById(R.id.Location).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
