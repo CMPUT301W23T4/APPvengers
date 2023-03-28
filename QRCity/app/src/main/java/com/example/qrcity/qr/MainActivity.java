@@ -35,6 +35,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import android.provider.Settings;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -65,8 +66,11 @@ public class MainActivity extends AppCompatActivity{
 
         user_id= Settings.Secure.getString(this.getContentResolver(),Settings.Secure.ANDROID_ID); //get android id
         dataBase = new DataBase();
-        user = dataBase.getUserById(user_id);                                                      //get user by android id
-                                                                                                    //if userid is not in database then it will add this new userid into database
+        //if userid is not in database then it will add this new userid into database
+        user = dataBase.getUserById(user_id);                 //get user by android id
+
+
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

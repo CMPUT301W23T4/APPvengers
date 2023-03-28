@@ -127,8 +127,9 @@ public class Scannable_code_fragment extends Fragment {
 
 
         ////////////////////////////////////////////////////
-        ((MainActivity)getActivity()).user.addCode(code);//this user is in the main activity, we are now dealing with multiple user
-        ((MainActivity)getActivity()).dataBase.addCode(code);
+        ((MainActivity)getActivity()).user.addCode(code);       //add code to the user
+        ((MainActivity)getActivity()).dataBase.addCode(code);   //add QR code in ScannableCode collection in database
+        ((MainActivity)getActivity()).dataBase.addUser(((MainActivity)getActivity()).user); //update user in database since the user just adds a new code
     }
 
     public void setPhoto(Bitmap bitmap){
