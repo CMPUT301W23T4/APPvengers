@@ -25,6 +25,7 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/white"
                 android:layout_alignParentRight="true"
+                app:title="@string/leaderboard"
                 app:navigationIcon="@drawable/baseline_menu_24"/>
         </com.google.android.material.appbar.AppBarLayout>
     </LinearLayout>
