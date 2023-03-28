@@ -185,4 +185,8 @@ public class MainActivity extends AppCompatActivity{
     public void clearFragments(){
         activeFragments.clear();
     }
+
+    public String getUser_id() {
+        return user_id;
+    }
 }

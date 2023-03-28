@@ -1,5 +1,6 @@
 package com.example.qrcity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import com.example.qrcity.databinding.FragmentFirstBinding;
 public class FirstFragment extends Fragment {
 
     private FragmentFirstBinding binding;
+    private MainActivity activityMain;
 
     @Override
     public View onCreateView(
@@ -30,6 +32,9 @@ public class FirstFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        final Activity activity = getActivity();
+        activityMain = (MainActivity)activity;
+
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,8 +47,14 @@ public class FirstFragment extends Fragment {
         binding.getRoot().findViewById(R.id.Records).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("Clicked location");
-                Intent intent = new Intent(getContext(),ThisUserListViewActivity.class);
+                System.out.println("Clicked records");
+
+                //Pass forward the userID
+                Bundle bundle = new Bundle();
+                bundle.putString("userID", activityMain.getUser_id());
+                Intent intent = new Intent(getContext(), CodeListview.class);
+                intent.putExtras(bundle);
+
                 startActivity(intent);
             }
         });
