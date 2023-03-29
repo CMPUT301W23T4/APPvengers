@@ -31,6 +31,7 @@ import com.example.qrcity.user.OnGetUserListener;
 import com.example.qrcity.R;
 import com.example.qrcity.user.User;
 import com.example.qrcity.databinding.ActivityMainBinding;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -41,6 +42,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 
@@ -81,15 +83,17 @@ public class MainActivity extends AppCompatActivity {
                 int id = item.getItemId();
                 item.setChecked(true);
                 drawerLayout.closeDrawer(GravityCompat.START);
+                ImageView iv =  findViewById(R.id.imageView2);
                 switch (id)
                 {
                     case R.id.nav_home:
-                        replaceFragment(new FirstFragment());
                         break;
                     case R.id.nav_account:
+                        iv.setVisibility(View.INVISIBLE);
                         replaceFragment(new AccountFragment());
                         break;
                     case R.id.nav_about:
+                        iv.setVisibility(View.INVISIBLE);
                         replaceFragment(new InfoFragment());
                         break;
                     default:
