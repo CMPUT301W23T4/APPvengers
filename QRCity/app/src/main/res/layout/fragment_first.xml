@@ -12,7 +12,7 @@
         layout="@layout/nav_header"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-    
+
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
@@ -38,6 +38,16 @@
                     app:title="@string/app_name"
                     app:navigationIcon="@drawable/baseline_menu_24"/>
             </com.google.android.material.appbar.AppBarLayout>
+
+            <FrameLayout
+                android:id="@+id/frameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/appbarLayout"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="NotSibling"/>
 
             <ImageView
                 android:id="@+id/imageView2"
@@ -76,15 +86,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:srcCompat="@drawable/addphoto" />
 
-                <FrameLayout
-                    android:id="@+id/frameLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    tools:layout_editor_absoluteX="-2dp"
-                    tools:layout_editor_absoluteY="102dp" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
-
         </RelativeLayout>
 
         <com.google.android.material.navigation.NavigationView
@@ -118,6 +120,7 @@
             app:labelVisibilityMode="labeled"
             app:menu="@menu/bottom_nav_menu"/>
     </com.google.android.material.bottomappbar.BottomAppBar>
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"

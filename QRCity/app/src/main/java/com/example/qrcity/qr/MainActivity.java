@@ -25,6 +25,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.qrcity.home.AccountFragment;
+import com.example.qrcity.home.InfoFragment;
 import com.example.qrcity.user.OnGetUserListener;
 import com.example.qrcity.R;
 import com.example.qrcity.user.User;
@@ -42,14 +44,12 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
     private String lastHash;
-
     private ArrayList<Fragment> activeFragments = new ArrayList<Fragment>();
-
     //////////////////////////////////////////////////////////////////
     public String user_id;    //android id. unique for each android device
     public DataBase dataBase;           //access to database
@@ -63,49 +63,49 @@ public class MainActivity extends AppCompatActivity{
         MaterialToolbar toolbar = findViewById(R.id.topAppbar);
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-
-        user_id= Settings.Secure.getString(this.getContentResolver(),Settings.Secure.ANDROID_ID); //get android id
+        user_id = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID); //get android id
         dataBase = new DataBase();
         //if userid is not in database then it will add this new userid into database
         user = dataBase.getUserById(user_id);                 //get user by android id
-
-
-
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
+            public void onClick(View  v) {
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            public boolean onNavigationItemSelected(@NonNull @org.jetbrains.annotations.NotNull  MenuItem item) {
 
                 int id = item.getItemId();
                 item.setChecked(true);
                 drawerLayout.closeDrawer(GravityCompat.START);
                 switch (id)
                 {
-
+                    case R.id.nav_account:
+                        replaceFragment(new AccountFragment());
+                        break;
+                    case R.id.nav_about:
+                        replaceFragment(new InfoFragment());
+                        break;
+                    default:
+                        return true;
                 }
                 return true;
             }
         });
     }
 
-
     private void replaceFragment(Fragment fragment){
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment);
         fragmentTransaction.commit();
+    }
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        /*binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity{
                 // Do action with user here
             }
         });
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
