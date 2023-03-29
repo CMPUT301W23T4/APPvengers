@@ -26,6 +26,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.qrcity.home.AccountFragment;
+import com.example.qrcity.home.HomeFragment;
 import com.example.qrcity.home.InfoFragment;
 import com.example.qrcity.user.OnGetUserListener;
 import com.example.qrcity.R;
@@ -87,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (id)
                 {
                     case R.id.nav_home:
+                        replaceFragment(new HomeFragment());
                         break;
                     case R.id.nav_account:
                         iv.setVisibility(View.INVISIBLE);
