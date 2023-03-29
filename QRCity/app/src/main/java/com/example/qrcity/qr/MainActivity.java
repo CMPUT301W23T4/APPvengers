@@ -83,6 +83,9 @@ public class MainActivity extends AppCompatActivity {
                 drawerLayout.closeDrawer(GravityCompat.START);
                 switch (id)
                 {
+                    case R.id.nav_home:
+                        replaceFragment(new FirstFragment());
+                        break;
                     case R.id.nav_account:
                         replaceFragment(new AccountFragment());
                         break;
