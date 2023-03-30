@@ -9,13 +9,13 @@
     tools:context=".qr.MainActivity"
     tools:ignore="HardcodedText">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
         <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appbarLayout"
+            android:id="@+id/searchAppBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -25,16 +25,24 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/white"
                 android:layout_alignParentRight="true"
+                app:navigationIcon="@drawable/baseline_arrow_back_24"
                 app:title="@string/search"/>
         </com.google.android.material.appbar.AppBarLayout>
-    </LinearLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
-        android:gravity="center"
-        android:text="Search"
-        android:textSize="18sp" />
+        <FrameLayout
+            android:id="@+id/searchFrameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/searchAppBarLayout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="NotSibling">
 
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </ListView>
+        </FrameLayout>
+    </RelativeLayout>
 </androidx.drawerlayout.widget.DrawerLayout>
