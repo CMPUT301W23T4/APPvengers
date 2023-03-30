@@ -13,9 +13,4 @@
         android:id="@+id/nav_points_leaderboard"
         android:title="Points Leaderboard" />
 
-    <item
-        android:id="@+id/action_sort"
-        android:title="Sort"
-        app:showAsAction="always"
-        android:icon="@drawable/baseline_sort_24"/>
 </menu>
