@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/nav_scanned_leaderboards"
         android:title="QR Scanned Leaderboard" />
@@ -11,4 +12,10 @@
     <item
         android:id="@+id/nav_points_leaderboard"
         android:title="Points Leaderboard" />
+
+    <item
+        android:id="@+id/action_sort"
+        android:title="Sort"
+        app:showAsAction="always"
+        android:icon="@drawable/baseline_sort_24"/>
 </menu>
