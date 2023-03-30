@@ -9,12 +9,14 @@
 package com.example.qrcity.qr;
 
 import android.os.Bundle;
-
+import android.provider.Settings;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -25,25 +27,14 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.qrcity.R;
+import com.example.qrcity.databinding.ActivityMainBinding;
 import com.example.qrcity.home.AccountFragment;
 import com.example.qrcity.home.HomeFragment;
 import com.example.qrcity.home.InfoFragment;
-import com.example.qrcity.user.OnGetUserListener;
-import com.example.qrcity.R;
 import com.example.qrcity.user.User;
-import com.example.qrcity.databinding.ActivityMainBinding;
-import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
-
-
-import android.provider.Settings;
-
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 
 import java.util.ArrayList;
 
