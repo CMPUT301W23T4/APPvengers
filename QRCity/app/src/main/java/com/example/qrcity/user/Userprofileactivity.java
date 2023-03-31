@@ -22,6 +22,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
@@ -69,6 +70,14 @@ public class Userprofileactivity extends AppCompatActivity implements Removeprof
                         }
                         if (pair.getKey().equals("contactInfo")){
                             user1.setContactInfo((String) pair.getValue());
+                        }
+                        if (pair.getKey() == "userCodeList") {
+                            user1.setCodeList((List) pair.getValue());
+                        }
+                        if (pair.getKey().equals("totalScore")) {
+                            Integer totalScore;
+                            totalScore = ((Long) pair.getValue()).intValue();
+                            user1.setTotalScore(totalScore);
                         }
                     }
                     if(true) {
