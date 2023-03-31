@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class UserSearchActivity extends AppCompatActivity {
+public class UserSearchActivity extends AppCompatActivity implements UserSearchFragment.OnFragmentInteractionListener{
     ListView listView;
     ArrayAdapter<String> arrayAdapter;
     ArrayList<String> nameList = new ArrayList<>();
