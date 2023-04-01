@@ -50,7 +50,7 @@ public class DataBase {
     public DataBase() {
         db = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
-        collectionReference = db.collection("users");
+        collectionReference = db.collection("Users");
         ownerCollection = db.collection("Owners");
         photoColletion = storage.getReference();
         codeCollection = db.collection("ScannableCodes");
@@ -67,7 +67,7 @@ public class DataBase {
     public ArrayList<User> getUsersByCode(String codeId) {
         ArrayList<User> userDataList = new ArrayList<>();
         //snapshot listener to watch for changes in the database
-        db.collection("users")
+        db.collection("Users")
                 .whereArrayContains("userCodeList", codeId)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -303,7 +303,7 @@ public class DataBase {
     }
     public void addUser(User user) {
         // Collection reference
-        CollectionReference cr = db.collection("users");
+        CollectionReference cr = db.collection("Users");
 
         Map<String, Object> user_data = new HashMap<>();
         user_data.put("name", user.getName());
@@ -335,8 +335,8 @@ public class DataBase {
     }
 
     public void editUser(User user) {
-        // Get a reference to the "users" collection
-        CollectionReference cr = db.collection("users");
+        // Get a reference to the "Users" collection
+        CollectionReference cr = db.collection("Users");
 
         // Get a reference to the specific user's document
         DocumentReference userRef = cr.document(user.getUserId());
@@ -370,7 +370,7 @@ public class DataBase {
 
 
     public void getUser(String userId, OnGetUserListener listener) {
-        CollectionReference cr = db.collection("users");
+        CollectionReference cr = db.collection("Users");
         DocumentReference dr = cr.document(userId);
         dr.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
@@ -396,7 +396,7 @@ public class DataBase {
     }
 
     public void getUserById(String userId, UserCallback callback) {
-        DocumentReference docRef = db.collection("users").document(userId);
+        DocumentReference docRef = db.collection("Users").document(userId);
         Source source = Source.SERVER;
 
         docRef.get(source).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -450,7 +450,6 @@ public class DataBase {
         });
     }
 
-
     public User getOwnerById(String androidId) {
         User user = new User();
         DocumentReference docRef = db.collection("Owners").document(androidId);
@@ -483,7 +482,7 @@ public class DataBase {
 
 
     public void getUsers(OnGetUsersListener listener) {
-        CollectionReference cr = db.collection("users");
+        CollectionReference cr = db.collection("Users");
         cr.get().addOnCompleteListener(task -> {
             ArrayList<String> userIds = new ArrayList<>();
             if (task.isSuccessful()) {

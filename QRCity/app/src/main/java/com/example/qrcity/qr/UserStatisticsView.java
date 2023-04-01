@@ -1,9 +1,13 @@
 package com.example.qrcity.qr;
 
+import static android.content.ContentValues.TAG;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -57,9 +61,8 @@ public class UserStatisticsView extends AppCompatActivity implements CustomList.
         TargetUserID = bundle.getString("userID");
         sameUser = ThisUserID.compareTo(TargetUserID) == 0;
 
-
         //Get a reference to the target user from the database
-        dataBase = new DataBase();
+        dataBase = DataBase.getInstance();
         dataBase.getUserById(TargetUserID, new UserCallback() {
             @Override
             public void onUserRetrieved(User user) {
@@ -68,11 +71,14 @@ public class UserStatisticsView extends AppCompatActivity implements CustomList.
 
             @Override
             public void onUserRetrievalError(Exception e) {
-
+                Log.i(TAG, "----- Could not get user -----");
             }
         });
 
-        setContentView(R.layout.user_statistics);
+        if (current_user.getUserCodeList().size() != 0)
+        {
+            setContentView(R.layout.user_statistics);
+        }
 
         //Set text at the top
         TextView statsName = findViewById(R.id.name);

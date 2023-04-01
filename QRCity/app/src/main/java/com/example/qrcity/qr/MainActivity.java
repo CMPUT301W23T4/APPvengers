@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         user_id = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID); //get android id
         dataBase = new DataBase();
         //if userid is not in database then it will add this new userid into database
-        current_user = new User(String.valueOf(user_id),"Default_name","Default_contactInfo");
+        current_user = new User(user_id,"Default_name","Default_contactInfo");
         dataBase.addUser(current_user);
         //current_user = dataBase.getUserById(user_id);                 //get user by android id
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
