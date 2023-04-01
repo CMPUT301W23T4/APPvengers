@@ -1,5 +1,6 @@
 package com.example.qrcity.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,8 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 
 import com.example.qrcity.R;
+import com.example.qrcity.user.User;
+import com.example.qrcity.user.Userprofileactivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,6 +27,7 @@ public class AccountFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private User current_user;
 
     public AccountFragment() {
         // Required empty public constructor
@@ -50,10 +54,9 @@ public class AccountFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
+        Intent intent = new Intent(getContext(), Userprofileactivity.class);
+        startActivity(intent);
     }
 
     @Override

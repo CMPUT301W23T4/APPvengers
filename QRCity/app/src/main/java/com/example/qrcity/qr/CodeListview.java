@@ -39,6 +39,7 @@ import android.widget.ListView;
 import com.example.qrcity.R;
 import com.example.qrcity.user.TestObjects;
 import com.example.qrcity.user.User;
+import com.example.qrcity.user.UserCallback;
 
 import java.util.ArrayList;
 
@@ -49,7 +50,7 @@ public class CodeListview extends AppCompatActivity implements CustomList.CodeLi
     private String TargetUserID;
     boolean sameUser;
     private DataBase dataBase;
-    private User user;
+    private User current_user;
 
     private ListView codeList;
     private ArrayAdapter<ScannableCode> scannableCodeAdapter;
@@ -71,7 +72,18 @@ public class CodeListview extends AppCompatActivity implements CustomList.CodeLi
         sameUser = ThisUserID.compareTo(TargetUserID) == 0;
 
         dataBase = new DataBase();
-        user = dataBase.getUserById(TargetUserID);
+        dataBase.getUserById(TargetUserID, new UserCallback() {
+            @Override
+            public User onUserRetrieved(User user) {
+                current_user = user;
+                return user;
+            }
+
+            @Override
+            public void onUserRetrievalError(Exception e) {
+
+            }
+        });
 
         setContentView(R.layout.code_listview);
 

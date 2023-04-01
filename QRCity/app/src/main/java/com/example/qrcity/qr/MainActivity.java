@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,6 +34,7 @@ import com.example.qrcity.home.AccountFragment;
 import com.example.qrcity.home.HomeFragment;
 import com.example.qrcity.home.InfoFragment;
 import com.example.qrcity.user.User;
+import com.example.qrcity.user.UserCallback;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -47,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     //////////////////////////////////////////////////////////////////
     public String user_id;    //android id. unique for each android device
     public DataBase dataBase;           //access to database
-    public User user;   //user object for this device (we are dealing with multiples users in the database now)
+    public User current_user;   //user object for this device (we are dealing with multiples users in the database now)
     //////////////////////////////////////////////////////////////////
 
     @Override
@@ -60,7 +62,9 @@ public class MainActivity extends AppCompatActivity {
         user_id = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID); //get android id
         dataBase = new DataBase();
         //if userid is not in database then it will add this new userid into database
-        user = dataBase.getUserById(user_id);                 //get user by android id
+        current_user = new User(String.valueOf(user_id),"Default_name","Default_contactInfo");
+        dataBase.addUser(current_user);
+        //current_user = dataBase.getUserById(user_id);                 //get user by android id
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View  v) {
@@ -83,7 +87,12 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.nav_account:
                         iv.setVisibility(View.INVISIBLE);
-                        replaceFragment(new AccountFragment());
+                        AccountFragment accountFragment = new AccountFragment();
+                        Bundle args = new Bundle();
+                        args.putSerializable("current_user", current_user);
+                        System.out.println("send current user");
+                        accountFragment.setArguments(args);
+                        replaceFragment(accountFragment);
                         break;
                     case R.id.nav_about:
                         iv.setVisibility(View.INVISIBLE);

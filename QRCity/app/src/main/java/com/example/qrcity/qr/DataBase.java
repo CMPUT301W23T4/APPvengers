@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import com.example.qrcity.user.OnGetUserListener;
 import com.example.qrcity.user.OnGetUsersListener;
 import com.example.qrcity.user.User;
+import com.example.qrcity.user.UserCallback;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -46,10 +47,10 @@ public class DataBase {
     final String TAG = "what to put here";
 
 
-    DataBase() {
+    public DataBase() {
         db = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
-        collectionReference = db.collection("Users");
+        collectionReference = db.collection("users");
         ownerCollection = db.collection("Owners");
         photoColletion = storage.getReference();
         codeCollection = db.collection("ScannableCodes");
@@ -66,7 +67,7 @@ public class DataBase {
     public ArrayList<User> getUsersByCode(String codeId) {
         ArrayList<User> userDataList = new ArrayList<>();
         //snapshot listener to watch for changes in the database
-        db.collection("Users")
+        db.collection("users")
                 .whereArrayContains("userCodeList", codeId)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -333,6 +334,38 @@ public class DataBase {
                 });
     }
 
+    public void editUser(User user) {
+        // Get a reference to the "users" collection
+        CollectionReference cr = db.collection("users");
+
+        // Get a reference to the specific user's document
+        DocumentReference userRef = cr.document(user.getUserId());
+
+        // Update the document with the new user data
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("name", user.getName());
+        updates.put("contactinfo", user.getContactInfo());
+        updates.put("totalscore", user.getTotalScore());
+        updates.put("numcodes", user.getNumCodes());
+        updates.put("userCodeList", user.getUserCodeList());
+        userRef.update(updates)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        // If data is successfully updated
+                        Log.d(TAG, "User " + user.getUserId() + " successfully updated");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // If data update fails
+                        Log.d(TAG, "User " + user.getUserId() + " data failed to update: " + e.toString());
+                    }
+                });
+    }
+
+
 
 
 
@@ -362,56 +395,61 @@ public class DataBase {
 
     }
 
-    public User getUserById(String userId) {
-        User user = new User();
-        DocumentReference docRef = db.collection("Users").document(userId);
+    public void getUserById(String userId, UserCallback callback) {
+        DocumentReference docRef = db.collection("users").document(userId);
         Source source = Source.SERVER;
 
         docRef.get(source).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
-                    // Document found on the server
                     DocumentSnapshot document = task.getResult();
-                    Map<String, Object> userData = document.getData();
-                    if (userData != null) {
-                        for (Map.Entry<String, Object> pair : userData.entrySet()) {
-                            String key = pair.getKey();
-                            if (key.equals("userId")) {
-                                user.setId((String) pair.getValue());
+                    if (document.exists()) {
+                        User user = new User();
+                        Map<String, Object> userData = document.getData();
+                        if (userData != null) {
+                            for (Map.Entry<String, Object> pair : userData.entrySet()) {
+                                String key = pair.getKey();
+                                if (key.equals("userId")) {
+                                    user.setId((String) pair.getValue());
+                                }
+                                if (key.equals("name")) {
+                                    user.setName((String) pair.getValue());
+                                }
+                                if (key.equals("contactInfo")) {
+                                    user.setContactInfo((String) pair.getValue());
+                                }
+                                if (key.equals("userCodeList")) {
+                                    user.setCodeList((List<Map>) pair.getValue());
+                                }
+                                if (key.equals("numCodes")) {
+                                    Integer numCodes = ((Long) pair.getValue()).intValue();
+                                    user.setNumCodes(numCodes);
+                                }
+                                if (key.equals("totalScore")) {
+                                    Integer totalScore = ((Long) pair.getValue()).intValue();
+                                    user.setTotalScore(totalScore);
+                                }
                             }
-                            if (key.equals("name")) {
-                                user.setName((String) pair.getValue());
-                            }
-                            if (key.equals("contactInfo")) {
-                                user.setContactInfo((String) pair.getValue());
-                            }
-                            if (key.equals("userCodeList")) {
-                                user.setCodeList((List<Map>) pair.getValue());
-                            }
-                            if (key.equals("numCodes")) {
-                                Integer numCodes;
-                                numCodes = ((Long) pair.getValue()).intValue();
-                                user.setNumCodes(numCodes);
-                            }
-                            if (key.equals("totalScore")) {
-                                Integer totalScore;
-                                totalScore = ((Long) pair.getValue()).intValue();
-                                user.setTotalScore(totalScore);
-                            }
+                            Log.d(TAG, "User downloaded");
+                            Log.d(TAG, "Server document data: " + document.getData());
+                            callback.onUserRetrieved(user);
+                        } else {
+                            Log.d(TAG, "No such document");
+                            callback.onUserRetrievalError(new Exception("User document has no data"));
                         }
+                    } else {
+                        Log.d(TAG, "No such document");
+                        callback.onUserRetrievalError(new Exception("User document does not exist"));
                     }
-                    Log.d(TAG, "User downloaded");
-                    Log.d(TAG, "Server document data: " + document.getData());
                 } else {
-                    User user = new User(userId,""); //add new user if this user is not in database
-                    addUser(user);
                     Log.d(TAG, "Server get failed: ", task.getException());
+                    callback.onUserRetrievalError(task.getException());
                 }
             }
         });
-        return user;
     }
+
 
     public User getOwnerById(String androidId) {
         User user = new User();
