@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         user_id = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID); //get android id
-        dataBase = new DataBase();
+        dataBase = DataBase.getInstance();
         //if userid is not in database then it will add this new userid into database
         current_user = new User(user_id,"Default_name","Default_contactInfo");
         dataBase.addUser(current_user);

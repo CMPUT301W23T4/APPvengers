@@ -45,8 +45,7 @@ public class DataBase {
     StorageReference photoColletion;
 
     final String TAG = "what to put here";
-
-
+    
     public DataBase() {
         db = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
@@ -57,13 +56,13 @@ public class DataBase {
 
     }
 
-
     public static DataBase getInstance() {
         if (instance == null) {
             instance = new DataBase();
         }
         return instance;
     }
+
     public ArrayList<User> getUsersByCode(String codeId) {
         ArrayList<User> userDataList = new ArrayList<>();
         //snapshot listener to watch for changes in the database
@@ -162,6 +161,7 @@ public class DataBase {
         });
         return userDataList;
     }
+
     public void addCode(ScannableCode code) {
         // When a new code is added is must be added to the ScannableCodes collection and appended
         // to the codeList of the current user document from the Users collection
@@ -202,6 +202,7 @@ public class DataBase {
                     }
                 });
     }
+
     public ScannableCode getCode(String id) {
         ScannableCode code = new ScannableCode();
         DocumentReference docRef = db.collection("ScannableCodes").document(id);
@@ -250,6 +251,7 @@ public class DataBase {
         });
         return code;
     }
+
     /**
      * Retrieves a list of every code from the the "ScannableCodes" collection
      * @return
@@ -301,37 +303,26 @@ public class DataBase {
         });
         return codeList;
     }
+
     public void addUser(User user) {
-        // Collection reference
-        CollectionReference cr = db.collection("Users");
-
-        Map<String, Object> user_data = new HashMap<>();
-        user_data.put("name", user.getName());
-        user_data.put("contactInfo", user.getContactInfo());
-        user_data.put("totalscore", user.getTotalScore());
-        user_data.put("numcodes", user.getNumCodes());
-        user_data.put("userId", user.getUserId());
-        user_data.put("userCodeList", user.getUserCodeList());
-        cr.document(user.getUserId()).set(user_data);
-
-
-        collectionReference
-                .document(user.getUserId())
-                .set(user_data)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        //if data is successfully uploaded
-                        Log.d(TAG, "User " + user.getUserId() + "  successfully uploaded");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        //if data upload fails
-                        Log.d(TAG, "User " + user.getUserId() + " data failed to upload: " + e.toString());
-                    }
-                });
+        DocumentReference docRef = collectionReference.document(user.getUserId());
+        docRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    return;
+                }
+            } else {
+                Map<String, Object> user_data = new HashMap<>();
+                user_data.put("name", user.getName());
+                user_data.put("contactInfo", user.getContactInfo());
+                user_data.put("totalscore", user.getTotalScore());
+                user_data.put("numcodes", user.getNumCodes());
+                user_data.put("userId", user.getUserId());
+                user_data.put("userCodeList", user.getUserCodeList());
+                docRef.set(user_data);
+            }
+        });
     }
 
     public void editUser(User user) {
@@ -364,10 +355,6 @@ public class DataBase {
                     }
                 });
     }
-
-
-
-
 
     public void getUser(String userId, OnGetUserListener listener) {
         CollectionReference cr = db.collection("Users");
@@ -480,7 +467,6 @@ public class DataBase {
         return user;
     }
 
-
     public void getUsers(OnGetUsersListener listener) {
         CollectionReference cr = db.collection("Users");
         cr.get().addOnCompleteListener(task -> {
@@ -494,6 +480,7 @@ public class DataBase {
             listener.getUsersListener(userIds);
         });
     }
+
     public ArrayList<User> getUsersByName(String userName) {
         ArrayList<User> userDataList = new ArrayList<>();
         //snapshot listener to watch for changes in the database
@@ -564,7 +551,6 @@ public class DataBase {
         dr.set(user_data);
     }
 
-
     public void removerUserData(User user) {//removes User data from the firebase
         collectionReference
                 .document(user.getUserId())
@@ -606,6 +592,7 @@ public class DataBase {
                     }
                 });
     }
+
     public void removeOwner(String OwnerName) {
         ownerCollection
                 .document(OwnerName)
@@ -625,11 +612,10 @@ public class DataBase {
                     }
                 });
     }
+
     public void addUsers(ArrayList<User> users) {
         for (User user : users) {
             addUser(user);
         }
     }
-
-
 }
