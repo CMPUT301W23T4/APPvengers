@@ -76,9 +76,8 @@ public class CodeListview extends AppCompatActivity implements CustomList.CodeLi
         dataBase = new DataBase();
         dataBase.getUserById(TargetUserID, new UserCallback() {
             @Override
-            public User onUserRetrieved(User user) {
+            public void onUserRetrieved(User user) {
                 current_user = user;
-                return user;
             }
 
             @Override
@@ -91,7 +90,7 @@ public class CodeListview extends AppCompatActivity implements CustomList.CodeLi
 
         //Set text at the top
         TextView listName = findViewById(R.id.list_name);
-        listName.setText(user.getName()+"'s scanned codes");
+        listName.setText(current_user.getName()+"'s scanned codes");
 
         //Get a reference to the ListView and create an object for the list
         codeList = findViewById(R.id.code_list);

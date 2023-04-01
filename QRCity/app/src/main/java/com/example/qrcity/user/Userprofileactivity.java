@@ -48,11 +48,11 @@ public class Userprofileactivity extends AppCompatActivity implements Removeprof
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_profile);
         String android_ID = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        /*
         dataBase.getUserById(android_ID, new UserCallback() {
             @Override
-            public User onUserRetrieved(User user) {
+            public void onUserRetrieved(User user) {
                 current_user = user;
-                return null;
             }
 
             @Override
@@ -60,11 +60,14 @@ public class Userprofileactivity extends AppCompatActivity implements Removeprof
 
             }
         });
-        //getUserByAndroidId(android_ID);
+        */
+        getUserByAndroidId(android_ID);
 
         userName = findViewById(R.id.UserName);
         contactInfo = findViewById(R.id.ContactInfo);
         score = findViewById(R.id.UserScore);
+
+
 
         if(current_user != null){
             userName.setText(current_user.getName());
@@ -175,11 +178,11 @@ public class Userprofileactivity extends AppCompatActivity implements Removeprof
 
     @Override
     public void onEditOKPressed(User user) {
-        userName.setText(current_user.getName());
-        contactInfo.setText(current_user.getContactInfo());
+        //userName.setText(current_user.getName());
+        //contactInfo.setText(current_user.getContactInfo());
         //this.user = user;
-        //updateUser(user);
-        dataBase.editUser(current_user);
+        updateUser(user);
+        //dataBase.editUser(current_user);
     }
 
     @Override

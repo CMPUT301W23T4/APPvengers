@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.qrcity.R;
 import com.example.qrcity.user.TestObjects;
 import com.example.qrcity.user.User;
+import com.example.qrcity.user.UserCallback;
 
 import java.util.ArrayList;
 
@@ -24,7 +25,7 @@ public class UserStatisticsView extends AppCompatActivity implements CustomList.
     private String TargetUserID;
     boolean sameUser;
     private DataBase dataBase;
-    private User user;
+    private User current_user;
 
     private ListView codeList;
     private ArrayAdapter<ScannableCode> scannableCodeAdapter;
@@ -59,19 +60,29 @@ public class UserStatisticsView extends AppCompatActivity implements CustomList.
 
         //Get a reference to the target user from the database
         dataBase = new DataBase();
-        user = dataBase.getUserById(TargetUserID);
+        dataBase.getUserById(TargetUserID, new UserCallback() {
+            @Override
+            public void onUserRetrieved(User user) {
+                current_user = user;
+            }
+
+            @Override
+            public void onUserRetrievalError(Exception e) {
+
+            }
+        });
 
         setContentView(R.layout.user_statistics);
 
         //Set text at the top
         TextView statsName = findViewById(R.id.name);
-        statsName.setText(user.getName()+"'s Stats");
+        statsName.setText(current_user.getName()+"'s Stats");
 
         //Get a reference to the ListView and create an object for the list
         codeList = findViewById(R.id.HighLowCodeList);
         scannableCodeDataList = new ArrayList<>();
         TextView listName = findViewById(R.id.HighLowCodes);
-        listName.setText(user.getName()+"'s Highest and Lowest scoring codes");
+        listName.setText(current_user.getName()+"'s Highest and Lowest scoring codes");
 
 
         // Set the adapter for the ListView to the CustomAdapter

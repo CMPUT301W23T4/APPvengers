@@ -89,8 +89,6 @@ public class MainActivity extends AppCompatActivity {
                         iv.setVisibility(View.INVISIBLE);
                         AccountFragment accountFragment = new AccountFragment();
                         Bundle args = new Bundle();
-                        args.putSerializable("current_user", current_user);
-                        System.out.println("send current user");
                         accountFragment.setArguments(args);
                         replaceFragment(accountFragment);
                         break;

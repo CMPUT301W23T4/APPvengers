@@ -42,8 +42,6 @@ public class editprofile extends DialogFragment {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.edit_profile, null);
         name_edit = view.findViewById(R.id.UserName_edit);
         contact_edit = view.findViewById(R.id.content_edit);
-        name_edit.setText(user.getName());
-        contact_edit.setText(user.getContactInfo());
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder
                 .setView(view)

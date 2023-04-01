@@ -91,7 +91,7 @@ public class DataBase {
                                         user.setContactInfo((String) pair.getValue());
                                     }
                                     if (pair.getKey().equals("userCodeList")) {
-                                        user.setCodeList((List) pair.getValue());
+                                        user.setCodeList((List<Map>) pair.getValue());
                                     }
                                 }
                                 // Add the user from the current document to userDataList
@@ -141,7 +141,7 @@ public class DataBase {
                             user.setContactInfo((String) pair.getValue());
                         }
                         if (key == "userCodeList") {
-                            user.setCodeList((List) pair.getValue());
+                            user.setCodeList((List<Map>) pair.getValue());
                         }
                         if (key.equals("numCodes")) {
                             Integer numCodes;
@@ -307,7 +307,7 @@ public class DataBase {
 
         Map<String, Object> user_data = new HashMap<>();
         user_data.put("name", user.getName());
-        user_data.put("contactinfo", user.getContactInfo());
+        user_data.put("contactInfo", user.getContactInfo());
         user_data.put("totalscore", user.getTotalScore());
         user_data.put("numcodes", user.getNumCodes());
         user_data.put("userId", user.getUserId());
@@ -344,7 +344,7 @@ public class DataBase {
         // Update the document with the new user data
         Map<String, Object> updates = new HashMap<>();
         updates.put("name", user.getName());
-        updates.put("contactinfo", user.getContactInfo());
+        updates.put("contactInfo", user.getContactInfo());
         updates.put("totalscore", user.getTotalScore());
         updates.put("numcodes", user.getNumCodes());
         updates.put("userCodeList", user.getUserCodeList());
@@ -378,7 +378,7 @@ public class DataBase {
                 DocumentSnapshot doc = task.getResult();
                 if (doc.exists()) {
                     String name = (String) doc.getData().get("name");
-                    String contactInfo = (String) doc.getData().get("contactinfo");
+                    String contactInfo = (String) doc.getData().get("contactInfo");
                     long totalScore = (long) doc.getData().get("totalscore");
                     long numCodes = (long) doc.getData().get("numcodes");
                     user.setId(userId);
@@ -522,7 +522,7 @@ public class DataBase {
                                         user.setContactInfo((String) pair.getValue());
                                     }
                                     if (pair.getKey().equals("userCodeList")) {
-                                        user.setCodeList((List) pair.getValue());
+                                        user.setCodeList((List<Map>) pair.getValue());
                                     }
                                 }
                                 // Add the user from the current document to userDataList
