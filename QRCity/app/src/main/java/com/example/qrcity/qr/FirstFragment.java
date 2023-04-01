@@ -55,7 +55,7 @@ public class FirstFragment extends Fragment {
                 //Pass forward the userID
                 Bundle bundle = new Bundle();
                 bundle.putString("userID", activityMain.getUser_id());
-                Intent intent = new Intent(getContext(), CodeListview.class);
+                Intent intent = new Intent(getContext(), UserStatisticsView.class);
                 intent.putExtras(bundle);
 
                 startActivity(intent);

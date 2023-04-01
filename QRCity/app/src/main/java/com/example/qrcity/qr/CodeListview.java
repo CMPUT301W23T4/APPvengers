@@ -35,6 +35,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.qrcity.R;
 import com.example.qrcity.user.TestObjects;
@@ -55,7 +56,6 @@ public class CodeListview extends AppCompatActivity implements CustomList.CodeLi
     private ListView codeList;
     private ArrayAdapter<ScannableCode> scannableCodeAdapter;
     private ArrayList<ScannableCode> scannableCodeDataList;
-    private MainActivity activityMain;
 
     /** --- Remove this --- **/
     private TestObjects objs = new TestObjects();
@@ -66,11 +66,13 @@ public class CodeListview extends AppCompatActivity implements CustomList.CodeLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //Check if the target user is the same as the current user
         ThisUserID = Settings.Secure.getString(this.getContentResolver(),Settings.Secure.ANDROID_ID);
         Bundle bundle = getIntent().getExtras();
         TargetUserID = bundle.getString("userID");
         sameUser = ThisUserID.compareTo(TargetUserID) == 0;
 
+        //Get a reference to the target user from the database
         dataBase = new DataBase();
         dataBase.getUserById(TargetUserID, new UserCallback() {
             @Override
@@ -87,7 +89,11 @@ public class CodeListview extends AppCompatActivity implements CustomList.CodeLi
 
         setContentView(R.layout.code_listview);
 
-        //Get a reference to the ListView and create an object for the city list
+        //Set text at the top
+        TextView listName = findViewById(R.id.list_name);
+        listName.setText(user.getName()+"'s scanned codes");
+
+        //Get a reference to the ListView and create an object for the list
         codeList = findViewById(R.id.code_list);
         scannableCodeDataList = new ArrayList<>();
 
@@ -95,6 +101,7 @@ public class CodeListview extends AppCompatActivity implements CustomList.CodeLi
         scannableCodeAdapter = new CustomList(this, scannableCodeDataList, sameUser);
         codeList.setAdapter(scannableCodeAdapter);
 
+        //Load statistics
         loadCodes();
     }
 
