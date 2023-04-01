@@ -36,6 +36,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".map.MapsActivity" />
+        <activity android:name=".qr.UserStatisticsView" />
         <activity android:name=".qr.CodeListview" />
     </application>
 

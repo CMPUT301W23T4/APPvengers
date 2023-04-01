@@ -77,7 +77,11 @@ public class CodeListview extends AppCompatActivity implements CustomList.CodeLi
 
         setContentView(R.layout.code_listview);
 
-        //Get a reference to the ListView and create an object for the city list
+        //Set text at the top
+        TextView listName = findViewById(R.id.list_name);
+        listName.setText(user.getName()+"'s scanned codes");
+
+        //Get a reference to the ListView and create an object for the list
         codeList = findViewById(R.id.code_list);
         scannableCodeDataList = new ArrayList<>();
 
@@ -85,13 +89,8 @@ public class CodeListview extends AppCompatActivity implements CustomList.CodeLi
         scannableCodeAdapter = new CustomList(this, scannableCodeDataList, sameUser);
         codeList.setAdapter(scannableCodeAdapter);
 
-        //Load the codes
+        //Load statistics
         loadCodes();
-
-        //Set text at the top
-        TextView listName = findViewById(R.id.list_name);
-        listName.setText(user.getName()+"'s scanned codes");
-
     }
 
     public void loadCodes(){
