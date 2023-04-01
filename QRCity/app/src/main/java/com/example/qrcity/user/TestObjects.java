@@ -23,7 +23,7 @@ public class TestObjects {
 
     public TestObjects(){}
 
-    /** Scannable codes **/
+    /** Users **/
     public User mockBasicUser() {
         User user = new User("0", "mockUser");
         return user;
@@ -35,6 +35,20 @@ public class TestObjects {
             user.addCode(code);
         }
         return user;
+    }
+
+    public ArrayList<User> mockUserList() {
+        ArrayList<User> userList= new ArrayList<User>();
+
+        for (int i = 0; i < 5; i++) {
+            User user = mockAdvancedUser();
+            String j = Integer.toString(i);
+            user.setId(j);
+            user.setName("mockUser" + j);
+            userList.add(user);
+        }
+
+        return userList;
     }
 
     /** Scannable codes **/
