@@ -9,13 +9,13 @@
     tools:context=".qr.MainActivity"
     tools:ignore="HardcodedText">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
         <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appbarLayout"
+            android:id="@+id/app_Layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -28,15 +28,28 @@
                 app:title="@string/leaderboard"
                 app:navigationIcon="@drawable/baseline_menu_24"/>
         </com.google.android.material.appbar.AppBarLayout>
-    </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/app_Layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="NotSibling"/>
+
+    </RelativeLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="0dp"
         android:gravity="center"
-        android:text="Leaderboards"
-        android:textSize="18sp" />
+        android:text="QR Scanned Leaderboard"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="22dp" />
 
     <!-- this the navigation view which draws and shows the navigation drawer -->
     <!-- include the menu created in the menu folder -->
