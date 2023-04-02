@@ -74,6 +74,8 @@ public class CodeListview extends AppCompatActivity implements CustomList.CodeLi
 
         //Get a reference to the target user from the database
         dataBase = new DataBase();
+        //TODO: load user from database
+        /*
         dataBase.getUserById(TargetUserID, new UserCallback() {
             @Override
             public void onUserRetrieved(User user) {
@@ -85,6 +87,8 @@ public class CodeListview extends AppCompatActivity implements CustomList.CodeLi
 
             }
         });
+         */
+        current_user = objs.mockAdvancedUser();
 
         setContentView(R.layout.code_listview);
 

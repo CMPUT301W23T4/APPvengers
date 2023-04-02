@@ -182,5 +182,4 @@ public class Userprofileactivity extends AppCompatActivity implements Removeprof
     public void RemoveProfile(View view){
         new Removeprofile().show(getSupportFragmentManager(),"Try_Remove");
     }
-
 }

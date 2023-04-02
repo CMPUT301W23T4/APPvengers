@@ -63,6 +63,8 @@ public class UserStatisticsView extends AppCompatActivity implements CustomList.
 
         //Get a reference to the target user from the database
         dataBase = DataBase.getInstance();
+        //TODO: load user from database
+        /*
         dataBase.getUserById(TargetUserID, new UserCallback() {
             @Override
             public void onUserRetrieved(User user) {
@@ -74,6 +76,8 @@ public class UserStatisticsView extends AppCompatActivity implements CustomList.
                 Log.i(TAG, "----- Could not get user -----");
             }
         });
+         */
+        current_user = objs.mockAdvancedUser();
 
         if (current_user.getUserCodeList().size() != 0)
         {

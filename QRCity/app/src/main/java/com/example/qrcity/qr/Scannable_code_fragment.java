@@ -126,11 +126,11 @@ public class Scannable_code_fragment extends Fragment {
         //add a code into QR code list.
         //((MainActivity)getActivity()).addCode(code);
 
-
+        //TODO: load current user from database
         ////////////////////////////////////////////////////
         ((MainActivity)getActivity()).current_user.addCode(code);       //add code to the user
         ((MainActivity)getActivity()).dataBase.addCode(code);   //add QR code in ScannableCode collection in database
-        ((MainActivity)getActivity()).dataBase.addUser(((MainActivity)getActivity()).current_user); //update user in database since the user just adds a new code
+        ((MainActivity)getActivity()).dataBase.editUser(((MainActivity)getActivity()).current_user); //update user in database since the user just adds a new code
     }
 
     public void setPhoto(Bitmap bitmap){

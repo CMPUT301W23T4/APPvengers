@@ -311,8 +311,25 @@ public class DataBase {
                 DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
                     return;
+                } else {
+                    Map<String, Object> user_data = new HashMap<>();
+                    user_data.put("name", user.getName());
+                    user_data.put("contactInfo", user.getContactInfo());
+                    user_data.put("totalscore", user.getTotalScore());
+                    user_data.put("numcodes", user.getNumCodes());
+                    user_data.put("userId", user.getUserId());
+                    user_data.put("userCodeList", user.getUserCodeList());
+                    docRef.set(user_data);
                 }
-            } else {
+            }
+        });
+    }
+
+    public void editUser(User user) {
+        DocumentReference docRef = collectionReference.document(user.getUserId());
+        docRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
                 Map<String, Object> user_data = new HashMap<>();
                 user_data.put("name", user.getName());
                 user_data.put("contactInfo", user.getContactInfo());
@@ -323,37 +340,6 @@ public class DataBase {
                 docRef.set(user_data);
             }
         });
-    }
-
-    public void editUser(User user) {
-        // Get a reference to the "Users" collection
-        CollectionReference cr = db.collection("Users");
-
-        // Get a reference to the specific user's document
-        DocumentReference userRef = cr.document(user.getUserId());
-
-        // Update the document with the new user data
-        Map<String, Object> updates = new HashMap<>();
-        updates.put("name", user.getName());
-        updates.put("contactInfo", user.getContactInfo());
-        updates.put("totalscore", user.getTotalScore());
-        updates.put("numcodes", user.getNumCodes());
-        updates.put("userCodeList", user.getUserCodeList());
-        userRef.update(updates)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        // If data is successfully updated
-                        Log.d(TAG, "User " + user.getUserId() + " successfully updated");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // If data update fails
-                        Log.d(TAG, "User " + user.getUserId() + " data failed to update: " + e.toString());
-                    }
-                });
     }
 
     public void getUser(String userId, OnGetUserListener listener) {
