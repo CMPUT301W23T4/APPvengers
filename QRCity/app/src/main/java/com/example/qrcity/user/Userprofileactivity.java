@@ -49,7 +49,20 @@ public class Userprofileactivity extends AppCompatActivity implements Removeprof
         setContentView(R.layout.user_profile);
         String android_ID = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
 
-        getUserByAndroidId(android_ID);
+        //getUserByAndroidId(android_ID);
+        dataBase.getUserById(android_ID, new UserCallback() {
+            @Override
+            public void onUserRetrieved(User user) {
+                System.out.println(user.getUserId());
+                System.out.println("test here");
+                current_user = user;
+            }
+
+            @Override
+            public void onUserRetrievalError(Exception e) {
+
+            }
+        });
 
         userName = findViewById(R.id.UserName);
         contactInfo = findViewById(R.id.ContactInfo);
@@ -61,7 +74,7 @@ public class Userprofileactivity extends AppCompatActivity implements Removeprof
             score.setText((int) current_user.getTotalScore());
         }
 
-        final String TAG = "what you want to leave here";
+        final String TAG = "Text from Userprofileactivity";
         final CollectionReference collectionReference = db.collection("Users");
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
@@ -158,17 +171,14 @@ public class Userprofileactivity extends AppCompatActivity implements Removeprof
 
     @Override
     public void onRemoveOKPressed() {
+        dataBase.removerUserData(current_user);
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
     @Override
     public void onEditOKPressed(User user) {
-        //userName.setText(current_user.getName());
-        //contactInfo.setText(current_user.getContactInfo());
-        //this.user = user;
-        updateUser(user);
-        //dataBase.editUser(current_user);
+        dataBase.editUser(current_user);
     }
 
     @Override

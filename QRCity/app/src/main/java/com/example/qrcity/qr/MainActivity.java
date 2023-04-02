@@ -62,9 +62,18 @@ public class MainActivity extends AppCompatActivity {
         user_id = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID); //get android id
         dataBase = DataBase.getInstance();
         //if userid is not in database then it will add this new userid into database
-        current_user = new User(user_id,"Default_name","Default_contactInfo");
-        dataBase.addUser(current_user);
-        //current_user = dataBase.getUserById(user_id);                 //get user by android id
+        //check if user is in database
+        dataBase.getUserById(user_id, new UserCallback() {
+            @Override
+            public void onUserRetrieved(User user) {
+            }
+
+            @Override
+            public void onUserRetrievalError(Exception e) {
+                current_user = new User(user_id,"Default_name","Default_contactInfo");
+                dataBase.addUser(current_user);
+            }
+        });
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View  v) {

@@ -69,6 +69,7 @@ public class UserStatisticsView extends AppCompatActivity implements CustomList.
             @Override
             public void onUserRetrieved(User user) {
                 current_user = user;
+                System.out.println("test here");
             }
 
             @Override
