@@ -44,7 +44,7 @@ public class DataBase {
     CollectionReference codeCollection;
     StorageReference photoColletion;
 
-    final String TAG = "what to put here";
+    final String TAG = "Message from Database";
     
     public DataBase() {
         db = FirebaseFirestore.getInstance();
