@@ -48,26 +48,12 @@ public class Userprofileactivity extends AppCompatActivity implements Removeprof
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_profile);
         String android_ID = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-        /*
-        dataBase.getUserById(android_ID, new UserCallback() {
-            @Override
-            public void onUserRetrieved(User user) {
-                current_user = user;
-            }
 
-            @Override
-            public void onUserRetrievalError(Exception e) {
-
-            }
-        });
-        */
         getUserByAndroidId(android_ID);
 
         userName = findViewById(R.id.UserName);
         contactInfo = findViewById(R.id.ContactInfo);
         score = findViewById(R.id.UserScore);
-
-
 
         if(current_user != null){
             userName.setText(current_user.getName());
@@ -76,7 +62,7 @@ public class Userprofileactivity extends AppCompatActivity implements Removeprof
         }
 
         final String TAG = "what you want to leave here";
-        final CollectionReference collectionReference = db.collection("users");
+        final CollectionReference collectionReference = db.collection("Users");
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
             FirebaseFirestoreException error) {
@@ -130,7 +116,7 @@ public class Userprofileactivity extends AppCompatActivity implements Removeprof
 
     }
     public void getUserByAndroidId(String userId){
-        db.collection("users").document(userId).get()
+        db.collection("Users").document(userId).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -154,7 +140,7 @@ public class Userprofileactivity extends AppCompatActivity implements Removeprof
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String userId = user.getUserId();
 
-        db.collection("users").document(userId).set(user)
+        db.collection("Users").document(userId).set(user)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
