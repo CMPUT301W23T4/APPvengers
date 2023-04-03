@@ -104,15 +104,9 @@ public class CodeListview extends AppCompatActivity implements CustomList.CodeLi
         //TODO: user.removeCode(String codeID);
         //TODO: dataBase.removeCode(String codeID);
 
-        /** --- Remove this --- /
-        for (int i = 0; i < ExternalCodeDataList.size(); i++) {
-            if (ExternalCodeDataList.get(i).getId() == codeID){
-                ExternalCodeDataList.remove(i);
-                break;
-            }
-        }
-        /** ------------------- **/
-
+        current_user.removeCode(codeID);
+        dataBase.editUser(current_user);
+        dataBase.loadAllUserData();
         loadCodes();
     }
 }

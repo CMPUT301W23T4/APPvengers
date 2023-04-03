@@ -53,6 +53,14 @@ public class User implements Serializable {
         userCodeList.add(codeMap);
     }
 
+    public void removeCode(String codeID) {
+        for (Map codeMap: userCodeList) {
+            if (codeID.compareTo((String) codeMap.get("id")) == 0){
+                userCodeList.remove(codeMap);
+            }
+        }
+    }
+
 
 
     @Override
