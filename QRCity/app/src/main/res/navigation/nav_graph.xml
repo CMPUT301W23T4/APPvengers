@@ -40,6 +40,9 @@
         <action
             android:id="@+id/action_CodeScannerFragment_to_scannable_code"
             app:destination="@id/scannable_code" />
+        <action
+            android:id="@+id/action_CodeScannerFragment_to_fail_scan_Fragment"
+            app:destination="@id/fail_scan_Fragment" />
     </fragment>
     <fragment
         android:id="@+id/scannable_code"
@@ -52,6 +55,9 @@
         <action
             android:id="@+id/action_scannable_code_to_success_scan_fragment"
             app:destination="@id/success_scan_fragment" />
+        <action
+            android:id="@+id/action_scannable_code_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
     </fragment>
     <fragment
         android:id="@+id/success_scan_fragment"
@@ -103,6 +109,15 @@
         tools:layout="@layout/fragment_info" >
         <action
             android:id="@+id/action_infoFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fail_scan_Fragment"
+        android:name="com.example.qrcity.qr.fail_scan_Fragment"
+        android:label="fragment_fail_scan_"
+        tools:layout="@layout/fragment_fail_scan_" >
+        <action
+            android:id="@+id/action_fail_scan_Fragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
 </navigation>

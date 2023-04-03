@@ -38,6 +38,7 @@ import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
 import com.example.qrcity.R;
+import com.example.qrcity.user.User;
 import com.google.zxing.Result;
 
 import java.math.BigInteger;
@@ -176,13 +177,41 @@ public class QRScanner extends Fragment {
         if (hash == null){
             return;
         } else{
-            Log.i(TAG, "Hash calculated successfully");
-            activityMain.setLastHash(hash);
-            Log.i(TAG, "Hash stored successfully");
-            Log.i(TAG, activityMain.getLastHash());
+            if (check_duplicate(hash)) {
+                NavHostFragment.findNavController(QRScanner.this)
+                        .navigate(R.id.action_CodeScannerFragment_to_fail_scan_Fragment);
+            }else{
+                Log.i(TAG, "Hash calculated successfully");
+                activityMain.setLastHash(hash);
+                Log.i(TAG, "Hash stored successfully");
+                Log.i(TAG, activityMain.getLastHash());
+                NavHostFragment.findNavController(QRScanner.this)
+                        .navigate(R.id.action_CodeScannerFragment_to_scannable_code);
+            }
+
         }
 
-        NavHostFragment.findNavController(QRScanner.this)
-                .navigate(R.id.action_CodeScannerFragment_to_scannable_code);
+
+    }
+    private boolean check_duplicate(String hash){
+        DataBase database=DataBase.getInstance();
+        User user=database.getUserFromUserData(database.getThisUserID());
+        boolean check =false;
+        String codeid="";
+        try
+        {
+            ScannableCode code=new ScannableCode();
+            codeid = code.toHexString(code.getSHA(hash+user.getUserId()));
+        }
+        catch (NoSuchAlgorithmException e) {
+            System.out.println("Exception thrown for incorrect algorithm: " + e);
+        }
+        for (int i = 0; i < user.getUserCodeList().size(); i++){
+            if (user.getUserCodeList().get(i).get("id").toString().equals(codeid)){
+                check=true;
+                break;
+            }
+        }
+        return check;
     }
 }

@@ -13,6 +13,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,10 @@ import com.example.qrcity.map.GPS_location;
 import com.example.qrcity.R;
 import com.example.qrcity.user.User;
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.Map;
 
 
 public class Scannable_code_fragment extends Fragment {
@@ -120,15 +125,22 @@ public class Scannable_code_fragment extends Fragment {
                 }
             }
         });
-    }
+        Button cancel=view.getRootView().findViewById(R.id.cancel_button);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(Scannable_code_fragment.this)
+                        .navigate(R.id.action_scannable_code_to_FirstFragment);
+            }
+        });
 
+
+    }
     private void save_data(){
         //create a scanned QR code
-        String unique_id=((MainActivity)getActivity()).getLastHash()+((MainActivity)getActivity()).user_id;
+        String unique_id=((MainActivity)getActivity()).getLastHash()+database.getThisUserID();
         ScannableCode code=new ScannableCode(unique_id,score,cmt_edit.getText().toString(),location,photo,score_sys.getName(((MainActivity)getActivity()).getLastHash()));
 
-        //add a code into QR code list.
-        //((MainActivity)getActivity()).addCode(code);
 
         //TODO: load current user from database
         ////////////////////////////////////////////////////

@@ -62,7 +62,6 @@ public class User implements Serializable {
     }
 
 
-
     @Override
     public int hashCode() {
 
