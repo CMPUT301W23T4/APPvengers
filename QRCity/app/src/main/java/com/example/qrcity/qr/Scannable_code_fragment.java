@@ -147,10 +147,22 @@ public class Scannable_code_fragment extends Fragment {
         database.addCode(code);
         User user = database.getUserFromUserData(database.getThisUserID());
         user.addCode(code);
+        user.set_Total_Score(score_cal(user));
+        user.set_Num_Codes(user.getUserCodeList().size());
         database.editUser(user);
         database.loadAllUserData();
         database.loadAllCodeData();
     }
+    private int score_cal(User user){
+        int s=0;
+        for (int i = 0; i < user.getUserCodeList().size(); i++){
+            String id = user.getUserCodeList().get(i).get("id").toString();
+            s=s+database.getCodeFromCodeData(id).getScore();
+        }
+        return s;
+    }
+
+
 
     public void setPhoto(Bitmap bitmap){
         photo = bitmap;
