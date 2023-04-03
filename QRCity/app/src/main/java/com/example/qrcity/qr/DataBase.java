@@ -2,6 +2,7 @@ package com.example.qrcity.qr;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.provider.Settings;
 import android.util.Base64;
 import android.util.Log;
 
@@ -33,6 +34,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.DoubleAccumulator;
 
 public class DataBase {
 
@@ -43,6 +45,10 @@ public class DataBase {
     CollectionReference ownerCollection;
     CollectionReference codeCollection;
     StorageReference photoColletion;
+    private String ThisUserID;
+
+    private HashMap<String, User> userData = new HashMap<>();
+    private HashMap<String, ScannableCode> codeData = new HashMap<>();
 
     final String TAG = "Message from Database";
     
@@ -53,7 +59,8 @@ public class DataBase {
         ownerCollection = db.collection("Owners");
         photoColletion = storage.getReference();
         codeCollection = db.collection("ScannableCodes");
-
+        loadAllUserData();
+        loadAllCodeData();
     }
 
     public static DataBase getInstance() {
@@ -111,55 +118,77 @@ public class DataBase {
         return userDataList;
     }
 
-    public HashMap<String, User> getAllUserData() {
-        HashMap<String, User> userDataList = new HashMap<>();
-        //snapshot listener to watch for changes in the database
+    public void loadAllUserData() {
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
-                // Iterate over all documents in the collection
-                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
+                FirebaseFirestoreException error) {
+                    if (queryDocumentSnapshots != null) {
+                        for (QueryDocumentSnapshot doc : queryDocumentSnapshots)
+                        {
+                            String userID = (String) doc.getData().get("userId");
+                            String name = (String) doc.getData().get("name");
+                            String contact = (String) doc.getData().get("contactInfo");
 
-                    List<Map> userCodeList = null;
-                    String userId = new String();
-                    User user = new User();
-                    Map<String, Object> userData = doc.getData();
-                    boolean success = false;
-                    // Get all fields from the current document and construct a User
-                    for (Map.Entry<String, Object> pair : userData.entrySet()) {
-                        String key = pair.getKey();
+                            User user = new User(userID, name, contact);
+                            user.setCodeList((ArrayList<Map>) doc.getData().get("userCodeList"));
 
-                        if (key.equals("userId")) {
-                            user.setId((String) pair.getValue());
-                            userId = (String) pair.getValue();
-                        }
-                        if (key.equals("name")) {
-                            user.setName((String) pair.getValue());
-                        }
-                        if (key.equals("contactInfo")) {
-                            user.setContactInfo((String) pair.getValue());
-                        }
-                        if (key == "userCodeList") {
-                            user.setCodeList((List<Map>) pair.getValue());
-                        }
-                        if (key.equals("numCodes")) {
-                            Integer numCodes;
-                            numCodes = ((Long) pair.getValue()).intValue();
-                            user.setNumCodes(numCodes);
-                        }
-                        if (key.equals("totalScore")) {
-                            Integer totalScore;
-                            totalScore = ((Long) pair.getValue()).intValue();
-                            user.setTotalScore(totalScore);
+                            userData.put(userID, user);
+
+                            Log.d(TAG, "---- Load User Success ----");
                         }
                     }
-                    userDataList.put(userId, user);
-                    Log.d(TAG, "User downloaded");
-                    Log.d(TAG, "Server document data: " + doc.getData());
+                }
+            });
+    }
+
+    public User getUserFromUserData(String userID){
+        return userData.get(userID);
+    }
+
+    public void loadAllCodeData() {
+        codeCollection.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
+            FirebaseFirestoreException error) {
+                if (queryDocumentSnapshots != null) {
+                    for (QueryDocumentSnapshot doc : queryDocumentSnapshots)
+                    {
+                        String codeID = doc.getId();
+                        String comment = (String) doc.getData().get("Comment");
+                        String name = (String) doc.getData().get("codeName");
+                        int score = doc.getLong("codeScore").intValue();
+
+                        byte[] decodedString = Base64.decode((String) doc.getData().get("photo"), Base64.DEFAULT);
+                        Bitmap Photo = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+                        ArrayList locationList = ((ArrayList) doc.get("Location"));
+                        double[] location = {0, 0};
+                        location[0] = (double) locationList.get(0);
+                        location[1] = (double) locationList.get(1);
+
+                        ScannableCode code = new ScannableCode(codeID, score, comment, location, Photo, name);
+                        code.setId(codeID);
+
+                        codeData.put(codeID, code);
+
+                        Log.d(TAG, "---- Load Code Success ----");
+                    }
                 }
             }
         });
-        return userDataList;
+    }
+
+    public ScannableCode getCodeFromCodeData(String userID){
+        return codeData.get(userID);
+    }
+
+    public String getThisUserID(){
+        return ThisUserID;
+    }
+
+    public void setThisUserID(String userID){
+        ThisUserID = userID;
     }
 
     public void addCode(ScannableCode code) {

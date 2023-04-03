@@ -10,7 +10,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,7 @@ import android.widget.Toast;
 
 import com.example.qrcity.map.GPS_location;
 import com.example.qrcity.R;
+import com.example.qrcity.user.User;
 import com.google.android.material.textfield.TextInputEditText;
 
 
@@ -39,6 +42,7 @@ public class Scannable_code_fragment extends Fragment {
     private Bitmap photo=null;
     private ScoringSystem score_sys = new ScoringSystem();
 
+    DataBase database = DataBase.getInstance();
 
 
     private static final int Image_Capture_Code = 1;
@@ -128,9 +132,12 @@ public class Scannable_code_fragment extends Fragment {
 
         //TODO: load current user from database
         ////////////////////////////////////////////////////
-        ((MainActivity)getActivity()).current_user.addCode(code);       //add code to the user
-        ((MainActivity)getActivity()).dataBase.addCode(code);   //add QR code in ScannableCode collection in database
-        ((MainActivity)getActivity()).dataBase.editUser(((MainActivity)getActivity()).current_user); //update user in database since the user just adds a new code
+        database.addCode(code);
+        User user = database.getUserFromUserData(database.getThisUserID());
+        user.addCode(code);
+        database.editUser(user);
+        database.loadAllUserData();
+        database.loadAllCodeData();
     }
 
     public void setPhoto(Bitmap bitmap){

@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.nav_view);
         user_id = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID); //get android id
         dataBase = DataBase.getInstance();
+        dataBase.setThisUserID(user_id);
         //if userid is not in database then it will add this new userid into database
         //check if user is in database
         dataBase.getUserById(user_id, new UserCallback() {

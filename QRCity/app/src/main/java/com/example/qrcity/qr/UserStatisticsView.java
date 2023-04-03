@@ -4,34 +4,27 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.qrcity.R;
-import com.example.qrcity.user.OnGetUserListener;
-import com.example.qrcity.user.TestObjects;
 import com.example.qrcity.user.User;
-import com.example.qrcity.user.UserCallback;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class UserStatisticsView extends AppCompatActivity implements CustomList.CodeListListener{
     // Declare the variables so that you will be able to reference it later.
     private String ThisUserID;
     private String TargetUserID;
     boolean sameUser;
-    private DataBase dataBase = new DataBase();
+    private DataBase dataBase = DataBase.getInstance();
     private User current_user;
 
     private ListView codeList;
@@ -52,11 +45,6 @@ public class UserStatisticsView extends AppCompatActivity implements CustomList.
 
     private final String TAG = "Text from UserStatisticsView: ";
 
-    /** --- Remove this --- **/
-    private TestObjects objs = new TestObjects();
-    private ArrayList<ScannableCode> ExternalCodeDataList = objs.mockScannableCodes();
-    /** ------------------- **/
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,29 +57,9 @@ public class UserStatisticsView extends AppCompatActivity implements CustomList.
         sameUser = ThisUserID.compareTo(TargetUserID) == 0;
 
         //Get a reference to the target user from the database
-        //TODO: load user from database
+        current_user = dataBase.getUserFromUserData(TargetUserID);
 
-
-        dataBase.getUserById(TargetUserID, new UserCallback() {
-            @Override
-            public void onUserRetrieved(User user) {
-                Log.d(TAG,"-----User Retrieved-----");
-                current_user = user;
-            }
-
-            @Override
-            public void onUserRetrievalError(Exception e) {
-                Log.d(TAG,"-----No such document-----");
-            }
-        });
-
-
-        //current_user = objs.mockAdvancedUser();
-
-        if (current_user.getUserCodeList().size() != 0)
-        {
-            setContentView(R.layout.user_statistics);
-        }
+        setContentView(R.layout.user_statistics);
 
         //Set text at the top
         TextView statsName = findViewById(R.id.name);
@@ -132,31 +100,41 @@ public class UserStatisticsView extends AppCompatActivity implements CustomList.
         });
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // Save the data to the bundle
+        outState.putString("userID", TargetUserID);
+    }
+
     public void refresh(){
         loadCodes();
-
-        ScannableCode max = scannableCodeDataList.get(0);
-        ScannableCode min = scannableCodeDataList.get(0);
 
         sum = 0;
         n = 0;
 
-        for (ScannableCode code: scannableCodeDataList) {
-            sum += code.getScore();
-            n += 1;
-            if (code.getScore() > max.getScore()){
-                max = code;
+        if (current_user.getUserCodeList().size() > 0){
+            ScannableCode max = scannableCodeDataList.get(0);
+            ScannableCode min = scannableCodeDataList.get(0);
+
+            for (ScannableCode code: scannableCodeDataList) {
+                sum += code.getScore();
+                n += 1;
+                if (code.getScore() > max.getScore()){
+                    max = code;
+                }
+                if (code.getScore() < min.getScore()){
+                    min = code;
+                }
             }
-            if (code.getScore() < min.getScore()){
-                min = code;
-            }
+
+            scannableCodeDataList.clear();
+            scannableCodeDataList.add(max);
+            scannableCodeDataList.add(min);
+
+            scannableCodeAdapter.notifyDataSetChanged();
         }
-
-        scannableCodeDataList.clear();
-        scannableCodeDataList.add(max);
-        scannableCodeDataList.add(min);
-
-        scannableCodeAdapter.notifyDataSetChanged();
 
         sumValue.setText(Integer.toString(sum));
         nValue.setText(Integer.toString(n));
@@ -166,13 +144,13 @@ public class UserStatisticsView extends AppCompatActivity implements CustomList.
         // Clear the old list
         scannableCodeDataList.clear();
 
-        /**Get the list of codes from the user
-         for (Map codeID: user.getUserCodeList()) {
-         scannableCodeDataList.add(dataBase.getCode((String) codeID.get("id")));
+        //**Get the list of codes from the user
+         for (Map codeID: current_user.getUserCodeList()) {
+            scannableCodeDataList.add(dataBase.getCodeFromCodeData((String) codeID.get("id")));
          }
-         */
+         //*/
 
-        /** --- Remove this --- **/
+        /** --- Remove this --- /
         for (ScannableCode code: ExternalCodeDataList) {
             scannableCodeDataList.add(code);
         }

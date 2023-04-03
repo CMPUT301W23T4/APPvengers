@@ -38,11 +38,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.qrcity.R;
-import com.example.qrcity.user.TestObjects;
 import com.example.qrcity.user.User;
-import com.example.qrcity.user.UserCallback;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class CodeListview extends AppCompatActivity implements CustomList.CodeListListener {
 
@@ -50,17 +49,12 @@ public class CodeListview extends AppCompatActivity implements CustomList.CodeLi
     private String ThisUserID;
     private String TargetUserID;
     boolean sameUser;
-    private DataBase dataBase;
+    private DataBase dataBase = DataBase.getInstance();
     private User current_user;
 
     private ListView codeList;
     private ArrayAdapter<ScannableCode> scannableCodeAdapter;
     private ArrayList<ScannableCode> scannableCodeDataList;
-
-    /** --- Remove this --- **/
-    private TestObjects objs = new TestObjects();
-    private ArrayList<ScannableCode> ExternalCodeDataList = objs.mockScannableCodes();
-    /** ------------------- **/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,22 +67,7 @@ public class CodeListview extends AppCompatActivity implements CustomList.CodeLi
         sameUser = ThisUserID.compareTo(TargetUserID) == 0;
 
         //Get a reference to the target user from the database
-        dataBase = new DataBase();
-        //TODO: load user from database
-        /*
-        dataBase.getUserById(TargetUserID, new UserCallback() {
-            @Override
-            public void onUserRetrieved(User user) {
-                current_user = user;
-            }
-
-            @Override
-            public void onUserRetrievalError(Exception e) {
-
-            }
-        });
-         */
-        current_user = objs.mockAdvancedUser();
+        current_user = dataBase.getUserFromUserData(TargetUserID);
 
         setContentView(R.layout.code_listview);
 
@@ -112,17 +91,10 @@ public class CodeListview extends AppCompatActivity implements CustomList.CodeLi
         // Clear the old list
         scannableCodeDataList.clear();
 
-        /**Get the list of codes from the user
-        for (Map codeID: user.getUserCodeList()) {
-            scannableCodeDataList.add(dataBase.getCode((String) codeID.get("id")));
+        //Get the list of codes from the user
+        for (Map codeID: current_user.getUserCodeList()) {
+            scannableCodeDataList.add(dataBase.getCodeFromCodeData((String) codeID.get("id")));
         }
-        */
-
-        /** --- Remove this --- **/
-        for (ScannableCode code: ExternalCodeDataList) {
-            scannableCodeDataList.add(code);
-        }
-        /** ------------------- **/
 
         //Notifying the adapter to render any new data fetched from the cloud
         scannableCodeAdapter.notifyDataSetChanged();
@@ -132,7 +104,7 @@ public class CodeListview extends AppCompatActivity implements CustomList.CodeLi
         //TODO: user.removeCode(String codeID);
         //TODO: dataBase.removeCode(String codeID);
 
-        /** --- Remove this --- **/
+        /** --- Remove this --- /
         for (int i = 0; i < ExternalCodeDataList.size(); i++) {
             if (ExternalCodeDataList.get(i).getId() == codeID){
                 ExternalCodeDataList.remove(i);
