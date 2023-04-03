@@ -14,6 +14,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.example.qrcity.R;
 import com.example.qrcity.databinding.FragmentFirstBinding;
 import com.example.qrcity.map.MapsActivity;
+import com.example.qrcity.search.UserSearchActivity;
 
 public class FirstFragment extends Fragment {
 
@@ -75,8 +76,8 @@ public class FirstFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 System.out.println("Clicked search");
-                NavHostFragment.findNavController(FirstFragment.this)
-                        .navigate(R.id.action_FirstFragment_to_searchPlayerFragment);
+                Intent intent = new Intent(getContext(), UserSearchActivity.class);
+                startActivity(intent);
             }
         });
 

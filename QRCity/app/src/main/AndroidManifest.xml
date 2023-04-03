@@ -36,10 +36,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".map.MapsActivity" />
+        <activity android:name=".map.MapsActivity" android:parentActivityName=".qr.MainActivity"/>
         <activity android:name=".qr.UserStatisticsView" />
         <activity android:name=".qr.CodeListview" />
-        <activity android:name=".user.Userprofileactivity"/>
+        <activity android:name=".user.Userprofileactivity" android:parentActivityName=".qr.MainActivity"/>
+        <activity android:name=".search.UserSearchActivity" android:parentActivityName=".qr.MainActivity" />
     </application>
 
 </manifest>
