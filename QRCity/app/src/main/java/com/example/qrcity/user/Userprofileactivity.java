@@ -54,7 +54,7 @@ public class Userprofileactivity extends AppCompatActivity implements Removeprof
             @Override
             public void onUserRetrieved(User user) {
                 System.out.println(user.getUserId());
-                System.out.println("test here");
+                System.out.println("test ok in userprofileactivity here");
                 current_user = user;
             }
 
@@ -128,6 +128,7 @@ public class Userprofileactivity extends AppCompatActivity implements Removeprof
         });
 
     }
+    /*
     public void getUserByAndroidId(String userId){
         db.collection("Users").document(userId).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -167,7 +168,7 @@ public class Userprofileactivity extends AppCompatActivity implements Removeprof
                     }
                 });
     }
-
+    */
 
     @Override
     public void onRemoveOKPressed() {

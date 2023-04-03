@@ -1,10 +1,7 @@
 package com.example.qrcity.qr;
 
-import static android.content.ContentValues.TAG;
-
 import android.app.Activity;
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -14,12 +11,18 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.qrcity.R;
+import com.example.qrcity.user.OnGetUserListener;
 import com.example.qrcity.user.TestObjects;
 import com.example.qrcity.user.User;
 import com.example.qrcity.user.UserCallback;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
@@ -28,7 +31,7 @@ public class UserStatisticsView extends AppCompatActivity implements CustomList.
     private String ThisUserID;
     private String TargetUserID;
     boolean sameUser;
-    private DataBase dataBase;
+    private DataBase dataBase = new DataBase();
     private User current_user;
 
     private ListView codeList;
@@ -44,6 +47,10 @@ public class UserStatisticsView extends AppCompatActivity implements CustomList.
     private Button viewCodeList;
 
     private Activity currentActivity;
+
+    private FirebaseFirestore fbdb = FirebaseFirestore.getInstance();
+
+    private final String TAG = "Text from UserStatisticsView: ";
 
     /** --- Remove this --- **/
     private TestObjects objs = new TestObjects();
@@ -62,23 +69,24 @@ public class UserStatisticsView extends AppCompatActivity implements CustomList.
         sameUser = ThisUserID.compareTo(TargetUserID) == 0;
 
         //Get a reference to the target user from the database
-        dataBase = DataBase.getInstance();
         //TODO: load user from database
-        /*
+
+
         dataBase.getUserById(TargetUserID, new UserCallback() {
             @Override
             public void onUserRetrieved(User user) {
+                Log.d(TAG,"-----User Retrieved-----");
                 current_user = user;
-                System.out.println("test here");
             }
 
             @Override
             public void onUserRetrievalError(Exception e) {
-                Log.i(TAG, "----- Could not get user -----");
+                Log.d(TAG,"-----No such document-----");
             }
         });
-         */
-        current_user = objs.mockAdvancedUser();
+
+
+        //current_user = objs.mockAdvancedUser();
 
         if (current_user.getUserCodeList().size() != 0)
         {
