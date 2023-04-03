@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:text="[User]'s Stats"
+            android:textColor="@color/black"
             android:textSize="25sp" />
 
         <LinearLayout
@@ -30,6 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
+                android:textColor="@color/black"
                 android:text="Number of scanned Codes:"
                 android:textSize="25sp" />
 
@@ -39,6 +41,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="right"
                 android:padding="5dp"
+                android:textColor="@color/black"
                 android:text="0"
                 android:textSize="25sp" />
         </LinearLayout>
@@ -53,6 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
+                android:textColor="@color/black"
                 android:text="Sum of scanned Codes:"
                 android:textSize="25sp" />
 
@@ -62,6 +66,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="right"
                 android:padding="5dp"
+                android:textColor="@color/black"
                 android:text="0"
                 android:textSize="25sp" />
         </LinearLayout>
@@ -76,6 +81,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
+                android:textColor="@color/black"
                 android:text="Highest and Lowest scoring scanned Codes:"
                 android:textSize="25sp" />
 
